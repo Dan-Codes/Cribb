@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "376494867081",
+    "firebase_url": "https://reviewing-off-campus-housing.firebaseio.com",
+    "project_id": "reviewing-off-campus-housing",
+    "storage_bucket": "reviewing-off-campus-housing.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:376494867081:android:d8c8d8b05e771b1d",
+        "android_client_info": {
+          "package_name": "com.example.cribb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "376494867081-vfcvns90hv3htr3uh2o3sfekkn31khs3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoTyyUjp3Xtdll-X3-zTnORb66-fkCUNE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "376494867081-vfcvns90hv3htr3uh2o3sfekkn31khs3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "376494867081-q8vpcd3f6pnnp98tkk6fvnjk0i81020d.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.housing.Reviewing-off-campus-housing"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
