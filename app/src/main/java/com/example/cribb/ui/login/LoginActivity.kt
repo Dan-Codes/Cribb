@@ -1,6 +1,7 @@
 package com.example.cribb.ui.login
 
 import android.app.Activity
+import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -98,8 +99,8 @@ class LoginActivity : AppCompatActivity() {
 
             login.setOnClickListener {
                 loading.visibility = View.VISIBLE
-                loginViewModel.login(username.text.toString(), password.text.toString())
-
+                //loginViewModel.login(username.text.toString(), password.text.toString())
+                signIn(username.text.toString(), password.text.toString())
             }
         }
     }
@@ -120,7 +121,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun signIn(email: String, password: String) {
-
+        val b: Boolean? = false
         // [START sign_in_with_email]
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
@@ -129,12 +130,14 @@ class LoginActivity : AppCompatActivity() {
                     d("Test", "Login Success!")
                     val user = auth.currentUser
                     //updateUI(user)
+                    startActivity(Intent(this, HomeActivity::class.java))
                 } else {
                     // If sign in fails, display a message to the user.
                     //Log.w(TAG, "signInWithEmail:failure", task.exception)
                     Toast.makeText(baseContext, "Authentication failed.",
                         Toast.LENGTH_SHORT).show()
                     //updateUI(null)
+
                 }
 
                 // ...
