@@ -90,5 +90,4 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     fun findLocation(){
     }
 
-
 }
