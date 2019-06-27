@@ -25,7 +25,7 @@
             android:id="@+id/searchBar"
             android:layout_margin="16dp"
             app:mt_navIconEnabled="true"
-            app:mt_placeholder="Search a place"
+            app:mt_placeholder="Search for a cribb"
             android:elevation="5dp"
             android:outlineProvider="bounds"
 
