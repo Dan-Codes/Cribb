@@ -2,7 +2,8 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:icon="@drawable/ic_location" android:title="@string/nav_location" android:visible="true"
-    />
-    <item android:title="@string/nav_home" android:icon="@drawable/ic_home" android:visible="true"/>
-    <item android:title="@string/nav_person" android:icon="@drawable/ic_person"/>
+          android:id="@+id/nav_loc"/>
+    <item android:title="@string/nav_home" android:icon="@drawable/ic_home" android:visible="true"
+          android:id="@+id/nav_home"/>
+    <item android:title="@string/nav_person" android:icon="@drawable/ic_person" android:id="@+id/nav_person"/>
 </menu>
