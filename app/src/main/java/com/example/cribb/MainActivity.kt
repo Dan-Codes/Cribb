@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
@@ -47,8 +48,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
-        val navigated = NavigationUI.onNavDestinationSelected(item!!, navController)
-        return navigated || super.onOptionsItemSelected(item)
+        when (item!!.itemId)
+        {
+            R.id.nav_home ->{
+
+            }
+            R.id.nav_person ->{
+
+            }
+            R.id.nav_loc -> {
+
+            }
+        }
+        return true
     }
 }
