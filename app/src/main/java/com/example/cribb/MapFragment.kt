@@ -2,6 +2,7 @@ package com.example.cribb
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.net.Uri
@@ -12,18 +13,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 import com.mancj.materialsearchbar.MaterialSearchBar
+import androidx.navigation.Navigation
+import androidx.transition.FragmentTransitionSupport
+import com.google.android.gms.maps.MapFragment
+import com.google.android.libraries.places.internal.it
+import com.google.firebase.firestore.Transaction
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -40,7 +50,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
-class MapFragment : Fragment(), OnMapReadyCallback {
+class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
 
     // TODO: Rename and change types of parameters
@@ -48,7 +58,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private var param2: String? = null
    // private var listener: OnFragmentInteractionListener? = null
 
-    private val db = FirebaseFirestore.getInstance()
+    //private val db = FirebaseFirestore.getInstance()
     private lateinit var mMap: GoogleMap
     private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var placesClient: PlacesClient
@@ -59,6 +69,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var mapView: View
     private lateinit var mMapView: MapView
     private lateinit var materialSearchBar: MaterialSearchBar
+    private lateinit var transaction : FragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -139,7 +150,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 //            }
 //        }
 
-//        mMap.setOnInfoWindowClickListener(this)
+        mMap.setOnInfoWindowClickListener(this)
 
     }
 
@@ -156,6 +167,25 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
             return
         }
+    }
+
+    @Override
+    override fun onInfoWindowClick(marker: Marker) {
+//        Toast.makeText(
+//            this, "Info window clicked",
+//            Toast.LENGTH_SHORT
+//        ).show()
+        var address: String = marker.title
+//        val newFragment = DisplayListingFragment()
+//        transaction
+//            .beginTransaction()
+//            .replace(R.id.container, newFragment)
+//            .addToBackStack(null)
+//            .commit()
+        val nextaction = MapFragmentDirections.actionMapFragmentToDisplayListingFragment()
+        nextaction.dynamicAddress = address
+        Navigation.findNavController(mapView).navigate(nextaction)
+        println("finished clicking")
     }
 
     // TODO: Rename method, update argument and hook method into UI event

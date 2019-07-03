@@ -7,7 +7,12 @@
     <activity android:id="@+id/mapsActivity" android:name="com.example.cribb.MapsActivity" android:label="activity_maps"
               tools:layout="@layout/activity_maps"/>
     <fragment android:id="@+id/displayListingFragment" android:name="com.example.cribb.DisplayListingFragment"
-              android:label="fragment_display_listing" tools:layout="@layout/fragment_display_listing"/>
+              android:label="fragment_display_listing" tools:layout="@layout/fragment_display_listing">
+        <argument android:name="dynamicAddress" app:argType="string" android:defaultValue="address"/>
+    </fragment>
     <fragment android:id="@+id/mapFragment" android:name="com.example.cribb.MapFragment" android:label="fragment_map"
-              tools:layout="@layout/fragment_map"/>
+              tools:layout="@layout/fragment_map">
+        <action android:id="@+id/action_mapFragment_to_displayListingFragment"
+                app:destination="@id/displayListingFragment"/>
+    </fragment>
 </navigation>

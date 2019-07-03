@@ -1,11 +1,15 @@
 package com.example.cribb
 
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.activity_displaylisting.*
+import kotlinx.android.synthetic.main.fragment_display_listing.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -24,6 +28,33 @@ class DisplayListingFragment : Fragment() {
         savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_display_listing, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        arguments?.let {
+            val safeArgs = DisplayListingFragmentArgs.fromBundle(it)
+            val address = "${safeArgs.dynamicAddress}"
+            address_passed.text = address
+            showReviews(address)
+        }
+
+    }
+
+    private fun showReviews(add: String){
+        val docRef = db.collection("listings").document(add)
+        docRef.get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    Log.d(TAG, "DocumentSnapshot data: ${document.data}")
+                } else {
+                    Log.d(TAG, "No such document")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d(TAG, "get failed with ", exception)
+            }
     }
 
 
