@@ -48,6 +48,9 @@ class DisplayListingFragment : Fragment() {
             .addOnSuccessListener { document ->
                 if (document != null) {
                     Log.d(TAG, "DocumentSnapshot data: ${document.data}")
+                    val landlordName:String = document.get("address") as String
+                    val getRent:String = document.get("rent") as String
+                    val review = document.get("reviews") as HashMap<*, *>
                 } else {
                     Log.d(TAG, "No such document")
                 }

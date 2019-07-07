@@ -52,13 +52,13 @@ class MainActivity : AppCompatActivity() {
         when (item!!.itemId)
         {
             R.id.nav_home ->{
-
+                item.isEnabled = true
             }
             R.id.nav_person ->{
-
+                item.isEnabled = true
             }
             R.id.nav_loc -> {
-
+                item.isEnabled = true
             }
         }
         return true

@@ -8,11 +8,12 @@
         android:orientation="vertical"
         tools:context=".MainActivity">
 
+
     <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?colorPrimary"
+            android:background="@drawable/top_toolbar_background"
             android:theme="@style/AppTheme" />
 
     <fragment
@@ -28,6 +29,7 @@
             android:id="@+id/bottom_nav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/bottom_navbar_design"
             app:menu="@menu/nav_items"/>
 
 </LinearLayout>
