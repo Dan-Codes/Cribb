@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.activity_displaylisting.*
 import kotlinx.android.synthetic.main.fragment_display_listing.*
 
 
@@ -27,19 +26,20 @@ class DisplayListingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_display_listing, container, false)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         arguments?.let {
             val safeArgs = DisplayListingFragmentArgs.fromBundle(it)
             val address = "${safeArgs.dynamicAddress}"
             address_passed.text = address
             showReviews(address)
+            (activity as MainActivity).supportActionBar?.title = address
         }
-
     }
 
     private fun showReviews(add: String){
@@ -48,9 +48,13 @@ class DisplayListingFragment : Fragment() {
             .addOnSuccessListener { document ->
                 if (document != null) {
                     Log.d(TAG, "DocumentSnapshot data: ${document.data}")
-                    val landlordName:String = document.get("address") as String
+                    val landlordName:String = document.get("landlordName") as String
                     val getRent:String = document.get("rent") as String
                     val review = document.get("reviews") as HashMap<*, *>
+                    landlord.text = landlordName
+                    price.text = getRent
+
+
                 } else {
                     Log.d(TAG, "No such document")
                 }

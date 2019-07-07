@@ -13,6 +13,13 @@
     <string name="nav_location">location</string>
     <string name="nav_home">home</string>
     <string name="nav_person">person</string>
+    <string name="address">address</string>
+    <string name="landlord">landlord</string>
+    <string name="rent">$999/month</string>
+    <string name="overall_rating">5.0</string>
+    <string name="manage_rating">5.0</string>
+    <string name="location_rating">5.0</string>
+    <string name="amenities_rating">5.0</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

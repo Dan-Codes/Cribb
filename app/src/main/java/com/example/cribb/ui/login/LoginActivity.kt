@@ -9,7 +9,6 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.util.Log.d
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -18,11 +17,9 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import com.example.cribb.MainActivity
-import com.example.cribb.MapsActivity
 
 import com.example.cribb.R
 import com.google.firebase.auth.FirebaseAuth
-import kotlin.math.log
 
 class LoginActivity : AppCompatActivity() {
 
