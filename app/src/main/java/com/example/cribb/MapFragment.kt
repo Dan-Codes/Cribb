@@ -116,37 +116,44 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
                     Log.d("TAG", "${document.id} => ${document.data}")
                     val location: GeoPoint? = document.getGeoPoint("geopoint")
                     val address: String? = document.get("address").toString()
-
-//                    val review = document.get("reviews") as HashMap<String, *>
+                    var avgLocation: Double = document.get("avgLocation") as Double
+                    var avgManage: Double = document.get("avgManage") as Double
+                    var avgAmenities: Double = document.get("avgAmenities") as Double
+                    var overallRating= 0.0
+                    val review = document.get("reviews") as HashMap<String, *>
 //                    println(review)
 //
-//                    var countReviews = 0
+                    var countReviews = 0
 //                    var averageLocation:Double = 0.0
 //                    var averageManagement:Double = 0.0
 //                    var averageAmenities:Double = 0.0
-//                    for (reviewer in review) {
+                   // for (reviewer in review) {
 //                        println(reviewer)
 //                        val reviewer = reviewer
 //                        val reviewMap = review
 //
 //                        val reviewInfo:HashMap<String,String>  = reviewMap.getValue(reviewer.key) as HashMap<String, String>
-//                        val lRating:Double = reviewInfo.getValue("locationRating") as Double
-//                        val mRating:Double = reviewInfo.getValue("managementRating") as Double
-//                        val aRating:Double = reviewInfo.getValue("amenitiesRating") as Double
+        //                val lRating:Double = reviewInfo.getValue("locationRating") as Double
+       //                 val mRating:Double = reviewInfo.getValue("managementRating") as Double
+        //                val aRating:Double = reviewInfo.getValue("amenitiesRating") as Double
 //                        if (lRating != null && mRating != null && aRating != null){
-//                            countReviews++
+//                           countReviews++
 //                            averageLocation += lRating
 //                            averageManagement += mRating
 //                            averageAmenities += aRating
-//                        }
+                       //}
 //
-//                    }
+                 //   }
 //                    if (averageLocation != 0.0){
 //                        averageLocation /= countReviews
 //                        averageManagement /= countReviews
 //                        averageAmenities /= countReviews
 //
 //                    }
+
+//                      if (avgLocation != 0.0){
+//                          overallRating = (avgAmenities + avgLocation + avgManage)/3
+//                      }
 //                    val avg = db.collection("listings").document(document.id)
 //
 //                    avg
@@ -161,6 +168,11 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 //
 //                    avg
 //                        .update("avgAmenities", averageAmenities)
+//                        .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }
+//                        .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
+
+//                                        avg
+//                        .update("avgOverallRating", overallRating)
 //                        .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }
 //                        .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
 

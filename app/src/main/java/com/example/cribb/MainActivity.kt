@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_home -> {fragment = CreateListingFragment()}
                 R.id.nav_loc -> {fragment = MapFragment()}
-                R.id.nav_person -> fragment = DisplayListingFragment()
+                R.id.nav_person -> fragment = ProfileFragment()
 
             }
             item.isEnabled = true

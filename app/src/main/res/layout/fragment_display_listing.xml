@@ -33,7 +33,7 @@
         <EditText
                 android:layout_width="70dp"
                 android:layout_height="47dp"
-                android:inputType="numberDecimal"
+                android:inputType="text"
                 android:ems="10"
                 android:id="@+id/overall_avg_num"
                 app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
@@ -41,7 +41,8 @@
                 android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
                 app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="0.193"
-                app:layout_constraintVertical_bias="0.202" android:text="5.0" android:gravity="center|left"/>
+                app:layout_constraintVertical_bias="0.202" android:text="@string/overall_rating"
+                android:gravity="center|left" android:textStyle="bold"/>
         <TextView
                 android:layout_width="170dp"
                 android:layout_height="71dp"
@@ -58,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="?android:attr/ratingBarStyleSmall"
-                android:id="@+id/ratingBar" android:numStars="5"
+                android:id="@+id/overallRatingBar" android:numStars="5"
                 android:rating="5" android:max="5" android:isIndicator="true"
                 app:layout_constraintTop_toBottomOf="@+id/overall_avg_num" android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent" android:layout_marginStart="8dp"
@@ -73,7 +74,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/reviews_scrollView"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp" android:layout_marginRight="8dp" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/ratingBar"
+                app:layout_constraintTop_toBottomOf="@+id/overallRatingBar"
                 app:layout_constraintStart_toEndOf="@+id/location_text" android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="0.639"
                 app:layout_constraintVertical_bias="0.123"/>
@@ -84,7 +85,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/reviews_scrollView"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp" android:layout_marginBottom="8dp" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/ratingBar" app:layout_constraintVertical_bias="0.123"
+                app:layout_constraintTop_toBottomOf="@+id/overallRatingBar" app:layout_constraintVertical_bias="0.123"
                 android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginRight="8dp" app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintHorizontal_bias="0.499"/>
@@ -93,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/manage_text" android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toTopOf="@+id/reviews_scrollView" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/ratingBar" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/overallRatingBar" app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginLeft="48dp" android:layout_marginStart="48dp"
                 app:layout_constraintVertical_bias="0.123"/>
         <EditText
@@ -108,7 +109,7 @@
                 android:layout_marginStart="48dp" app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginLeft="32dp"/>
         <EditText
-                android:layout_width="120dp"
+                android:layout_width="84dp"
                 android:layout_height="48dp"
                 android:inputType="number"
                 android:ems="10"
@@ -119,7 +120,7 @@
                 app:layout_constraintHorizontal_bias="0.498"
         />
         <EditText
-                android:layout_width="78dp"
+                android:layout_width="84dp"
                 android:layout_height="48dp"
                 android:inputType="number"
                 android:ems="10"
@@ -132,10 +133,11 @@
         <ScrollView
                 android:layout_width="0dp"
                 android:layout_height="0dp" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@id/manage_text"
                 android:id="@+id/reviews_scrollView"
                 app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintTop_toBottomOf="@id/space">
+                app:layout_constraintTop_toBottomOf="@id/space"
+        >
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:orientation="vertical" android:id="@+id/LinearLayout"/>
         </ScrollView>

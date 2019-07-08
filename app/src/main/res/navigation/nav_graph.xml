@@ -16,7 +16,10 @@
         <action android:id="@+id/action_mapFragment_to_displayListingFragment"
                 app:destination="@id/displayListingFragment"/>
         <action android:id="@+id/action_createListing" app:destination="@id/createListingFragment"/>
+        <action android:id="@+id/action_mapFragment_to_profileFragment" app:destination="@id/profileFragment"/>
     </fragment>
     <fragment android:id="@+id/createListingFragment" android:name="com.example.cribb.CreateListingFragment"
               android:label="fragment_create_listing" tools:layout="@layout/fragment_create_listing"/>
+    <fragment android:id="@+id/profileFragment" android:name="com.example.cribb.ProfileFragment"
+              android:label="fragment_profile" tools:layout="@layout/fragment_profile"/>
 </navigation>
