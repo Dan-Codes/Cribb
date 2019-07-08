@@ -125,9 +125,9 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 
 
 //        // Add a marker in Sydney and move the camera
-//        val syracuse = LatLng(43.038710, -76.134265)
+        val syracuse = LatLng(43.038710, -76.134265)
 //        //mMap.addMarker(MarkerOptions().position(syracuse).title("Marker in Sydney"))
-//        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(syracuse, 12.0f))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(syracuse, 12.0f))
         setUpMap() //checks if location is enabled and requests users permission
         mMap.isMyLocationEnabled = true //creates a blue location dot and location button
 //
