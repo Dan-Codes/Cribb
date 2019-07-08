@@ -1,6 +1,7 @@
 package com.example.cribb
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -13,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentManager
@@ -35,6 +37,7 @@ import com.google.android.gms.maps.MapFragment
 import com.google.android.libraries.places.internal.it
 import com.google.firebase.firestore.Transaction
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_display_listing.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -113,6 +116,54 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
                     Log.d("TAG", "${document.id} => ${document.data}")
                     val location: GeoPoint? = document.getGeoPoint("geopoint")
                     val address: String? = document.get("address").toString()
+
+//                    val review = document.get("reviews") as HashMap<String, *>
+//                    println(review)
+//
+//                    var countReviews = 0
+//                    var averageLocation:Double = 0.0
+//                    var averageManagement:Double = 0.0
+//                    var averageAmenities:Double = 0.0
+//                    for (reviewer in review) {
+//                        println(reviewer)
+//                        val reviewer = reviewer
+//                        val reviewMap = review
+//
+//                        val reviewInfo:HashMap<String,String>  = reviewMap.getValue(reviewer.key) as HashMap<String, String>
+//                        val lRating:Double = reviewInfo.getValue("locationRating") as Double
+//                        val mRating:Double = reviewInfo.getValue("managementRating") as Double
+//                        val aRating:Double = reviewInfo.getValue("amenitiesRating") as Double
+//                        if (lRating != null && mRating != null && aRating != null){
+//                            countReviews++
+//                            averageLocation += lRating
+//                            averageManagement += mRating
+//                            averageAmenities += aRating
+//                        }
+//
+//                    }
+//                    if (averageLocation != 0.0){
+//                        averageLocation /= countReviews
+//                        averageManagement /= countReviews
+//                        averageAmenities /= countReviews
+//
+//                    }
+//                    val avg = db.collection("listings").document(document.id)
+//
+//                    avg
+//                        .update("avgLocation", averageLocation)
+//                        .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }
+//                        .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
+//
+//                    avg
+//                        .update("avgManage", averageManagement)
+//                        .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }
+//                        .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
+//
+//                    avg
+//                        .update("avgAmenities", averageAmenities)
+//                        .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }
+//                        .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
+
                     mMap.addMarker(
                         MarkerOptions().position(LatLng(location!!.latitude, location.longitude)).title(
                             address

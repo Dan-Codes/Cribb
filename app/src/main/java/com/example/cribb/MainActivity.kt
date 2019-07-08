@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         bottom_nav.setOnNavigationItemSelectedListener{ item ->
             var fragment: Fragment? = null
             when (item.itemId) {
-                R.id.home -> {fragment = CreateListingFragment()}
+                R.id.nav_home -> {fragment = CreateListingFragment()}
                 R.id.nav_loc -> {fragment = MapFragment()}
                 R.id.nav_person -> fragment = DisplayListingFragment()
 
