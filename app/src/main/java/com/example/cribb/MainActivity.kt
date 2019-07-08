@@ -5,12 +5,15 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.google.android.libraries.places.internal.it
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_main.*
 val db = FirebaseFirestore.getInstance()
 class MainActivity : AppCompatActivity() {
@@ -25,6 +28,25 @@ class MainActivity : AppCompatActivity() {
         setupBottomNavMenu(navController)
         setupSideNavigationMenu(navController)
         setupActionBar(navController)
+
+        bottom_nav.setOnNavigationItemSelectedListener{ item ->
+            var fragment: Fragment? = null
+            when (item.itemId) {
+                R.id.home -> {fragment = CreateListingFragment()}
+                R.id.nav_loc -> {fragment = MapFragment()}
+                R.id.nav_person -> fragment = DisplayListingFragment()
+
+            }
+            item.isEnabled = true
+            supportFragmentManager
+                .beginTransaction()
+                .setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out)
+                .replace(R.id.nav_host_fragment, fragment!!)
+                .addToBackStack(fragment.tag)
+                .commit()
+
+            return@setOnNavigationItemSelectedListener true
+        }
     }
 
     private fun setupBottomNavMenu(navController: NavController) {
@@ -49,10 +71,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item!!.itemId)
+        when (item?.itemId)
         {
-            R.id.nav_home ->{
+            R.id.nav_home -> {
                 item.isEnabled = true
+                println("pressed!")
             }
             R.id.nav_person ->{
                 item.isEnabled = true
@@ -62,5 +85,18 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return true
+    }
+
+    override fun onBackPressed() {
+
+        val count = supportFragmentManager.backStackEntryCount
+
+        if (count == 0) {
+            super.onBackPressed()
+            //additional code
+        } else {
+            supportFragmentManager.popBackStack()
+        }
+
     }
 }

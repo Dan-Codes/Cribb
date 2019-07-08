@@ -34,6 +34,7 @@ import androidx.transition.FragmentTransitionSupport
 import com.google.android.gms.maps.MapFragment
 import com.google.android.libraries.places.internal.it
 import com.google.firebase.firestore.Transaction
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -97,7 +98,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        (activity as MainActivity).bottom_nav.menu.getItem(0).isChecked = true
     }
 
     @SuppressLint("MissingPermission")
