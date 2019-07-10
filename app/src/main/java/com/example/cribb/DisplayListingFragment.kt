@@ -1,19 +1,18 @@
 package com.example.cribb
 
 
+import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RatingBar
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.LinearLayout
 import com.google.firebase.Timestamp
-import kotlinx.android.synthetic.main.fragment_create_listing.*
 import kotlinx.android.synthetic.main.fragment_display_listing.*
 import kotlinx.android.synthetic.main.fragment_display_listing.view.*
 
@@ -48,6 +47,7 @@ class DisplayListingFragment : Fragment() {
         }
     }
 
+    @SuppressLint("ResourceType")
     private fun showReviews(add: String){
         val docRef = db.collection("listings").document(add)
         docRef.get()
@@ -72,7 +72,6 @@ class DisplayListingFragment : Fragment() {
                     for (reviewer in review){
                           println(reviewer)
                         val reviewer = reviewer
-                        val textView = TextView(activity)
                         val reviewMap = review
                         val ratingBar = RatingBar(activity, null, android.R.attr.ratingBarStyleSmall)
                         val reviewInfo:HashMap<String,String>  = reviewMap.getValue(reviewer.key) as HashMap<String, String>
@@ -84,15 +83,32 @@ class DisplayListingFragment : Fragment() {
                         var willLiveAgain:String = if (reviewInfo.getValue("willLiveAgain") as Boolean) "Yes" else "No"
                         val timestamp = reviewInfo.getValue("timeStamp") as Timestamp
 
-                        //val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                        val linearLayout = (activity)!!.findViewById<LinearLayout>(R.id.LinearLayout_in_scroll)
+                        val textView = TextView(activity)
                         textView.text = "Overall Rating: $overall_rating \n$comments  \n" +
                                 " Will live again: $willLiveAgain\nTimestamp: ${timestamp.toDate()}\n"
-                        textView.gravity = Gravity.LEFT
+                        val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                        params.setMargins(100,10,48,10)
+                        textView.layoutParams = params
+
+//                        var params = textView.layoutParams as? LinearLayout.LayoutParams
+//                        val params = LinearLayout.LayoutParams(
+//                            LinearLayout.LayoutParams.MATCH_PARENT,
+//                            LinearLayout.LayoutParams.WRAP_CONTENT)
+
+//
+//                        textView.id=1
+
+
+
+
                         ratingBar.max = 5
                         ratingBar.stepSize = 0.1.toFloat()
                         ratingBar.rating = overall_rating.toFloat()
-                        LinearLayout.addView(ratingBar,ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT)
-                        reviews_scrollView.LinearLayout.addView(textView,ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
+                        ratingBar.layoutParams = params
+                        LinearLayout_in_scroll.addView(ratingBar)
+
+                        reviews_scrollView.LinearLayout_in_scroll.addView(textView)
                     }
 
 

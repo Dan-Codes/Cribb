@@ -1,6 +1,7 @@
 package com.example.cribb
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
@@ -8,6 +9,8 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,6 +19,8 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.NonNull
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -33,11 +38,24 @@ import com.google.firebase.firestore.GeoPoint
 import com.mancj.materialsearchbar.MaterialSearchBar
 import androidx.navigation.Navigation
 import androidx.transition.FragmentTransitionSupport
+import com.example.cribb.R.*
 import com.google.android.gms.maps.MapFragment
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.android.libraries.places.internal.it
 import com.google.firebase.firestore.Transaction
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_display_listing.*
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.AutocompleteSessionToken
+import com.google.android.libraries.places.api.model.TypeFilter
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse
+import com.google.android.libraries.places.internal.i
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+import kotlinx.android.synthetic.main.fragment_map.*
+import com.google.android.gms.location.places.*
+import com.google.android.gms.common.api.ApiException as ApiException
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -60,9 +78,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-   // private var listener: OnFragmentInteractionListener? = null
-
-    //private val db = FirebaseFirestore.getInstance()
     private lateinit var mMap: GoogleMap
     private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var placesClient: PlacesClient
@@ -74,6 +89,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
     private lateinit var mMapView: MapView
     private lateinit var materialSearchBar: MaterialSearchBar
     private lateinit var transaction : FragmentManager
+    //private lateinit var suggestionList : ArrayList<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,6 +97,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 //            param1 = it.getString(ARG_PARAM1)
 //            param2 = it.getString(ARG_PARAM2)
 //        }
+        // Initialize Places.
     }
 
     override fun onCreateView(
@@ -88,7 +105,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        mapView = inflater.inflate(R.layout.fragment_map, container, false)
+        mapView = inflater.inflate(layout.fragment_map, container, false)
 
 //        mMapView = ((mapView.findViewById(R.id.maps)))
 //        mMapView.onCreate(null)
@@ -102,7 +119,78 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).bottom_nav.menu.getItem(0).isChecked = true
+        materialSearchBar = getView()!!.findViewById(R.id.searchBar)
+        Places.initialize(((activity as MainActivity).applicationContext), "AIzaSyAcN8tyZ3brV52PRFzqbhQd5wuWnWgd_MQ")
+        // Create a new Places client instance.
+        var placesClient = Places.createClient(context!!)
+        val token = AutocompleteSessionToken.newInstance()
+
+        materialSearchBar.setOnSearchActionListener(object : MaterialSearchBar.OnSearchActionListener {
+            override fun onSearchStateChanged(enabled: Boolean) {
+
+            }
+
+            override fun onSearchConfirmed(text: CharSequence) {
+                (activity as Activity).startSearch(text.toString(), true, null, true)
+                Log.d("tag", "startSearch Initialized")
+            }
+
+            override fun onButtonClicked(buttonCode: Int) {
+                if (buttonCode == MaterialSearchBar.BUTTON_NAVIGATION) {
+                    //opening or closing a navigation drawer
+                } else if (buttonCode == MaterialSearchBar.BUTTON_BACK) {
+                    materialSearchBar.disableSearch()
+                }
+            }
+        })
+
+        materialSearchBar.addTextChangeListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                lateinit var suggestionList : ArrayList<String>
+                val predictionsRequest = FindAutocompletePredictionsRequest.builder()
+                    .setCountry("us")
+                    .setTypeFilter(TypeFilter.ADDRESS)
+                    .setSessionToken(token)
+                    .setQuery(s.toString())
+                    .build()
+                placesClient.findAutocompletePredictions(predictionsRequest).addOnCompleteListener{
+
+                }
+                 placesClient.findAutocompletePredictions(predictionsRequest).addOnCompleteListener {
+                     if (it.isSuccessful){
+                         val predictionsResponse = it.result
+                         if(predictionsResponse != null){
+                             predictionList = predictionsResponse.autocompletePredictions
+
+                             for (prediction in predictionsResponse.autocompletePredictions){
+                                 suggestionList.add(prediction.getFullText(null).toString())
+                             }
+                             materialSearchBar.updateLastSuggestions(suggestionList)
+                             if (!materialSearchBar.isSuggestionsVisible){
+                                 materialSearchBar.showSuggestionsList()
+                             }
+                         }
+                    }
+//                     else{
+//                         Log.d("tag", "failed fetching autocomplete")
+//                     }
+                 }.addOnFailureListener{
+                     if (it is ApiException) {
+                        val apiException :ApiException =  it
+                         Log.e(TAG, "Place not found: " + apiException.getStatusCode());
+     }
+                 }
+            }
+
+        })
     }
+
 
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
@@ -133,13 +133,13 @@
         <ScrollView
                 android:layout_width="0dp"
                 android:layout_height="0dp" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/manage_text"
+                app:layout_constraintStart_toStartOf="parent"
                 android:id="@+id/reviews_scrollView"
                 app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintTop_toBottomOf="@id/space"
         >
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                          android:orientation="vertical" android:id="@+id/LinearLayout"/>
+                          android:orientation="vertical" android:id="@+id/LinearLayout_in_scroll"/>
         </ScrollView>
         <Space
                 android:layout_width="wrap_content"
@@ -149,4 +149,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</RelativeLayout>
+</LinearLayout>

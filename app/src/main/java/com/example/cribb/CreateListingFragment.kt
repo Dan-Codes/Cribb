@@ -13,7 +13,12 @@ import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+import kotlinx.android.synthetic.main.fragment_create_listing.*
 import java.util.*
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.net.PlacesClient
+import android.R.attr.apiKey
+import android.app.Activity
 
 
 class CreateListingFragment : Fragment(){
@@ -27,22 +32,33 @@ class CreateListingFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        val autocompleteFragment = ((activity as AppCompatActivity).supportFragmentManager.findFragmentById(R.id.autocomplete_fragment) as? AutocompleteSupportFragment?)
+        // Initialize Places.
+        Places.initialize((activity as MainActivity).applicationContext, getString(R.string.google_api_key))
+
+// Create a new Places client instance.
+        val placesClient = Places.createClient(context!!)
+//        val autocompleteFragment = ((activity as MainActivity).supportFragmentManager.findFragmentById(R.id.autocomplete_fragment) as? AutocompleteSupportFragment?)
 //// Specify the types of place data to return.
-//        autocompleteFragment!!.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME))
+//        autocompleteFragment?.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME))
 //
 //// Set up a PlaceSelectionListener to handle the response.
-//        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+//        autocompleteFragment?.setOnPlaceSelectedListener(object : PlaceSelectionListener {
 //            override fun onError(p0: Status) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//
 //            }
 //
 //            override fun onPlaceSelected(place: Place) {
-//                // TODO: Get info about the selected place.
 //                Log.i(TAG, "Place: " + place.name + ", " + place.id)
 //            }
 //
 //        })
+        submit.setOnClickListener {
+            uploadProperty()
+        }
+    }
+
+    private fun uploadProperty(){
+            println("we out here")
     }
 
 
