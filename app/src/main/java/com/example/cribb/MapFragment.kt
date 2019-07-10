@@ -89,7 +89,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
     private lateinit var mMapView: MapView
     private lateinit var materialSearchBar: MaterialSearchBar
     private lateinit var transaction : FragmentManager
-    //private lateinit var suggestionList : ArrayList<String>
+    private var suggestionList : ArrayList<String> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,7 +120,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).bottom_nav.menu.getItem(0).isChecked = true
         materialSearchBar = getView()!!.findViewById(R.id.searchBar)
-        Places.initialize(((activity as MainActivity).applicationContext), "AIzaSyAcN8tyZ3brV52PRFzqbhQd5wuWnWgd_MQ")
+        Places.initialize(((activity as MainActivity).applicationContext), getString(string.google_api_key))
         // Create a new Places client instance.
         var placesClient = Places.createClient(context!!)
         val token = AutocompleteSessionToken.newInstance()
@@ -138,37 +138,49 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
             override fun onButtonClicked(buttonCode: Int) {
                 if (buttonCode == MaterialSearchBar.BUTTON_NAVIGATION) {
                     //opening or closing a navigation drawer
+                    materialSearchBar.disableSearch()
                 } else if (buttonCode == MaterialSearchBar.BUTTON_BACK) {
                     materialSearchBar.disableSearch()
+                    materialSearchBar.hideSuggestionsList()
                 }
+
             }
         })
 
         materialSearchBar.addTextChangeListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
+                if ((s == null)) {
+                    materialSearchBar.disableSearch()
+                    materialSearchBar.hideSuggestionsList()
+                    return
+                }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                lateinit var suggestionList : ArrayList<String>
+                println(s)
+                if ((s == null)) {
+                    materialSearchBar.disableSearch()
+                    materialSearchBar.hideSuggestionsList()
+                    return
+                }
+                suggestionList.clear()
                 val predictionsRequest = FindAutocompletePredictionsRequest.builder()
                     .setCountry("us")
                     .setTypeFilter(TypeFilter.ADDRESS)
                     .setSessionToken(token)
                     .setQuery(s.toString())
                     .build()
-                placesClient.findAutocompletePredictions(predictionsRequest).addOnCompleteListener{
-
-                }
                  placesClient.findAutocompletePredictions(predictionsRequest).addOnCompleteListener {
                      if (it.isSuccessful){
                          val predictionsResponse = it.result
                          if(predictionsResponse != null){
                              predictionList = predictionsResponse.autocompletePredictions
-
                              for (prediction in predictionsResponse.autocompletePredictions){
+                                 Log.i(TAG, prediction.placeId)
+                                 Log.i(TAG, prediction.getPrimaryText(null).toString())
                                  suggestionList.add(prediction.getFullText(null).toString())
                              }
                              materialSearchBar.updateLastSuggestions(suggestionList)
