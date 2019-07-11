@@ -1,31 +1,31 @@
 package com.example.cribb
 
-import android.content.ContentValues.TAG
-import android.net.wifi.WifiConfiguration
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.google.android.gms.common.api.Status
-import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment
-import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import kotlinx.android.synthetic.main.fragment_create_listing.*
-import java.util.*
 import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.net.PlacesClient
-import android.R.attr.apiKey
-import android.app.Activity
+import android.location.Address
+import android.location.Geocoder
+import android.widget.Toast
+import com.google.firebase.firestore.GeoPoint
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import java.lang.Exception
+import kotlin.math.abs
 
 
-class CreateListingFragment : Fragment(){
+class CreateListingFragment : Fragment() {
 
+    private lateinit var geocoder: Geocoder
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_create_listing, container, false)
     }
@@ -57,9 +57,49 @@ class CreateListingFragment : Fragment(){
         }
     }
 
-    private fun uploadProperty(){
-            println("we out here")
+    private fun uploadProperty() {
+        if (address1.text.isNullOrBlank() || city.text.isNullOrBlank() || state.text.isNullOrBlank() || zipcode.text.isNullOrBlank() || rent.text.isNullOrBlank() || landlord.text.isNullOrBlank()) {
+            Toast.makeText(context, "You must include all required address fields", Toast.LENGTH_SHORT).show()
+            return
+        }
+        var listAddress: List<Address>
+        val full_address = "${address1.text} ${city.text}, ${state.text} ${zipcode.text}"
+        geocoder = Geocoder(context!!)
+
+
+        listAddress = geocoder.getFromLocationName(full_address, 3)
+        if (listAddress == null) {
+            Toast.makeText(context!!, "This place does not exist.", Toast.LENGTH_SHORT).show()
+            return
+        }
+        val geoPoint: GeoPoint = GeoPoint(listAddress[0].latitude, listAddress[0].longitude)
+        Log.d("GeoPoint", "$geoPoint")
+        checkDidAdd(geoPoint)
+        //Log.d("added", "$check")
     }
 
+    private fun checkDidAdd(geoPoint: GeoPoint):Boolean = runBlocking {
+        var added = false
 
+        val wait = async {
+            db.collection("listings")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    val currentGeoPoint = document.get("geopoint") as GeoPoint
+                    println("test point")
+                    if (abs(geoPoint.latitude - currentGeoPoint.latitude) < 0.0001 && abs(geoPoint.longitude - currentGeoPoint.longitude) < 0.0001) {
+                        added = true
+                        Log.d("caught", "already in database")
+                        break
+                    }
+                }
+            }.addOnFailureListener { exception ->
+                Log.d("TAG", "Error getting documents: ", exception)
+            }
+        }.join()
+
+        println("done!!")
+        return@runBlocking added
+    }
 }
