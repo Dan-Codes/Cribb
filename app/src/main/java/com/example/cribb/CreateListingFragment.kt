@@ -1,5 +1,7 @@
 package com.example.cribb
 
+import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,17 +13,23 @@ import com.google.android.libraries.places.api.Places
 import android.location.Address
 import android.location.Geocoder
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
+import androidx.navigation.Navigation
+import com.google.android.gms.maps.MapFragment
+import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.firebase.firestore.GeoPoint
 import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import java.lang.Exception
+import java.text.Normalizer
 import kotlin.math.abs
+
 
 
 class CreateListingFragment : Fragment() {
 
     private lateinit var geocoder: Geocoder
+    private lateinit var formView: View
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,6 +41,8 @@ class CreateListingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Initialize Places.
+        formView = view
+        Log.d("view", "$formView")
         Places.initialize((activity as MainActivity).applicationContext, getString(R.string.google_api_key))
 
 // Create a new Places client instance.
@@ -54,6 +64,7 @@ class CreateListingFragment : Fragment() {
 //        })
         submit.setOnClickListener {
             uploadProperty()
+            formView = it
         }
     }
 
@@ -74,11 +85,12 @@ class CreateListingFragment : Fragment() {
         }
         val geoPoint: GeoPoint = GeoPoint(listAddress[0].latitude, listAddress[0].longitude)
         Log.d("GeoPoint", "$geoPoint")
-        checkDidAdd(geoPoint)
+        checkDidAdd(geoPoint, full_address)
         //Log.d("added", "$check")
     }
 
-    private fun checkDidAdd(geoPoint: GeoPoint):Boolean = runBlocking {
+    @SuppressLint("ResourceType")
+    private fun checkDidAdd(geoPoint: GeoPoint, fullAddress: String):Boolean = runBlocking {
         var added = false
 
         val wait = async {
@@ -91,9 +103,38 @@ class CreateListingFragment : Fragment() {
                     if (abs(geoPoint.latitude - currentGeoPoint.latitude) < 0.0001 && abs(geoPoint.longitude - currentGeoPoint.longitude) < 0.0001) {
                         added = true
                         Log.d("caught", "already in database")
-                        break
+                        return@addOnSuccessListener
                     }
                 }
+                Log.d("tag", "address doesn't exist in database, initializing data entry")
+                val map = HashMap<String,Any>()
+                val data:HashMap<String,Any> = hashMapOf(
+                    "address" to "$fullAddress",
+                    "geopoint" to geoPoint,
+                    "property" to true,
+                    "reviews" to map,
+                    "landlordName" to "${landlord.text}",
+                    "rent" to "${rent.text}",
+                    "addedby" to "User",
+                    "avgAmenities" to 0.0,
+                    "avgLocation" to 0.0,
+                    "avgManage" to 0.0,
+                    "avgOverallRating" to 0.0
+                )
+                db.collection("listings").document(fullAddress).set(data)
+                Log.d("tag", "address successfully added to database")
+//                var nextAction = CreateListingFragmentDirections.addedProperty(geoPoint.latitude.toString(),geoPoint.longitude.toString())
+//                Navigation.findNavController(formView).navigate(nextAction)
+                newInstance(geoPoint.latitude, geoPoint.longitude)
+                val fragment = Fragment(R.id.mapFragment)
+
+                fragmentManager
+                    ?.beginTransaction()
+                    ?.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out)
+                    ?.replace(R.id.nav_host_fragment, fragment)
+                    ?.commit()
+
+
             }.addOnFailureListener { exception ->
                 Log.d("TAG", "Error getting documents: ", exception)
             }
@@ -101,5 +142,16 @@ class CreateListingFragment : Fragment() {
 
         println("done!!")
         return@runBlocking added
+    }
+
+    companion object {
+
+        @JvmStatic
+        fun newInstance(latitude: Double, longitude: Double) = CreateListingFragment().apply {
+            arguments = Bundle().apply {
+                putDouble("passing lat", latitude)
+                putDouble("passing lng", longitude)
+            }
+        }
     }
 }

@@ -17,15 +17,6 @@ import kotlinx.android.synthetic.main.fragment_display_listing.*
 import kotlinx.android.synthetic.main.fragment_display_listing.view.*
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- *
- */
 class DisplayListingFragment : Fragment() {
 
     override fun onCreateView(
@@ -54,16 +45,17 @@ class DisplayListingFragment : Fragment() {
             .addOnSuccessListener { document ->
                 if (document != null) {
                     Log.d(TAG, "DocumentSnapshot data: ${document.data}")
-                    val landlordName:String = document.get("landlordName") as String
-                    val getRent:String = document.get("rent") as String
-                    val overallRating:Double = document.get("avgOverallRating") as Double
-                    val amenitiesRating:Double = document.get("avgAmenities") as Double
-                    val locationRating:Double = document.get("avgLocation") as Double
-                    val manageRating:Double = document.get("avgManage") as Double
+                    val landlordName:String? = document.get("landlordName") as String
+                    val getRent:String? = document.get("rent") as String
+                    val overallRating:Double? = document.getDouble("avgOverallRating")
+                    val amenitiesRating:Double? = document.getDouble("avgAmenities")
+                    val locationRating:Double? = document.getDouble("avgLocation")
+                    val manageRating:Double? = document.getDouble("avgManage")
                     val review = document.get("reviews") as HashMap<String, *>
                     landlord.text = landlordName
                     price.text = "$$getRent"
-                    overallRatingBar.rating = overallRating.toFloat()
+
+                    if (overallRating != null) overallRatingBar.rating = overallRating.toFloat()
                     overall_avg_num.setText(String.format("%.1f", overallRating))
                     amenities_avg_num.setText(String.format("%.1f", amenitiesRating))
                     location_avg_num.setText(String.format("%.1f", locationRating))

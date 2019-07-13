@@ -17,9 +17,14 @@
                 app:destination="@id/displayListingFragment"/>
         <action android:id="@+id/action_createListing" app:destination="@id/createListingFragment"/>
         <action android:id="@+id/action_mapFragment_to_profileFragment" app:destination="@id/profileFragment"/>
+        <argument android:name="lat" app:argType="string"/>
+        <argument android:name="lng" app:argType="string"/>
     </fragment>
     <fragment android:id="@+id/createListingFragment" android:name="com.example.cribb.CreateListingFragment"
-              android:label="fragment_create_listing" tools:layout="@layout/fragment_create_listing"/>
+              android:label="fragment_create_listing" tools:layout="@layout/fragment_create_listing">
+        <action android:id="@+id/addedProperty" app:destination="@id/mapFragment"
+                app:enterAnim="@anim/nav_default_pop_enter_anim"/>
+    </fragment>
     <fragment android:id="@+id/profileFragment" android:name="com.example.cribb.ProfileFragment"
               android:label="fragment_profile" tools:layout="@layout/fragment_profile"/>
 </navigation>

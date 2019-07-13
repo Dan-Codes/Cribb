@@ -11,4 +11,5 @@
 /build
 /captures
 .externalNativeBuild
-/app/src/debug
+/app/src/debug/
+/app/build/generated/

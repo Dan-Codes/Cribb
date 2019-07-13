@@ -58,26 +58,10 @@ import com.google.android.gms.location.places.*
 import com.google.android.gms.common.api.ApiException as ApiException
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [MapFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [MapFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
- */
+
 class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
-
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     private lateinit var mMap: GoogleMap
     private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var placesClient: PlacesClient
@@ -90,14 +74,12 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
     private lateinit var materialSearchBar: MaterialSearchBar
     private lateinit var transaction : FragmentManager
     private var suggestionList : ArrayList<String> = arrayListOf()
+    private var lat:Double = 0.0
+    private var lng:Double = 0.0
+    private var geoPoint_passed :GeoPoint = GeoPoint(0.0,0.0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        arguments?.let {
-//            param1 = it.getString(ARG_PARAM1)
-//            param2 = it.getString(ARG_PARAM2)
-//        }
-        // Initialize Places.
     }
 
     override fun onCreateView(
@@ -118,6 +100,24 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//            arguments?.let {
+//                if (!it.isEmpty) {
+//                val safeArgs = MapFragmentArgs.fromBundle(it)
+//                var getlat = "${safeArgs.lat}"
+//                var getlng = "${safeArgs.lng}"
+//                geoPoint_passed = GeoPoint(getlat.toDouble(),getlng.toDouble())
+//                }
+//            }
+        arguments?.getDouble("passing lat")?.let {
+            Log.d("debug", "$it")
+            if (it != 0.0)
+            lat = it
+        }
+        arguments?.getDouble("passing lng")?.let {
+            if (it != 0.0)
+                lng = it
+        }
+
         (activity as MainActivity).bottom_nav.menu.getItem(0).isChecked = true
         materialSearchBar = getView()!!.findViewById(R.id.searchBar)
         Places.initialize(((activity as MainActivity).applicationContext), getString(string.google_api_key))
@@ -206,7 +206,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
-
         mMap = googleMap
 
         db.collection("listings")
@@ -216,9 +215,9 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
                     Log.d("TAG", "${document.id} => ${document.data}")
                     val location: GeoPoint? = document.getGeoPoint("geopoint")
                     val address: String? = document.get("address").toString()
-                    var avgLocation: Double = document.get("avgLocation") as Double
-                    var avgManage: Double = document.get("avgManage") as Double
-                    var avgAmenities: Double = document.get("avgAmenities") as Double
+                    val avgLocation = document.getDouble("avgLocation")
+                    var avgManage = document.getDouble("avgManage")
+                    var avgAmenities = document.getDouble("avgAmenities")
                     var overallRating= 0.0
                     val review = document.get("reviews") as HashMap<String, *>
 //                    println(review)
@@ -291,7 +290,12 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 //        // Add a marker in Sydney and move the camera
         val syracuse = LatLng(43.038710, -76.134265)
 //        //mMap.addMarker(MarkerOptions().position(syracuse).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(syracuse, 12.0f))
+        if (geoPoint_passed.latitude != 0.0) {
+            val location = LatLng(geoPoint_passed.latitude,geoPoint_passed.longitude)
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,15.0f))
+        }
+        else
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(syracuse, 15.0f))
         setUpMap() //checks if location is enabled and requests users permission
         mMap.isMyLocationEnabled = true //creates a blue location dot and location button
 //
@@ -335,77 +339,15 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 
     @Override
     override fun onInfoWindowClick(marker: Marker) {
-//        Toast.makeText(
-//            this, "Info window clicked",
-//            Toast.LENGTH_SHORT
-//        ).show()
         var address: String = marker.title
-//        val newFragment = DisplayListingFragment()
-//        transaction
-//            .beginTransaction()
-//            .replace(R.id.container, newFragment)
-//            .addToBackStack(null)
-//            .commit()
         val nextaction = MapFragmentDirections.actionMapFragmentToDisplayListingFragment()
         nextaction.dynamicAddress = address
         Navigation.findNavController(mapView).navigate(nextaction)
         println("finished clicking")
+
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-//    fun onButtonPressed(uri: Uri) {
-//        listener?.onFragmentInteraction(uri)
-//    }
 
-//    override fun onAttach(context: Context) {
-//        super.onAttach(context)
-//        if (context is OnFragmentInteractionListener) {
-//            listener = context
-//        } else {
-//            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-//        }
-//    }
-
-//    override fun onDetach() {
-//        super.onDetach()
-//        listener = null
-//    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
-//    interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        fun onFragmentInteraction(uri: Uri)
-//    }
-
-//    companion object {
-//        /**
-//         * Use this factory method to create a new instance of
-//         * this fragment using the provided parameters.
-//         *
-//         * @param param1 Parameter 1.
-//         * @param param2 Parameter 2.
-//         * @return A new instance of fragment MapFragment.
-//         */
-//        // TODO: Rename and change types and number of parameters
-//        @JvmStatic
-//        fun newInstance(param1: String, param2: String) =
-//            MapFragment().apply {
-//                arguments = Bundle().apply {
-//                    putString(ARG_PARAM1, param1)
-//                    putString(ARG_PARAM2, param2)
-//                }
-//            }
-//    }
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
