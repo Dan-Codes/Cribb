@@ -32,13 +32,18 @@ class MainActivity : AppCompatActivity() {
         setupBottomNavMenu(navController)
         setupSideNavigationMenu(navController)
         setupActionBar(navController)
+        //actionBar.setDisplayHomeAsUpEnabled(true)
 
         bottom_nav.setOnNavigationItemSelectedListener{ item ->
             var fragment: Fragment? = null
+
             when (item.itemId) {
                 R.id.nav_home -> {fragment = CreateListingFragment()}
                 R.id.nav_loc -> {fragment = MapFragment()}
                 R.id.nav_person -> fragment = ProfileFragment()
+                R.id.home -> {
+                    onBackPressed()
+                }
 
             }
             item.isEnabled = true
@@ -48,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.nav_host_fragment, fragment!!)
                 .addToBackStack(fragment.tag)
                 .commit()
-
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
             return@setOnNavigationItemSelectedListener true
         }
 

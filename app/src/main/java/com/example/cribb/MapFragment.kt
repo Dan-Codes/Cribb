@@ -342,7 +342,14 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
         var address: String = marker.title
         val nextaction = MapFragmentDirections.actionMapFragmentToDisplayListingFragment()
         nextaction.dynamicAddress = address
+        val fragment = DisplayListingFragment()
         Navigation.findNavController(mapView).navigate(nextaction)
+//        fragmentManager
+//            ?.beginTransaction()
+//            ?.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out)
+//            ?.replace(R.id.nav_host_fragment, fragment!!)
+//            ?.addToBackStack(fragment.tag)
+//            ?.commit()
         println("finished clicking")
 
     }

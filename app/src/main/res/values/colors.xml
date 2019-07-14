@@ -8,8 +8,10 @@
     <color name="white">#fff</color>
 
     <color name="cribbBlue">#085972</color>
+    <color name="cribbLightBlue">#9CDEFF</color>
     <color name="cribbRed">#820B1D</color>
     <color name="cribbLightGrey">#7F807F</color>
+    <color name="cribbMiddleGrey">#595959</color>
     <color name="cribbDarkGrey">#353432</color>
 
 </resources>

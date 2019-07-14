@@ -15,12 +15,13 @@ import android.location.Geocoder
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.google.android.gms.maps.MapFragment
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.firebase.firestore.GeoPoint
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
+import com.squareup.okhttp.Dispatcher
+import kotlinx.coroutines.*
 import java.text.Normalizer
 import kotlin.math.abs
 
@@ -29,7 +30,11 @@ import kotlin.math.abs
 class CreateListingFragment : Fragment() {
 
     private lateinit var geocoder: Geocoder
+    private lateinit var geoPoint: GeoPoint
+    private lateinit var full_address:String
     private lateinit var formView: View
+    private var job: Job = Job()
+    private val scope = CoroutineScope(Dispatchers.Main + job)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -63,85 +68,98 @@ class CreateListingFragment : Fragment() {
 //
 //        })
         submit.setOnClickListener {
-            uploadProperty()
-            formView = it
+            if (uploadProperty()){
+                checkDidAdd(geoPoint,full_address){ result -> Boolean
+                    if (result){
+                        it.findNavController().navigate(R.id.mapFragment)
+                    }
+                    else{
+                        return@checkDidAdd
+                    }
+                }
+            }
+            else return@setOnClickListener
+
         }
     }
 
-    private fun uploadProperty() {
+    private fun uploadProperty(): Boolean {
         if (address1.text.isNullOrBlank() || city.text.isNullOrBlank() || state.text.isNullOrBlank() || zipcode.text.isNullOrBlank() || rent.text.isNullOrBlank() || landlord.text.isNullOrBlank()) {
             Toast.makeText(context, "You must include all required address fields", Toast.LENGTH_SHORT).show()
-            return
+            return false
         }
         var listAddress: List<Address>
-        val full_address = "${address1.text} ${city.text}, ${state.text} ${zipcode.text}"
+        full_address = "${address1.text} ${city.text}, ${state.text} ${zipcode.text}"
         geocoder = Geocoder(context!!)
 
 
         listAddress = geocoder.getFromLocationName(full_address, 3)
         if (listAddress == null) {
             Toast.makeText(context!!, "This place does not exist.", Toast.LENGTH_SHORT).show()
-            return
+            return false
         }
-        val geoPoint: GeoPoint = GeoPoint(listAddress[0].latitude, listAddress[0].longitude)
+        geoPoint = GeoPoint(listAddress[0].latitude, listAddress[0].longitude)
         Log.d("GeoPoint", "$geoPoint")
-        checkDidAdd(geoPoint, full_address)
         //Log.d("added", "$check")
+
+        return true
     }
 
-    @SuppressLint("ResourceType")
-    private fun checkDidAdd(geoPoint: GeoPoint, fullAddress: String):Boolean = runBlocking {
+    private fun checkDidAdd(geoPoint: GeoPoint, fullAddress: String, myCallback: (Boolean) -> Unit){
         var added = false
-
-        val wait = async {
-            db.collection("listings")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    val currentGeoPoint = document.get("geopoint") as GeoPoint
-                    println("test point")
-                    if (abs(geoPoint.latitude - currentGeoPoint.latitude) < 0.0001 && abs(geoPoint.longitude - currentGeoPoint.longitude) < 0.0001) {
-                        added = true
-                        Log.d("caught", "already in database")
-                        return@addOnSuccessListener
+        scope.launch {
+            val docRef = db.collection("listings")
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        val currentGeoPoint = document.get("geopoint") as GeoPoint
+                        println("test point")
+                        if (abs(geoPoint.latitude - currentGeoPoint.latitude) < 0.0001 && abs(geoPoint.longitude - currentGeoPoint.longitude) < 0.0001) {
+                            added = true
+                            Log.d("caught", "already in database")
+                            Toast.makeText(context!!, "This place already exists on Cribb", Toast.LENGTH_SHORT).show()
+                            //resultListener.onResult(true)
+                            myCallback(false)
+                            return@addOnSuccessListener
+                        }
                     }
-                }
-                Log.d("tag", "address doesn't exist in database, initializing data entry")
-                val map = HashMap<String,Any>()
-                val data:HashMap<String,Any> = hashMapOf(
-                    "address" to "$fullAddress",
-                    "geopoint" to geoPoint,
-                    "property" to true,
-                    "reviews" to map,
-                    "landlordName" to "${landlord.text}",
-                    "rent" to "${rent.text}",
-                    "addedby" to "User",
-                    "avgAmenities" to 0.0,
-                    "avgLocation" to 0.0,
-                    "avgManage" to 0.0,
-                    "avgOverallRating" to 0.0
-                )
-                db.collection("listings").document(fullAddress).set(data)
-                Log.d("tag", "address successfully added to database")
+                    myCallback(true)
+                    Log.d("tag", "address doesn't exist in database, initializing data entry")
+                    val map = HashMap<String, Any>()
+                    val data: HashMap<String, Any> = hashMapOf(
+                        "address" to "$fullAddress",
+                        "geopoint" to geoPoint,
+                        "property" to true,
+                        "reviews" to map,
+                        "landlordName" to "${landlord.text}",
+                        "rent" to "${rent.text}",
+                        "addedby" to "User",
+                        "avgAmenities" to 0.0,
+                        "avgLocation" to 0.0,
+                        "avgManage" to 0.0,
+                        "avgOverallRating" to 0.0
+                    )
+                    db.collection("listings").document(fullAddress).set(data)
+                    Log.d("tag", "address successfully added to database")
 //                var nextAction = CreateListingFragmentDirections.addedProperty(geoPoint.latitude.toString(),geoPoint.longitude.toString())
 //                Navigation.findNavController(formView).navigate(nextAction)
-                newInstance(geoPoint.latitude, geoPoint.longitude)
-                val fragment = Fragment(R.id.mapFragment)
+//                newInstance(geoPoint.latitude, geoPoint.longitude)
+//                val fragment = Fragment(R.id.mapFragment)
 
-                fragmentManager
-                    ?.beginTransaction()
-                    ?.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out)
-                    ?.replace(R.id.nav_host_fragment, fragment)
-                    ?.commit()
+//                fragmentManager
+//                    ?.beginTransaction()
+//                    ?.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out)
+//                    ?.replace(R.id.nav_host_fragment, fragment)
+//                    ?.commit()
 
 
-            }.addOnFailureListener { exception ->
-                Log.d("TAG", "Error getting documents: ", exception)
-            }
-        }.join()
+                }.addOnFailureListener { exception ->
+                    Log.d("TAG", "Error getting documents: ", exception)
+                }
+            println("done!!")
+        }
 
-        println("done!!")
-        return@runBlocking added
+        //return added
     }
 
     companion object {
@@ -153,5 +171,9 @@ class CreateListingFragment : Fragment() {
                 putDouble("passing lng", longitude)
             }
         }
+    }
+    interface ResultListener {
+        fun onResult(isAdded: Boolean)
+        fun onError(error: Throwable)
     }
 }

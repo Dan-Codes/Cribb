@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.LinearLayout
+import androidx.navigation.Navigation
 import com.google.firebase.Timestamp
 import kotlinx.android.synthetic.main.fragment_display_listing.*
 import kotlinx.android.synthetic.main.fragment_display_listing.view.*
@@ -35,6 +36,9 @@ class DisplayListingFragment : Fragment() {
             address_passed.text = address
             showReviews(address)
             (activity as MainActivity).supportActionBar?.title = address
+        }
+        writeReview.setOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.writeReviewFragment)
         }
     }
 

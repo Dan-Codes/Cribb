@@ -50,22 +50,22 @@
                 android:autoText="false"/>
         <TextView
                 android:layout_width="170dp"
-                android:layout_height="71dp"
+                android:layout_height="65dp"
                 android:id="@+id/price"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
                 app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp" android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@+id/landlord" app:layout_constraintHorizontal_bias="0.581"
-                app:layout_constraintVertical_bias="0.019" app:layout_constraintStart_toEndOf="@+id/overall_avg_num"
+                app:layout_constraintStart_toEndOf="@+id/overall_avg_num"
                 android:text="@string/rent" android:gravity="center" android:textSize="20sp"
-                android:textAllCaps="true"/>
+                android:background="@color/cribbMiddleGrey"
+                android:textAllCaps="true" android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/amenities_text"/>
         <RatingBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="?android:attr/ratingBarStyleSmall"
-                android:progressTint="@color/cribbBlue"
+                android:progressTint="@color/cribbLightBlue"
                 android:progressBackgroundTint="#000"
                 android:id="@+id/overallRatingBar" android:numStars="5"
                 android:rating="4" android:max="5" android:isIndicator="true"
@@ -80,32 +80,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/amenities_text" android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toTopOf="@+id/reviews_scrollView"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="8dp" android:layout_marginRight="8dp" android:layout_marginTop="8dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@+id/overallRatingBar"
-                app:layout_constraintStart_toEndOf="@+id/location_text" android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="0.639"
+                app:layout_constraintStart_toEndOf="@+id/location_text" android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"
                 app:layout_constraintVertical_bias="0.123" android:textAllCaps="true"/>
         <TextView
                 android:text="Location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/location_text"
                 app:layout_constraintBottom_toTopOf="@+id/reviews_scrollView"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp" android:layout_marginBottom="8dp" android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp" android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@+id/overallRatingBar" app:layout_constraintVertical_bias="0.123"
-                android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginRight="8dp" app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintHorizontal_bias="0.499" android:textAllCaps="true"/>
+                android:textAllCaps="true"
+                app:layout_constraintEnd_toStartOf="@+id/guideline3"/>
         <TextView
                 android:text="Management"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/manage_text" android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toTopOf="@+id/reviews_scrollView" android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@+id/overallRatingBar"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginLeft="48dp" android:layout_marginStart="48dp"
-                app:layout_constraintVertical_bias="0.123" android:textAllCaps="true"/>
+                app:layout_constraintVertical_bias="0.123" android:textAllCaps="true"
+                android:layout_marginEnd="32dp" app:layout_constraintEnd_toStartOf="@+id/location_text"
+                android:layout_marginRight="32dp"/>
         <EditText
                 android:layout_width="84dp"
                 android:layout_height="48dp"
@@ -115,9 +112,9 @@
                 android:text="@string/manage_rating" android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@+id/manage_text" android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toTopOf="@+id/reviews_scrollView" app:layout_constraintVertical_bias="0.0"
-                android:layout_marginStart="48dp" app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginLeft="32dp" android:singleLine="false" android:textSize="25sp"
-                android:textStyle="bold" android:textColor="#9CDEFF"/>
+                android:singleLine="false" android:textSize="25sp"
+                android:textStyle="bold" android:textColor="#9CDEFF"
+                app:layout_constraintStart_toStartOf="@+id/manage_text"/>
         <EditText
                 android:layout_width="84dp"
                 android:layout_height="48dp"
@@ -125,10 +122,10 @@
                 android:ems="10"
                 android:id="@+id/location_avg_num" android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@+id/location_text"
-                android:text="@string/location_rating" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                android:textSize="25sp" android:textStyle="bold" android:textColor="#9CDEFF"/>
+                android:text="@string/location_rating"
+                android:textSize="25sp" android:textStyle="bold" android:textColor="#9CDEFF"
+                app:layout_constraintStart_toStartOf="@+id/location_text"
+        />
         <EditText
                 android:layout_width="84dp"
                 android:layout_height="48dp"
@@ -136,11 +133,11 @@
                 android:ems="10"
                 android:id="@+id/amenities_avg_num" android:text="@string/amenities_rating"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/amenities_text" android:layout_marginEnd="32dp"
-                app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="32dp"
+                app:layout_constraintTop_toBottomOf="@+id/amenities_text"
                 android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/reviews_scrollView"
                 app:layout_constraintVertical_bias="0.0" android:textSize="25sp" android:textStyle="bold"
-                android:textColor="#9CDEFF"/>
+                android:textColor="#9CDEFF"
+                app:layout_constraintStart_toStartOf="@+id/amenities_text"/>
         <ScrollView
                 android:layout_width="0dp"
                 android:layout_height="0dp" app:layout_constraintEnd_toEndOf="parent"
@@ -148,15 +145,55 @@
                 android:id="@+id/reviews_scrollView"
                 app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintTop_toBottomOf="@id/space"
-        >
+                android:layout_marginBottom="75dp">
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                          android:orientation="vertical" android:id="@+id/LinearLayout_in_scroll"/>
+                          android:orientation="vertical" android:id="@+id/LinearLayout_in_scroll">
+                <ImageView
+                        android:src="@drawable/display_listing"
+                        android:layout_width="389dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/imageView4" android:layout_marginTop="8dp"
+                />
+            </LinearLayout>
         </ScrollView>
         <Space
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="0dp"
                 app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/location_avg_num" android:id="@+id/space"/>
+        <ImageButton
+                android:src="@drawable/delete_review"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/imageButton" android:scaleType="fitXY" android:layout_marginBottom="16dp"
+                android:background="#00FFFFFF" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/reviews_scrollView"
+                android:layout_marginStart="20dp" app:layout_constraintStart_toStartOf="@+id/manage_avg_num"
+                android:layout_marginLeft="20dp" app:layout_constraintVertical_bias="0.0"/>
+        <ImageButton
+                android:src="@drawable/write_review_blue"
+                android:layout_width="50dp"
+                android:layout_height="50dp" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginBottom="16dp" android:id="@+id/writeReview" android:scaleType="fitXY"
+                android:background="@color/cribbDarkGrey" app:layout_constraintHorizontal_bias="0.498"
+                android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/reviews_scrollView"/>
+        <ImageView
+                android:src="@drawable/write_report"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"
+                android:id="@+id/imageView5" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/writeReview" android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/reviews_scrollView"/>
+        <androidx.constraintlayout.widget.Guideline
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintGuide_percent="0.6"
+                android:id="@+id/guideline3"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
