@@ -20,6 +20,7 @@
     <string name="manage_rating">5.0</string>
     <string name="location_rating">5.0</string>
     <string name="amenities_rating">5.0</string>
+    <string name="change_overall_rating">5.0</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
