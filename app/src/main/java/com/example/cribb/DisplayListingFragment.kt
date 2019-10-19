@@ -19,26 +19,26 @@ import kotlinx.android.synthetic.main.fragment_display_listing.view.*
 
 
 class DisplayListingFragment : Fragment() {
-
+    var address = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_display_listing, container, false)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
             val safeArgs = DisplayListingFragmentArgs.fromBundle(it)
-            val address = "${safeArgs.dynamicAddress}"
+            address = "${safeArgs.dynamicAddress}"
             address_passed.text = address
             showReviews(address)
             (activity as MainActivity).supportActionBar?.title = address
         }
         writeReview.setOnClickListener {
-            Navigation.findNavController(it).navigate(R.id.writeReviewFragment)
+            val nextAction = DisplayListingFragmentDirections.actionDisplayListingFragmentToWriteReviewFragment(address)
+            Navigation.findNavController(it).navigate(nextAction)
         }
     }
 

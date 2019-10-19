@@ -159,7 +159,6 @@ class CreateListingFragment : Fragment() {
             println("done!!")
         }
 
-        //return added
     }
 
     companion object {

@@ -2,6 +2,7 @@ package com.example.cribb
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -19,20 +20,19 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_main.*
 val db = FirebaseFirestore.getInstance()
-
+lateinit var navController: NavController
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
         val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
-
-        setupBottomNavMenu(navController)
-        setupSideNavigationMenu(navController)
-        setupActionBar(navController)
+        //setupBottomNavMenu(navController)
+        //setupSideNavigationMenu(navController)
+        //setupActionBar(navController)
         //actionBar.setDisplayHomeAsUpEnabled(true)
+        NavigationUI.setupActionBarWithNavController(this,navController)
 
         bottom_nav.setOnNavigationItemSelectedListener{ item ->
             var fragment: Fragment? = null
@@ -53,13 +53,18 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.nav_host_fragment, fragment!!)
                 .addToBackStack(fragment.tag)
                 .commit()
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
             return@setOnNavigationItemSelectedListener true
         }
 
 
     }
 
+
+    override fun onSupportNavigateUp(): Boolean {
+        Log.d("test", "pressed")
+        navController.navigateUp()
+        return super.onSupportNavigateUp()
+    }
     private fun setupBottomNavMenu(navController: NavController) {
         bottom_nav?.let {
             NavigationUI.setupWithNavController(it, navController)
@@ -81,22 +86,22 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId)
-        {
-            R.id.nav_home -> {
-                item.isEnabled = true
-                println("pressed!")
-            }
-            R.id.nav_person ->{
-                item.isEnabled = true
-            }
-            R.id.nav_loc -> {
-                item.isEnabled = true
-            }
-        }
-        return true
-    }
+//    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+//        when (item?.itemId)
+//        {
+//            R.id.nav_home -> {
+//                item.isEnabled = true
+//                println("pressed!")
+//            }
+//            R.id.nav_person ->{
+//                item.isEnabled = true
+//            }
+//            R.id.nav_loc -> {
+//                item.isEnabled = true
+//            }
+//        }
+//        return true
+//    }
 
     override fun onBackPressed() {
 
