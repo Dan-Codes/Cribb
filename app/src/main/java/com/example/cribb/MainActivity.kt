@@ -1,12 +1,12 @@
 package com.example.cribb
 
 import android.app.Activity
+
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
@@ -14,7 +14,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
-import com.google.android.libraries.places.internal.it
+//import com.google.android.libraries.places.internal.it
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_login.*
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this,navController)
 
         bottom_nav.setOnNavigationItemSelectedListener{ item ->
-            var fragment: Fragment? = null
+            var fragment: androidx.fragment.app.Fragment? = null
 
             when (item.itemId) {
                 R.id.nav_home -> {fragment = CreateListingFragment()}

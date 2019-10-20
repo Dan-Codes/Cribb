@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_mapFragment_to_displayListingFragment"
             app:destination="@id/displayListingFragment"
+            app:enterAnim="@anim/fade_in_right"
+            app:launchSingleTop="false"
+            app:popUpTo="@+id/mapFragment"
             app:popUpToInclusive="false" />
         <action android:id="@+id/action_createListing" app:destination="@id/createListingFragment"/>
         <action android:id="@+id/action_mapFragment_to_profileFragment" app:destination="@id/profileFragment"

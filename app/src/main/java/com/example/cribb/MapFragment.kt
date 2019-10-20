@@ -42,7 +42,7 @@ import com.example.cribb.R.*
 import com.google.android.gms.maps.MapFragment
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
-import com.google.android.libraries.places.internal.it
+//import com.google.android.libraries.places.internal.it
 import com.google.firebase.firestore.Transaction
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_display_listing.*
@@ -51,7 +51,7 @@ import com.google.android.libraries.places.api.model.AutocompleteSessionToken
 import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse
-import com.google.android.libraries.places.internal.i
+//import com.google.android.libraries.places.internal.i
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import kotlinx.android.synthetic.main.fragment_map.*
 import com.google.android.gms.location.places.*

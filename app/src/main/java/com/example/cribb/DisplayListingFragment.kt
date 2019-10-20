@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_display_listing.*
 import kotlinx.android.synthetic.main.fragment_display_listing.view.*
 
 
-class DisplayListingFragment : Fragment() {
+class DisplayListingFragment : androidx.fragment.app.Fragment() {
     var address = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
