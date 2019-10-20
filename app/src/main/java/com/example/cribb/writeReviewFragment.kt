@@ -30,8 +30,8 @@ private const val ARG_PARAM2 = "param2"
  */
 class writeReviewFragment : Fragment() {
 
-    var address = ""
 
+    private lateinit var address:String
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,9 +45,10 @@ class writeReviewFragment : Fragment() {
         arguments?.let {
             val safeArgs = writeReviewFragmentArgs.fromBundle(it)
             address = "${safeArgs.dynamicAddress}"
+            address_review.text = address
+            checkReview()
         }
-        address_review.text = address
-        checkReview()
+
 
     }
 

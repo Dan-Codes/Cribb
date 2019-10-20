@@ -9,11 +9,12 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main2.*
-
+val db = FirebaseFirestore.getInstance()
+lateinit var navController: NavController
 class Main2Activity : AppCompatActivity() {
-    private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
@@ -24,7 +25,7 @@ class Main2Activity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.mapFrag, R.id.navigation_dashboard, R.id.navigation_notifications
+                R.id.mapFrag, R.id.profileFragment, R.id.createListingFragment
             )
         )
         NavigationUI.setupActionBarWithNavController(this, navController)

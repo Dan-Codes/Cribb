@@ -12,13 +12,15 @@ import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.LinearLayout
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.firebase.Timestamp
 import kotlinx.android.synthetic.main.fragment_display_listing.*
 import kotlinx.android.synthetic.main.fragment_display_listing.view.*
 
 
 class DisplayListingFragment : androidx.fragment.app.Fragment() {
-    var address = ""
+    private lateinit var address:String
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
@@ -35,8 +37,11 @@ class DisplayListingFragment : androidx.fragment.app.Fragment() {
             showReviews(address)
             (activity as Main2Activity).supportActionBar?.title = address
         }
+
         writeReview.setOnClickListener {
-            val nextAction = DisplayListingFragmentDirections.actionDisplayListingFragmentToWriteReviewFragment(address)
+
+            val nextAction = DisplayListingFragmentDirections.actionDisplayListingFragment2ToWriteReviewFragment2()
+            nextAction.dynamicAddress = address
             Navigation.findNavController(it).navigate(nextAction)
         }
     }

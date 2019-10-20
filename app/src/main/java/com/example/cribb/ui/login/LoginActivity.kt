@@ -1,6 +1,7 @@
 package com.example.cribb.ui.login
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -9,6 +10,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.AttributeSet
 import android.util.Log.d
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -17,7 +19,6 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import com.example.cribb.Main2Activity
-import com.example.cribb.MainActivity
 import com.example.cribb.R
 import com.google.firebase.auth.FirebaseAuth
 
@@ -30,7 +31,9 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         auth = FirebaseAuth.getInstance()
         super.onCreate(savedInstanceState)
-
+        val email  = resources.getString(R.string.email)
+        val pass = resources.getString(R.string.password)
+        signIn(email,pass)
         setContentView(R.layout.activity_login)
 
         val username = findViewById<EditText>(R.id.username)
@@ -103,6 +106,11 @@ class LoginActivity : AppCompatActivity() {
                 signIn(username.text.toString(), password.text.toString())
             }
         }
+    }
+
+    override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
+        return super.onCreateView(name, context, attrs)
+
     }
 
     private fun updateUiWithUser(model: LoggedInUserView) {

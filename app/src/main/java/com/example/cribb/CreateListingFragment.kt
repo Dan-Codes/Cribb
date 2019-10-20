@@ -48,7 +48,7 @@ class CreateListingFragment : Fragment() {
         // Initialize Places.
         formView = view
         Log.d("view", "$formView")
-        Places.initialize((activity as MainActivity).applicationContext, getString(R.string.google_api_key))
+        Places.initialize((activity as Main2Activity).applicationContext, getString(R.string.google_api_key))
 
 // Create a new Places client instance.
         val placesClient = Places.createClient(context!!)
