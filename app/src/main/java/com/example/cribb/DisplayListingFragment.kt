@@ -33,7 +33,7 @@ class DisplayListingFragment : androidx.fragment.app.Fragment() {
             address = "${safeArgs.dynamicAddress}"
             address_passed.text = address
             showReviews(address)
-            (activity as MainActivity).supportActionBar?.title = address
+            (activity as Main2Activity).supportActionBar?.title = address
         }
         writeReview.setOnClickListener {
             val nextAction = DisplayListingFragmentDirections.actionDisplayListingFragmentToWriteReviewFragment(address)

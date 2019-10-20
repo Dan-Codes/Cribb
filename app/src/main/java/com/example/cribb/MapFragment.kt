@@ -118,9 +118,9 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
                 lng = it
         }
 
-        (activity as MainActivity).bottom_nav.menu.getItem(0).isChecked = true
+        //(activity as MainActivity).bottom_nav.menu.getItem(0).isChecked = true
         materialSearchBar = getView()!!.findViewById(R.id.searchBar)
-        Places.initialize(((activity as MainActivity).applicationContext), getString(string.google_api_key))
+        Places.initialize(((activity as Main2Activity).applicationContext), getString(string.google_api_key))
         // Create a new Places client instance.
         var placesClient = Places.createClient(context!!)
         val token = AutocompleteSessionToken.newInstance()
@@ -340,7 +340,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
     @Override
     override fun onInfoWindowClick(marker: Marker) {
         var address: String = marker.title
-        val nextaction = MapFragmentDirections.actionMapFragmentToDisplayListingFragment()
+        val nextaction = MapFragmentDirections.actionMapFragToDisplayListingFragment2()
         nextaction.dynamicAddress = address
         val fragment = DisplayListingFragment()
         Navigation.findNavController(mapView).navigate(nextaction)

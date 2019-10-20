@@ -16,8 +16,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
-        <activity android:name=".LoginPrettyActivity"></activity>
+        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
+        <activity
+            android:name=".Main2Activity"
+            android:label="@string/title_activity_main2"></activity>
+        <activity android:name=".LoginPrettyActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

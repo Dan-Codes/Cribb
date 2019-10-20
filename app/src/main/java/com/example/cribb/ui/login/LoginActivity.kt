@@ -16,6 +16,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import com.example.cribb.Main2Activity
 import com.example.cribb.MainActivity
 import com.example.cribb.R
 import com.google.firebase.auth.FirebaseAuth
@@ -129,7 +130,9 @@ class LoginActivity : AppCompatActivity() {
                     d("Test", "Login Success!")
                     val user = auth.currentUser
                     //updateUI(user)
-                    startActivity(Intent(this, MainActivity::class.java))
+                    val intent = Intent(this, Main2Activity::class.java)
+                    startActivity(intent)
+                    //startActivity(Intent(this, Main2Activity::class.java))
                 } else {
                     // If sign in fails, display a message to the user.
                     //Log.w(TAG, "signInWithEmail:failure", task.exception)
