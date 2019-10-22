@@ -45,11 +45,16 @@ class writeReviewFragment : Fragment() {
         arguments?.let {
             val safeArgs = writeReviewFragmentArgs.fromBundle(it)
             address = "${safeArgs.dynamicAddress}"
-            address_review.text = address
             checkReview()
         }
 
 
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        address_review.text = address
     }
 
     private fun checkReview() {

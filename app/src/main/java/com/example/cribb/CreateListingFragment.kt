@@ -74,7 +74,7 @@ class CreateListingFragment : Fragment() {
                         it.findNavController().navigate(R.id.mapFragment)
                     }
                     else{
-                        return@checkDidAdd
+                        return@checkDidAdd 
                     }
                 }
             }
