@@ -153,6 +153,11 @@ class SignUpActivity : AppCompatActivity() {
             }
     }
 
+    fun goToLogIn(v:View){
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+
+    }
 
 
     public override fun onStart() {

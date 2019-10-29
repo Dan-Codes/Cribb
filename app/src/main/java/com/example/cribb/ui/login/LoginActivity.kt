@@ -107,11 +107,10 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    fun perform_action(v:View){
+    fun goToSignUp(v:View){
         val intent = Intent(this, SignUpActivity::class.java)
         startActivity(intent)
-        Toast.makeText(baseContext, "!!!!!!!!",
-            Toast.LENGTH_SHORT).show()
+
     }
 
     override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {

@@ -89,7 +89,7 @@
         android:clickable="true"
         android:text="No account yet? Create one"
         android:textSize="16dip"
-        android:onClick="perform_action"
+        android:onClick="goToSignUp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password" />
