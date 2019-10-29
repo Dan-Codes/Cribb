@@ -3,24 +3,26 @@ package com.example.cribb.ui.login
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import android.os.Bundle
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
-import android.util.Log.d
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ProgressBar
+import android.widget.Toast
+import androidx.annotation.StringRes
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.example.cribb.Main2Activity
 import com.example.cribb.R
 import com.google.firebase.auth.FirebaseAuth
 
-
-class LoginActivity : AppCompatActivity() {
+class SignUpActivity : AppCompatActivity() {
 
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var auth: FirebaseAuth
@@ -31,18 +33,17 @@ class LoginActivity : AppCompatActivity() {
 //        val email  = resources.getString(R.string.email)
 //        val pass = resources.getString(R.string.password)
 //        signIn(email,pass)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_sign_up)
 
         val username = findViewById<EditText>(R.id.username)
         val password = findViewById<EditText>(R.id.password)
         val login = findViewById<Button>(R.id.login)
         val loading = findViewById<ProgressBar>(R.id.loading)
-        val signUp = findViewById<TextView>(R.id.link_signup)
 
         loginViewModel = ViewModelProviders.of(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
 
-        loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
+        loginViewModel.loginFormState.observe(this@SignUpActivity, Observer {
             val loginState = it ?: return@Observer
 
             // disable login button unless both username / password is valid
@@ -56,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
-        loginViewModel.loginResult.observe(this@LoginActivity, Observer {
+        loginViewModel.loginResult.observe(this@SignUpActivity, Observer {
             val loginResult = it ?: return@Observer
 
             loading.visibility = View.GONE
@@ -103,15 +104,7 @@ class LoginActivity : AppCompatActivity() {
                 //loginViewModel.login(username.text.toString(), password.text.toString())
                 signIn(username.text.toString(), password.text.toString())
             }
-
         }
-    }
-
-    fun perform_action(v:View){
-        val intent = Intent(this, SignUpActivity::class.java)
-        startActivity(intent)
-        Toast.makeText(baseContext, "!!!!!!!!",
-            Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
@@ -137,11 +130,11 @@ class LoginActivity : AppCompatActivity() {
     private fun signIn(email: String, password: String) {
         val b: Boolean? = false
         // [START sign_in_with_email]
-        auth.signInWithEmailAndPassword(email, password)
+        auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    d("Test", "Login Success!")
+                    Log.d("Test", "Login Success!")
                     val user = auth.currentUser
                     //updateUI(user)
                     val intent = Intent(this, Main2Activity::class.java)
@@ -184,3 +177,4 @@ private fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
     })
 }
+
