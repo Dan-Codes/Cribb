@@ -37,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
         val password = findViewById<EditText>(R.id.password)
         val login = findViewById<Button>(R.id.login)
         val loading = findViewById<ProgressBar>(R.id.loading)
-        val signUp = findViewById<TextView>(R.id.link_signup)
+        val signUp = findViewById<TextView>(R.id.link_login)
 
         loginViewModel = ViewModelProviders.of(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
@@ -109,6 +109,11 @@ class LoginActivity : AppCompatActivity() {
 
     fun goToSignUp(v:View){
         val intent = Intent(this, SignUpActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun goToReset(v:View){
+        val intent = Intent(this, ForgetPassword::class.java)
         startActivity(intent)
 
     }
