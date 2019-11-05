@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.fragment_create_listing.view.*
 import kotlinx.android.synthetic.main.fragment_display_listing.*
 import kotlinx.android.synthetic.main.fragment_write_review.*
+import kotlin.math.roundToInt
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -73,17 +74,20 @@ class writeReviewFragment : Fragment() {
                         for (reviewer in review) {
                             if (reviewer.key == user.email){
                                 val reviewMap = review
-                                val reviewInfo:HashMap<String,String>  = reviewMap.getValue(reviewer.key) as HashMap<String, String>
+                                val reviewInfo:HashMap<String,*>  = reviewMap.getValue(reviewer.key) as HashMap<String, *>
                                 Toast.makeText(context!!, "You have already reviewed this property.", Toast.LENGTH_SHORT).show()
-                                val comment:String = reviewInfo.getValue("comments")
+                                val comment:String = reviewInfo.getValue("comments").toString()
                                 review_comments.setText(comment)
-                                seekBar.progress = (reviewInfo.getValue("rating")).toInt()
-                                overall_rating.text = (reviewInfo.getValue("rating"))
-                                location_ratingBar.rating = (reviewInfo.getValue("locationRating")).toFloat()
-                                manage_ratingBar.rating = (reviewInfo.getValue("managementRating")).toFloat()
-                                amenities_ratingBar.rating = (reviewInfo.getValue("amenitiesRating")).toFloat()
-                                live_here_again_switch.isChecked = (reviewInfo.getValue("willLiveAgain")).toBoolean()
-                                anonymous_switch.isChecked = (reviewInfo.getValue("isAnonymous")).toBoolean()
+
+                                val ratingInt = (reviewInfo.getValue("rating"))
+                                seekBar.progress = ratingInt.toString().toDouble().roundToInt()
+
+                                overall_rating.text = (reviewInfo.getValue("rating")).toString()
+                                location_ratingBar.rating = (reviewInfo.getValue("locationRating")).toString().toFloat()
+                                manage_ratingBar.rating = (reviewInfo.getValue("managementRating")).toString().toFloat()
+                                amenities_ratingBar.rating = (reviewInfo.getValue("amenitiesRating")).toString().toFloat()
+                                live_here_again_switch.isChecked = (reviewInfo.getValue("willLiveAgain")).toString().toBoolean()
+                                anonymous_switch.isChecked = (reviewInfo.getValue("isAnonymous")).toString().toBoolean()
                                 break
                             }
 
