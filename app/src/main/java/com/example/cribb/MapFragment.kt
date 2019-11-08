@@ -77,9 +77,11 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
     private var lat:Double = 0.0
     private var lng:Double = 0.0
     private var geoPoint_passed :GeoPoint = GeoPoint(0.0,0.0)
+    private var permission:Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setUpMap()
     }
 
     override fun onCreateView(
@@ -296,6 +298,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
         }
         else
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(syracuse, 15.0f))
+
         setUpMap() //checks if location is enabled and requests users permission
         mMap.isMyLocationEnabled = true //creates a blue location dot and location button
 //
@@ -334,6 +337,29 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
             )
 
             return
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+
+        when (requestCode){
+            LOCATION_PERMISSION_REQUEST_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    Toast.makeText(context,"Permission Granted!", Toast.LENGTH_SHORT).show()
+                    permission = false
+                }
+                else{
+                    Toast.makeText(context,"Permission Denied",Toast.LENGTH_SHORT).show()
+                }
+            }
+            else -> {
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+            }
+
         }
     }
 
