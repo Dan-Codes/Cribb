@@ -6,6 +6,7 @@ import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
@@ -55,6 +56,7 @@ import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRe
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import kotlinx.android.synthetic.main.fragment_map.*
 import com.google.android.gms.location.places.*
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.common.api.ApiException as ApiException
 
 
@@ -208,6 +210,19 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
+          try {
+            // Customise the styling of the base map using a JSON object defined
+            // in a raw resource file.
+            val success = googleMap.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
+                            context, R.raw.maps_style_json))
+
+            if (!success) {
+                Log.e(TAG, "Style parsing failed.");
+            }
+        } catch (e: Resources.NotFoundException ) {
+            Log.e(TAG, "Can't find style. Error: ", e)
+        }
         mMap = googleMap
 
         db.collection("listings")
