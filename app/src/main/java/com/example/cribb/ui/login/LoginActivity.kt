@@ -28,9 +28,9 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         auth = FirebaseAuth.getInstance()
         super.onCreate(savedInstanceState)
-        val email  = resources.getString(R.string.email)
-        val pass = resources.getString(R.string.password)
-        signIn(email,pass)
+//        val email  = resources.getString(R.string.email)
+//        val pass = resources.getString(R.string.password)
+//        signIn(email,pass)
         setContentView(R.layout.activity_login)
 
         val username = findViewById<EditText>(R.id.username)
