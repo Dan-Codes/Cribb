@@ -19,7 +19,9 @@ import androidx.navigation.findNavController
 import com.google.android.gms.maps.MapFragment
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.GeoPoint
+import com.google.type.Date
 import com.squareup.okhttp.Dispatcher
 import kotlinx.coroutines.*
 import java.text.Normalizer
@@ -68,18 +70,18 @@ class CreateListingFragment : Fragment() {
 //
 //        })
         submit.setOnClickListener {
-            if (uploadProperty()){
-                checkDidAdd(geoPoint,full_address){ result -> Boolean
-                    if (result){
-                        it.findNavController().navigate(R.id.mapFragment)
-                    }
-                    else{
-                        return@checkDidAdd 
-                    }
-                }
-            }
-            else return@setOnClickListener
-
+//            if (uploadProperty()){
+//                checkDidAdd(geoPoint,full_address){ result -> Boolean
+//                    if (result){
+//                        it.findNavController().navigate(R.id.mapFragment)
+//                    }
+//                    else{
+//                        return@checkDidAdd
+//                    }
+//                }
+//            }
+//            else return@setOnClickListener
+            uploadProperty()
         }
     }
 
@@ -102,6 +104,23 @@ class CreateListingFragment : Fragment() {
         Log.d("GeoPoint", "$geoPoint")
         //Log.d("added", "$check")
 
+        val nestedData = HashMap<String,Any?>()
+        val docData = hashMapOf(
+            "address" to full_address,
+            "geopoint" to geoPoint,
+            "property" to true,
+            "landlordName" to landlord.text.toString(),
+            "rent" to rent.text.toString(),
+            "addedby" to "dli123@syr.edu",
+            "reviews" to nestedData
+        )
+
+
+
+        db.collection("listings").document(full_address)
+            .set(docData)
+            .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
+            .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
         return true
     }
 
