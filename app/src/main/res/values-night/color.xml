@@ -22,7 +22,7 @@
     <!--low-luminance UIs. These colors will be used by night/themes.xml.-->
 
     <color name="color_primary">#9CDEFF</color>
-    <color name="color_primary_variant">#4b01d0</color>
+    <color name="color_primary_variant">#595959</color>
     <color name="color_secondary">#9CDEFF</color>
     <color name="color_secondary_variant">#085972</color>
 
@@ -35,4 +35,11 @@
     <color name="color_on_background">#ffffff</color>
     <color name="color_on_surface">#ffffff</color>
     <color name="color_on_error">#000000</color>
+
+    <color name="cribbBlue">#085972</color>
+    <color name="cribbLightBlue">#9CDEFF</color>
+    <color name="cribbRed">#820B1D</color>
+    <color name="cribbLightGrey">#7F807F</color>
+    <color name="cribbMiddleGrey">#595959</color>
+    <color name="cribbDarkGrey">#353432</color>
 </resources>

@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/top_toolbar_background"
         app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment"
+        app:titleTextColor="@color/color_on_surface"
         tools:layout_editor_absoluteX="0dp" />
 
     <fragment

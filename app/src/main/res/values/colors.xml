@@ -12,11 +12,11 @@
     <color name="cribbRed">#820B1D</color>
     <color name="cribbLightGrey">#7F807F</color>
     <color name="cribbMiddleGrey">#595959</color>
-    <color name="cribbDarkGrey">#353432</color>
+    <color name="cribbDarkGrey">#eeeeee</color>
 
     <color name="color_primary">#9CDEFF</color>
 
-    <color name="color_primary_variant">#3700b3</color>
+    <color name="color_primary_variant">#eeeeee</color>
 
     <color name="color_secondary">#9CDEFF</color>
 

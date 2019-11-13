@@ -47,7 +47,7 @@
     <fragment
         android:id="@+id/writeReviewFragment2"
         android:name="com.example.cribb.writeReviewFragment"
-        android:label="fragment_write_review"
+        android:label="Write Review"
         tools:layout="@layout/fragment_write_review" >
         <argument
             android:name="dynamicAddress"
@@ -57,11 +57,11 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.cribb.ProfileFragment"
-        android:label="fragment_profile"
+        android:label="Profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/createListingFragment"
         android:name="com.example.cribb.CreateListingFragment"
-        android:label="fragment_create_listing"
+        android:label="Upload a Cribb"
         tools:layout="@layout/fragment_create_listing" />
 </navigation>
