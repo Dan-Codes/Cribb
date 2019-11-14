@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_mapFrag_to_displayListingFragment2"
             app:destination="@id/displayListingFragment2" />
+        <action
+            android:id="@+id/action_mapFrag_to_searchTable"
+            app:destination="@id/searchTable" />
     </fragment>
     <fragment
         android:id="@+id/displayListingFragment2"
@@ -64,4 +67,9 @@
         android:name="com.example.cribb.CreateListingFragment"
         android:label="Upload a Cribb"
         tools:layout="@layout/fragment_create_listing" />
+    <fragment
+        android:id="@+id/searchTable"
+        android:name="com.example.cribb.ui.searchTable"
+        android:label="fragment_search_table"
+        tools:layout="@layout/fragment_search_table" />
 </navigation>
