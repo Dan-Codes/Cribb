@@ -33,6 +33,14 @@
         <action
             android:id="@+id/action_mapFrag_to_searchTable"
             app:destination="@id/searchTable" />
+        <argument
+            android:name="lat"
+            app:argType="float"
+            android:defaultValue="0.0" />
+        <argument
+            android:name="longitude"
+            app:argType="float"
+            android:defaultValue="0.0" />
     </fragment>
     <fragment
         android:id="@+id/displayListingFragment2"
@@ -66,7 +74,11 @@
         android:id="@+id/createListingFragment"
         android:name="com.example.cribb.CreateListingFragment"
         android:label="Upload a Cribb"
-        tools:layout="@layout/fragment_create_listing" />
+        tools:layout="@layout/fragment_create_listing" >
+        <action
+            android:id="@+id/action_createListingFragment_to_mapFrag"
+            app:destination="@id/mapFrag" />
+    </fragment>
     <fragment
         android:id="@+id/searchTable"
         android:name="com.example.cribb.ui.searchTable"

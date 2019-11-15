@@ -38,6 +38,7 @@ import com.mancj.materialsearchbar.MaterialSearchBar
 import androidx.navigation.Navigation
 import androidx.transition.FragmentTransitionSupport
 import com.example.cribb.R.*
+import com.example.cribb.ui.searchTable
 import com.google.android.gms.maps.MapFragment
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
@@ -59,13 +60,13 @@ import com.google.android.gms.common.api.ApiException as ApiException
 
 
 
-
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
 class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     private lateinit var mMap: GoogleMap
-    private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var placesClient: PlacesClient
-
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var predictionList: List<AutocompletePrediction>
     private lateinit var mLastKnownLocation: Location
     private lateinit var locationCallback: LocationCallback
@@ -78,10 +79,21 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
     private var lng:Double = 0.0
     private var geoPoint_passed :GeoPoint = GeoPoint(0.0,0.0)
     private var permission:Boolean = true
+    private var param1: Double? = null
+    private var param2: Double? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        arguments?.let {
+            val safeArgs = MapFragmentArgs.fromBundle(it)
+            lat = safeArgs.lat.toDouble()
+            lng = safeArgs.longitude.toDouble()
+            param1 = it.getDouble(ARG_PARAM1)
+            param2 = it.getDouble(ARG_PARAM2)
+        }
+        Log.d("geoPoints", "$param1")
         setUpMap()
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
     }
 
     override fun onCreateView(
@@ -220,14 +232,24 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 
 
 //        // Add a marker in Sydney and move the camera
-        val syracuse = LatLng(43.038710, -76.134265)
-//        //mMap.addMarker(MarkerOptions().position(syracuse).title("Marker in Sydney"))
-        if (geoPoint_passed.latitude != 0.0) {
-            val location = LatLng(geoPoint_passed.latitude,geoPoint_passed.longitude)
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,15.0f))
-        }
-        else
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(syracuse, 15.0f))
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location : Location? ->
+                Log.d("location", "$location")
+                    var current_location = LatLng(location!!.latitude,location!!.longitude)
+
+                    val syracuse = LatLng(43.038710, -76.134265)
+
+
+                if (lat != 0.0) {
+                    val location = LatLng(lat,lng)
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,15.0f))
+                }
+                else
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(current_location, 15.0f))
+            }
+
+
+
 
         setUpMap() //checks if location is enabled and requests users permission
         mMap.isMyLocationEnabled = true //creates a blue location dot and location button
@@ -314,5 +336,14 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
+
+        @JvmStatic
+        fun newInstance(param1: Double, param2: Double) =
+            com.example.cribb.MapFragment().apply {
+                arguments = Bundle().apply {
+                    putDouble(ARG_PARAM1, param1)
+                    putDouble(ARG_PARAM2, param2)
+                }
+            }
     }
 }

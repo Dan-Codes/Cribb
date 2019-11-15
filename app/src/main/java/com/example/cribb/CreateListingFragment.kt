@@ -16,6 +16,8 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.MapFragment
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.SupportMapFragment
@@ -70,17 +72,6 @@ class CreateListingFragment : Fragment() {
 //
 //        })
         submit.setOnClickListener {
-//            if (uploadProperty()){
-//                checkDidAdd(geoPoint,full_address){ result -> Boolean
-//                    if (result){
-//                        it.findNavController().navigate(R.id.mapFragment)
-//                    }
-//                    else{
-//                        return@checkDidAdd
-//                    }
-//                }
-//            }
-//            else return@setOnClickListener
             uploadProperty()
         }
     }
@@ -112,64 +103,81 @@ class CreateListingFragment : Fragment() {
             "landlordName" to landlord.text.toString(),
             "rent" to rent.text.toString(),
             "addedby" to "dli123@syr.edu",
-            "reviews" to nestedData
+            "reviews" to nestedData,
+            "avgAmenities" to 0.0,
+            "avgLocation" to 0.0,
+            "avgManage" to 0.0,
+            "avgOverallRating" to 0.0
         )
 
+        val docRef = db.collection("listings")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    val currentGeoPoint = document.get("geopoint") as GeoPoint
+                    if (abs(geoPoint.latitude - currentGeoPoint.latitude) < 0.0001 && abs(geoPoint.longitude - currentGeoPoint.longitude) < 0.0001) {
+                        Log.d("caught", "already in database")
+                        Toast.makeText(
+                            context!!,
+                            "This place already exists on Cribb",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        //resultListener.onResult(true)
+                        //myCallback(false)
+                        return@addOnSuccessListener
+                    }
+                }
+                //myCallback(true)
+                Log.d("tag", "address doesn't exist in database, initializing data entry")
+                db.collection("listings").document(full_address)
+                    .set(docData)
+                    .addOnSuccessListener {
+                        Log.d(TAG, "DocumentSnapshot successfully written!")
+                        //val fragment :com.example.cribb.MapFragment = com.example.cribb.MapFragment.newInstance(geoPoint.latitude,geoPoint.longitude)
+                        //com.example.cribb.MapFragment.newInstance(geoPoint.latitude,geoPoint.longitude)
+                        val navController = findNavController()
+                        //navController.
+                        var nextAction = CreateListingFragmentDirections.actionCreateListingFragmentToMapFrag()
+                        nextAction.lat = geoPoint.latitude.toFloat()
+                        nextAction.longitude = geoPoint.longitude.toFloat()
+                        navController.navigate(nextAction)
+                    }
+                    .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e)
+                    }
+            }
 
-
-        db.collection("listings").document(full_address)
-            .set(docData)
-            .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
-            .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
         return true
     }
+//, myCallback: (Boolean) -> Unit
+    private fun checkDidAdd(geoPoint: GeoPoint, fullAddress: String){
 
-    private fun checkDidAdd(geoPoint: GeoPoint, fullAddress: String, myCallback: (Boolean) -> Unit){
-        var added = false
         scope.launch {
             val docRef = db.collection("listings")
                 .get()
                 .addOnSuccessListener { result ->
                     for (document in result) {
                         val currentGeoPoint = document.get("geopoint") as GeoPoint
-                        println("test point")
                         if (abs(geoPoint.latitude - currentGeoPoint.latitude) < 0.0001 && abs(geoPoint.longitude - currentGeoPoint.longitude) < 0.0001) {
-                            added = true
                             Log.d("caught", "already in database")
                             Toast.makeText(context!!, "This place already exists on Cribb", Toast.LENGTH_SHORT).show()
                             //resultListener.onResult(true)
-                            myCallback(false)
+                            //myCallback(false)
                             return@addOnSuccessListener
                         }
                     }
-                    myCallback(true)
+                    //myCallback(true)
                     Log.d("tag", "address doesn't exist in database, initializing data entry")
-                    val map = HashMap<String, Any>()
-                    val data: HashMap<String, Any> = hashMapOf(
-                        "address" to "$fullAddress",
-                        "geopoint" to geoPoint,
-                        "property" to true,
-                        "reviews" to map,
-                        "landlordName" to "${landlord.text}",
-                        "rent" to "${rent.text}",
-                        "addedby" to "User",
-                        "avgAmenities" to 0.0,
-                        "avgLocation" to 0.0,
-                        "avgManage" to 0.0,
-                        "avgOverallRating" to 0.0
-                    )
-                    db.collection("listings").document(fullAddress).set(data)
-                    Log.d("tag", "address successfully added to database")
+
+
+
 //                var nextAction = CreateListingFragmentDirections.addedProperty(geoPoint.latitude.toString(),geoPoint.longitude.toString())
 //                Navigation.findNavController(formView).navigate(nextAction)
-//                newInstance(geoPoint.latitude, geoPoint.longitude)
-//                val fragment = Fragment(R.id.mapFragment)
-
-//                fragmentManager
-//                    ?.beginTransaction()
-//                    ?.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out)
-//                    ?.replace(R.id.nav_host_fragment, fragment)
-//                    ?.commit()
+                val fragment = com.example.cribb.MapFragment.newInstance(geoPoint.latitude,geoPoint.longitude)
+                fragmentManager
+                    ?.beginTransaction()
+                    ?.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out)
+                    ?.replace(view!!.id, fragment)
+                    ?.commit()
 
 
                 }.addOnFailureListener { exception ->
