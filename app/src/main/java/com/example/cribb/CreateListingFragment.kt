@@ -71,6 +71,9 @@ class CreateListingFragment : Fragment() {
 //            }
 //
 //        })
+//        address1.setOnClickListener{
+//            it.scrollTo(0,50)
+//        }
         submit.setOnClickListener {
             uploadProperty()
         }

@@ -1,42 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
-        xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        tools:context=".CreateListingFragment"
-        android:background="@color/cribbDarkGrey"
-        android:layout_height="match_parent" >
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cribbDarkGrey"
+    tools:context=".CreateListingFragment">
+
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/cribbDarkGrey"
-            android:id="@+id/LinearLayout_in_scroll" android:orientation="vertical">
+        android:id="@+id/LinearLayout_in_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/cribbDarkGrey"
+        android:orientation="vertical">
+
         <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
             <androidx.constraintlayout.widget.Guideline
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" app:layout_constraintGuide_begin="48dp"
-                    android:id="@+id/guide_left"/>
+                android:id="@+id/guide_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="48dp" />
+
             <androidx.constraintlayout.widget.Guideline
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/guide_right" app:layout_constraintGuide_end="48dp"/>
+                android:id="@+id/guide_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="48dp" />
+
             <androidx.constraintlayout.widget.Guideline
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" app:layout_constraintGuide_percent="0.6"
-                    android:id="@+id/guide_60"/>
+                android:id="@+id/guide_60"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.6" />
+
             <ImageView
-                    android:src="@drawable/add_cribb"
-                    android:layout_width="118dp"
-                    android:layout_height="115dp" android:id="@+id/imageView2"
-                    app:layout_constraintEnd_toStartOf="@+id/guide_right"
-                    app:layout_constraintStart_toStartOf="@+id/guide_left"
-                    app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="24dp"/>
+                android:id="@+id/imageView2"
+                android:layout_width="118dp"
+                android:layout_height="115dp"
+                android:layout_marginTop="24dp"
+                android:src="@drawable/add_cribb"
+                app:layout_constraintEnd_toStartOf="@+id/guide_right"
+                app:layout_constraintStart_toStartOf="@+id/guide_left"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <!--<fragment android:id="@+id/autocomplete_fragment"-->
             <!--android:layout_width="0dp"-->
@@ -47,78 +60,92 @@
             <!--app:layout_constraintHorizontal_bias="1.0"-->
             <!--tools:layout_editor_absoluteY="691dp"/>-->
             <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                android:id="@+id/textInputLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:layout_constraintStart_toStartOf="@id/guide_left"
-                    app:layout_constraintEnd_toEndOf="@id/guide_right" app:layout_constraintHorizontal_bias="0.0"
-                    android:layout_marginTop="24dp" app:layout_constraintTop_toBottomOf="@+id/imageView2"
-                    android:id="@+id/textInputLayout">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="@id/guide_right"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@id/guide_left"
+                app:layout_constraintTop_toBottomOf="@+id/imageView2">
 
                 <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/address" android:inputType="textPostalAddress"
-                        android:id="@+id/address1"/>
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
+                    android:id="@+id/address1"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/address"
+                    android:inputType="textPostalAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout2"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:layout_constraintStart_toStartOf="@+id/guide_left"
-                    app:layout_constraintEnd_toStartOf="@+id/guide_right"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout" android:id="@+id/textInputLayout2">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toStartOf="@+id/guide_right"
+                app:layout_constraintStart_toStartOf="@+id/guide_left"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="address 2" android:id="@+id/address2"/>
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
+                    android:id="@+id/address2"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="Address 2" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout4"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:layout_constraintStart_toStartOf="@+id/guide_left"
-                    app:layout_constraintTop_toBottomOf="@id/textInputLayout2"
-                    android:layout_marginTop="16dp"
-                    android:id="@+id/textInputLayout4" app:layout_constraintEnd_toStartOf="@+id/guide_right"
-            >
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toStartOf="@+id/guide_right"
+                app:layout_constraintStart_toStartOf="@+id/guide_left"
+                app:layout_constraintTop_toBottomOf="@id/textInputLayout2">
 
                 <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="City" android:id="@+id/city"/>
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
+                    android:id="@+id/city"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="City" />
+            </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout5"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:layout_constraintEnd_toStartOf="@+id/guide_right"
-                    app:layout_constraintStart_toStartOf="@+id/guide_left"
-                    android:id="@+id/textInputLayout5" app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
-                    android:layout_marginTop="16dp">
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toStartOf="@+id/guide_right"
+                app:layout_constraintStart_toStartOf="@+id/guide_left"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
 
                 <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Landlord/Leasing Company" android:id="@+id/landlord"/>
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
+                    android:id="@+id/landlord"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="Landlord/Leasing Company" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout6"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 app:errorEnabled="true"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:layout_constraintEnd_toStartOf="@+id/guide_right"
-                    app:layout_constraintStart_toStartOf="@+id/guide_left"
-                    android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/textInputLayout5"
-                    android:id="@+id/textInputLayout6">
+                app:layout_constraintEnd_toStartOf="@+id/guide_right"
+                app:layout_constraintStart_toStartOf="@+id/guide_left"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
 
                 <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Cost of Rent" android:id="@+id/rent"/>
+                    android:id="@+id/rent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Cost of Rent" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
@@ -137,35 +164,45 @@
                 app:layout_constraintHorizontal_bias="0.517"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout6" />
+
             <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                android:id="@+id/textInputLayout3"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:layout_constraintEnd_toStartOf="@id/guide_60"
-                    app:layout_constraintStart_toStartOf="@+id/guide_left"
-                    android:id="@+id/textInputLayout3" android:layout_marginTop="16dp"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout4" android:layout_marginRight="16dp"
-                    android:layout_marginEnd="16dp">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                app:layout_constraintEnd_toStartOf="@id/guide_60"
+                app:layout_constraintStart_toStartOf="@+id/guide_left"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
 
                 <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="State" android:id="@+id/state" android:autoText="true"/>
+                    android:id="@+id/state"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autoText="true"
+                    android:hint="State" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:layout_constraintEnd_toStartOf="@id/guide_right" android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp" android:layout_marginTop="16dp"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout4"
-                    app:layout_constraintStart_toStartOf="@+id/guide_60" android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintEnd_toStartOf="@id/guide_right"
+                app:layout_constraintStart_toStartOf="@+id/guide_60"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
 
                 <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Zipcode" android:id="@+id/zipcode"/>
+                    android:id="@+id/zipcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Zipcode" />
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
