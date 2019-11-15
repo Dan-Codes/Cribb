@@ -1,5 +1,6 @@
 package com.example.cribb
 
+
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues.TAG
@@ -10,6 +11,7 @@ import android.content.res.Resources
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
+import android.os.StrictMode
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -94,6 +96,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
         Log.d("geoPoints", "$param1")
         setUpMap()
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
+
     }
 
     override fun onCreateView(
@@ -114,6 +117,13 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (true) {
+            val policy: StrictMode.ThreadPolicy = StrictMode.ThreadPolicy.Builder()
+                .permitAll().build()
+            StrictMode.setThreadPolicy(policy)
+            var result: String = UsStreetSingleAddressExample.run("1", "2", "3")
+            Log.d("Result", "$result")
+        }
 //            arguments?.let {
 //                if (!it.isEmpty) {
 //                val safeArgs = MapFragmentArgs.fromBundle(it)
