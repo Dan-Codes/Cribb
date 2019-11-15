@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.fragment_create_listing.*
 import com.google.android.libraries.places.api.Places
 import android.location.Address
 import android.location.Geocoder
+import android.os.StrictMode
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.Navigation
@@ -84,70 +85,86 @@ class CreateListingFragment : Fragment() {
             Toast.makeText(context, "You must include all required address fields", Toast.LENGTH_SHORT).show()
             return false
         }
-        var listAddress: List<Address>
-        full_address = "${address1.text} ${city.text}, ${state.text} ${zipcode.text}"
-        geocoder = Geocoder(context!!)
 
-
-        listAddress = geocoder.getFromLocationName(full_address, 3)
-        if (listAddress == null) {
-            Toast.makeText(context!!, "This place does not exist.", Toast.LENGTH_SHORT).show()
-            return false
-        }
-        geoPoint = GeoPoint(listAddress[0].latitude, listAddress[0].longitude)
-        Log.d("GeoPoint", "$geoPoint")
-        //Log.d("added", "$check")
-
-        val nestedData = HashMap<String,Any?>()
-        val docData = hashMapOf(
-            "address" to full_address,
-            "geopoint" to geoPoint,
-            "property" to true,
-            "landlordName" to landlord.text.toString(),
-            "rent" to rent.text.toString(),
-            "addedby" to "dli123@syr.edu",
-            "reviews" to nestedData,
-            "avgAmenities" to 0.0,
-            "avgLocation" to 0.0,
-            "avgManage" to 0.0,
-            "avgOverallRating" to 0.0
-        )
-
-        val docRef = db.collection("listings")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    val currentGeoPoint = document.get("geopoint") as GeoPoint
-                    if (abs(geoPoint.latitude - currentGeoPoint.latitude) < 0.0001 && abs(geoPoint.longitude - currentGeoPoint.longitude) < 0.0001) {
-                        Log.d("caught", "already in database")
-                        Toast.makeText(
-                            context!!,
-                            "This place already exists on Cribb",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        //resultListener.onResult(true)
-                        //myCallback(false)
-                        return@addOnSuccessListener
-                    }
-                }
-                //myCallback(true)
-                Log.d("tag", "address doesn't exist in database, initializing data entry")
-                db.collection("listings").document(full_address)
-                    .set(docData)
-                    .addOnSuccessListener {
-                        Log.d(TAG, "DocumentSnapshot successfully written!")
-                        //val fragment :com.example.cribb.MapFragment = com.example.cribb.MapFragment.newInstance(geoPoint.latitude,geoPoint.longitude)
-                        //com.example.cribb.MapFragment.newInstance(geoPoint.latitude,geoPoint.longitude)
-                        val navController = findNavController()
-                        //navController.
-                        var nextAction = CreateListingFragmentDirections.actionCreateListingFragmentToMapFrag()
-                        nextAction.lat = geoPoint.latitude.toFloat()
-                        nextAction.longitude = geoPoint.longitude.toFloat()
-                        navController.navigate(nextAction)
-                    }
-                    .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e)
-                    }
+        //API verify valid address
+        if (true) {
+            val policy: StrictMode.ThreadPolicy = StrictMode.ThreadPolicy.Builder()
+                .permitAll().build()
+            StrictMode.setThreadPolicy(policy)
+            var result: String = UsStreetSingleAddressExample.run("${address1.text.toString()}", "${city.text.toString()}", "${state.text.toString()}", "${zipcode.text.toString()}")
+            Log.d("Result", "$result")
+            if (result != "Address is valid."){
+                Toast.makeText(context!!, "This place does not exist.", Toast.LENGTH_SHORT).show()
+                return false
             }
+
+            var listAddress: List<Address>
+            full_address = "${address1.text} ${city.text}, ${state.text} ${zipcode.text}"
+            geocoder = Geocoder(context!!)
+
+
+            listAddress = geocoder.getFromLocationName(full_address, 3)
+            if (listAddress == null) {
+                Toast.makeText(context!!, "This place does not exist.", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            geoPoint = GeoPoint(listAddress[0].latitude, listAddress[0].longitude)
+            Log.d("GeoPoint", "$geoPoint")
+            //Log.d("added", "$check")
+
+            val nestedData = HashMap<String,Any?>()
+            val docData = hashMapOf(
+                "address" to full_address,
+                "geopoint" to geoPoint,
+                "property" to true,
+                "landlordName" to landlord.text.toString(),
+                "rent" to rent.text.toString(),
+                "addedby" to "dli123@syr.edu",
+                "reviews" to nestedData,
+                "avgAmenities" to 0.0,
+                "avgLocation" to 0.0,
+                "avgManage" to 0.0,
+                "avgOverallRating" to 0.0
+            )
+
+            val docRef = db.collection("listings")
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        val currentGeoPoint = document.get("geopoint") as GeoPoint
+                        if (abs(geoPoint.latitude - currentGeoPoint.latitude) < 0.0001 && abs(geoPoint.longitude - currentGeoPoint.longitude) < 0.0001) {
+                            Log.d("caught", "already in database")
+                            Toast.makeText(
+                                context!!,
+                                "This place already exists on Cribb",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            //resultListener.onResult(true)
+                            //myCallback(false)
+                            return@addOnSuccessListener
+                        }
+                    }
+                    //myCallback(true)
+                    Log.d("tag", "address doesn't exist in database, initializing data entry")
+                    db.collection("listings").document(full_address)
+                        .set(docData)
+                        .addOnSuccessListener {
+                            Log.d(TAG, "DocumentSnapshot successfully written!")
+                            //val fragment :com.example.cribb.MapFragment = com.example.cribb.MapFragment.newInstance(geoPoint.latitude,geoPoint.longitude)
+                            //com.example.cribb.MapFragment.newInstance(geoPoint.latitude,geoPoint.longitude)
+                            val navController = findNavController()
+                            //navController.
+                            var nextAction = CreateListingFragmentDirections.actionCreateListingFragmentToMapFrag()
+                            nextAction.lat = geoPoint.latitude.toFloat()
+                            nextAction.longitude = geoPoint.longitude.toFloat()
+                            navController.navigate(nextAction)
+                        }
+                        .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e)
+                        }
+                }
+        }
+
+
 
         return true
     }

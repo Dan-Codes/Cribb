@@ -117,13 +117,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (true) {
-            val policy: StrictMode.ThreadPolicy = StrictMode.ThreadPolicy.Builder()
-                .permitAll().build()
-            StrictMode.setThreadPolicy(policy)
-            var result: String = UsStreetSingleAddressExample.run("1", "2", "3")
-            Log.d("Result", "$result")
-        }
 //            arguments?.let {
 //                if (!it.isEmpty) {
 //                val safeArgs = MapFragmentArgs.fromBundle(it)
