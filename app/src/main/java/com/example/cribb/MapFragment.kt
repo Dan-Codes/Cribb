@@ -222,11 +222,18 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 //                        .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }
 //                        .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
 
-                    mMap.addMarker(
+                    val marker = mMap.addMarker(
                         MarkerOptions().position(LatLng(location!!.latitude, location.longitude)).title(
                             address
                         )
                     )
+                    //(abs(lat - ThirdState.shared.varLat) < 0.000001 || abs(long - ThirdState.shared.varLong) < 0.000001)
+                    //if ((location!!.latitude - lat) < 0.000001 && (location!!.longitude - lng) < 0.000001){
+                    if (location!!.latitude.toFloat() == lat.toFloat() && location!!.longitude.toFloat() == lng.toFloat()){
+                        marker.showInfoWindow()
+                        Log.d("info window", "$marker")
+                    }
+
                 }
             }
             .addOnFailureListener { exception ->
