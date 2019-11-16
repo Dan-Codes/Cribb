@@ -54,6 +54,9 @@
         <action
             android:id="@+id/action_displayListingFragment2_to_writeReviewFragment2"
             app:destination="@id/writeReviewFragment2" />
+        <action
+            android:id="@+id/action_displayListingFragment2_to_reportFragment"
+            app:destination="@id/reportFragment" />
     </fragment>
     <fragment
         android:id="@+id/writeReviewFragment2"
@@ -87,5 +90,15 @@
         <action
             android:id="@+id/action_searchTable_to_displayListingFragment2"
             app:destination="@id/displayListingFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/reportFragment"
+        android:name="com.example.cribb.ReportFragment"
+        android:label="Report a Problem"
+        tools:layout="@layout/fragment_report" >
+        <argument
+            android:name="report_address"
+            app:argType="string"
+            android:defaultValue="address" />
     </fragment>
 </navigation>

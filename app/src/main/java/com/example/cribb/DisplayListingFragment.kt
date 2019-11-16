@@ -44,6 +44,11 @@ class DisplayListingFragment : androidx.fragment.app.Fragment() {
             nextAction.dynamicAddress = address
             Navigation.findNavController(it).navigate(nextAction)
         }
+        reportButton.setOnClickListener {
+            val nextAction = DisplayListingFragmentDirections.actionDisplayListingFragment2ToReportFragment()
+            nextAction.reportAddress = address
+            Navigation.findNavController(it).navigate(nextAction)
+        }
     }
 
     @SuppressLint("ResourceType")
