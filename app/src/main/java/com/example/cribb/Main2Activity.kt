@@ -56,7 +56,7 @@ class Main2Activity : AppCompatActivity(), searchTable.OnFragmentInteractionList
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle presses on the action bar menu items
         when (item.itemId) {
-            R.id.app_bar_search -> {
+            R.id.search -> {
                 val navController = findNavController(R.id.nav_host_fragment)
 
                 navController.navigate(R.id.action_mapFrag_to_searchTable)
