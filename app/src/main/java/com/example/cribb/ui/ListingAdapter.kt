@@ -26,6 +26,25 @@ class ListingAdapter(val items : ArrayList<searchTable.Listing>, val context: Co
         holder?.listingRating?.text= "Rating: " + items.get(position).rating.toString()
         holder?.listingPrice?.text= "Price: " + items.get(position).price.toString()
     }
+
+    interface OnItemClickListener {
+        fun onItemClicked(position: Int, view: View)
+    }
+}
+
+fun RecyclerView.addOnItemClickListener(onClickListener: ListingAdapter.OnItemClickListener) {
+    this.addOnChildAttachStateChangeListener(object: RecyclerView.OnChildAttachStateChangeListener {
+        override fun onChildViewDetachedFromWindow(view: View) {
+            view?.setOnClickListener(null)
+        }
+
+        override fun onChildViewAttachedToWindow(view: View) {
+            view.setOnClickListener({
+                val holder = getChildViewHolder(view)
+                onClickListener.onItemClicked(holder.adapterPosition, view)
+            })
+        }
+    })
 }
 
 class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {

@@ -12,12 +12,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.SearchView
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-
+import androidx.navigation.Navigation
 import com.example.cribb.R
 import com.example.cribb.db
 import kotlinx.android.synthetic.main.fragment_search_table.*
 import kotlinx.android.synthetic.main.listing_item.*
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 import kotlin.math.roundToInt
 
 // TODO: Rename parameter arguments, choose names that match
@@ -46,10 +51,12 @@ class searchTable : Fragment(), SearchView.OnQueryTextListener {
         var price:String = ""
     }
 
-    var emptyList = Listing()
-    var sharedProp:ArrayList<Listing> = ArrayList()
+    private var sharedProp:ArrayList<Listing> = ArrayList()
+    private var filteredProp:ArrayList<Listing> = ArrayList()
 
-    private var properties:ArrayList<Listing> = ArrayList()
+    init {
+        addProperty()
+    }
 
     private fun addProperty(){
         var arrayList:ArrayList<Listing> = ArrayList()
@@ -93,9 +100,6 @@ class searchTable : Fragment(), SearchView.OnQueryTextListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -117,17 +121,52 @@ class searchTable : Fragment(), SearchView.OnQueryTextListener {
 
     override fun onQueryTextChange(newText: String): Boolean {
         Log.d(TAG, newText)
+        updateProperty(newText)
         return false
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        addProperty()
+        listing_list.layoutManager = LinearLayoutManager(this.requireContext())
+        listing_list.adapter = ListingAdapter(sharedProp, this.requireContext())
 
         val searchView = getView()!!.findViewById<SearchView>(R.id.searchView)
         searchView!!.setOnQueryTextListener(this)
 
+        listing_list.addOnItemClickListener(object: ListingAdapter.OnItemClickListener {
+            override fun onItemClicked(position: Int, view: View) {
+                var nextAction = searchTableDirections.actionSearchTableToDisplayListingFragment2()
+                if (filteredProp.isEmpty()){
+                    nextAction.dynamicAddress = sharedProp.get(position).name
+                }
+
+                else{
+                    nextAction.dynamicAddress = filteredProp.get(position).name
+                }
+                Navigation.findNavController(searchView).navigate(nextAction)
+            }
+        })
+    }
+
+    private fun updateProperty(searchString: String){
+        var searchString = searchString
+        searchString = searchString.toLowerCase(Locale.getDefault())
+
+        filteredProp.clear()
+
+        if (searchString.isEmpty()) {
+            filteredProp.addAll(sharedProp)
+            listing_list.adapter = ListingAdapter(filteredProp, this.requireContext())
+        }
+        else {
+            for (wp in sharedProp){
+                if (wp.name.toLowerCase(Locale.getDefault()).contains(searchString)){
+                    filteredProp.add(wp)
+                }
+            }
+            listing_list.adapter = ListingAdapter(filteredProp, this.requireContext())
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event

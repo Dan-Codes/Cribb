@@ -26,7 +26,7 @@
         android:id="@+id/mapFrag"
         android:name="com.example.cribb.MapFragment"
         android:label="Cribb"
-        tools:layout="@layout/fragment_map" >
+        tools:layout="@layout/fragment_map">
         <action
             android:id="@+id/action_mapFrag_to_displayListingFragment2"
             app:destination="@id/displayListingFragment2" />
@@ -35,12 +35,12 @@
             app:destination="@id/searchTable" />
         <argument
             android:name="lat"
-            app:argType="float"
-            android:defaultValue="0.0" />
+            android:defaultValue="0.0"
+            app:argType="float" />
         <argument
             android:name="longitude"
-            app:argType="float"
-            android:defaultValue="0.0" />
+            android:defaultValue="0.0"
+            app:argType="float" />
     </fragment>
     <fragment
         android:id="@+id/displayListingFragment2"
@@ -82,6 +82,10 @@
     <fragment
         android:id="@+id/searchTable"
         android:name="com.example.cribb.ui.searchTable"
-        android:label="fragment_search_table"
-        tools:layout="@layout/fragment_search_table" />
+        android:label="Search"
+        tools:layout="@layout/fragment_search_table">
+        <action
+            android:id="@+id/action_searchTable_to_displayListingFragment2"
+            app:destination="@id/displayListingFragment2" />
+    </fragment>
 </navigation>
