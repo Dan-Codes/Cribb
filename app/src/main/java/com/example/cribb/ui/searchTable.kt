@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.cribb.R
@@ -32,7 +33,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [searchTable.newInstance] factory method to
  * create an instance of this fragment.
  */
-class searchTable : Fragment() {
+class searchTable : Fragment(), SearchView.OnQueryTextListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -85,7 +86,6 @@ class searchTable : Fragment() {
                     arrayList.add(property)
                 }
                 sharedProp = arrayList
-                sharedProp.add(emptyList)
                 listing_list.layoutManager = LinearLayoutManager(this.requireContext())
                 listing_list.adapter = ListingAdapter(sharedProp, this.requireContext())
             }
@@ -110,14 +110,23 @@ class searchTable : Fragment() {
         return inflater.inflate(R.layout.fragment_search_table, container, false)
     }
 
+    override fun onQueryTextSubmit(query: String): Boolean {
+
+        return false
+    }
+
+    override fun onQueryTextChange(newText: String): Boolean {
+        Log.d(TAG, newText)
+        return false
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         addProperty()
 
-
-
+        val searchView = getView()!!.findViewById<SearchView>(R.id.searchView)
+        searchView!!.setOnQueryTextListener(this)
 
     }
 
