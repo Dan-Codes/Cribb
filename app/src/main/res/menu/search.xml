@@ -6,5 +6,6 @@
         android:id="@+id/search"
         android:icon="@drawable/quantum_ic_search_grey600_24"
         android:title="Seach"
+        android:visible="false"
         app:showAsAction="always" />
 </menu>

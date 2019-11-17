@@ -93,10 +93,20 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
             param1 = it.getDouble(ARG_PARAM1)
             param2 = it.getDouble(ARG_PARAM2)
         }
+        setHasOptionsMenu(true)
+
+
         Log.d("geoPoints", "$param1")
         setUpMap()
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
 
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+
+        var searchIt:MenuItem = menu.findItem(R.id.search)
+        searchIt.setVisible(true)
     }
 
     override fun onCreateView(
@@ -255,7 +265,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,15.0f))
                 }
                 else
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(current_location, 15.0f))
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(syracuse, 15.0f))
             }
 
 
