@@ -17,9 +17,38 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listing_list"
         android:layout_width="0dp"
-        android:layout_height="615dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+
+    <Button
+        android:id="@+id/btnDefault"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:text="Default"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+
+    <Button
+        android:id="@+id/btnPrice"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="39dp"
+        android:text="Price"
+        app:layout_constraintStart_toEndOf="@+id/btnDefault"
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+
+    <Button
+        android:id="@+id/btnRating"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="40dp"
+        android:text="Rating"
+        app:layout_constraintStart_toEndOf="@+id/btnPrice"
         app:layout_constraintTop_toBottomOf="@+id/searchView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -53,6 +53,7 @@ class searchTable : Fragment(), SearchView.OnQueryTextListener {
 
     private var sharedProp:ArrayList<Listing> = ArrayList()
     private var filteredProp:ArrayList<Listing> = ArrayList()
+    private var scope:String = ""
 
     init {
         addProperty()
@@ -127,6 +128,39 @@ class searchTable : Fragment(), SearchView.OnQueryTextListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        btnDefault.setOnClickListener {
+            if (filteredProp.isEmpty()) {
+                sharedProp = ArrayList(sharedProp.sortedWith(compareBy({ it.name })))
+                listing_list.adapter = ListingAdapter(sharedProp, this.requireContext())
+            }
+            else {
+                filteredProp = ArrayList(filteredProp.sortedWith(compareBy({ it.name })))
+                listing_list.adapter = ListingAdapter(filteredProp, this.requireContext())
+            }
+        }
+
+        btnRating.setOnClickListener {
+            if (filteredProp.isEmpty()) {
+                sharedProp = ArrayList(sharedProp.sortedWith(compareBy({ it.rating })))
+                listing_list.adapter = ListingAdapter(sharedProp, this.requireContext())
+            }
+            else {
+                filteredProp = ArrayList(filteredProp.sortedWith(compareBy({ it.rating })))
+                listing_list.adapter = ListingAdapter(filteredProp, this.requireContext())
+            }
+        }
+
+        btnPrice.setOnClickListener {
+            if (filteredProp.isEmpty()) {
+                sharedProp = ArrayList(sharedProp.sortedWith(compareBy({ it.price })))
+                listing_list.adapter = ListingAdapter(sharedProp, this.requireContext())
+            }
+            else {
+                filteredProp = ArrayList(filteredProp.sortedWith(compareBy({ it.price })))
+                listing_list.adapter = ListingAdapter(filteredProp, this.requireContext())
+            }
+        }
 
         listing_list.layoutManager = LinearLayoutManager(this.requireContext())
         listing_list.adapter = ListingAdapter(sharedProp, this.requireContext())
