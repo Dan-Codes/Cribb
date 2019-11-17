@@ -28,9 +28,9 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         auth = FirebaseAuth.getInstance()
         super.onCreate(savedInstanceState)
-        val email  = resources.getString(R.string.email)
-        val pass = resources.getString(R.string.password)
-        signIn(email,pass)
+//        val email  = resources.getString(R.string.email)
+//        val pass = resources.getString(R.string.password)
+//        signIn(email,pass)
         setContentView(R.layout.activity_login)
 
         val username = findViewById<EditText>(R.id.username)
@@ -38,6 +38,7 @@ class LoginActivity : AppCompatActivity() {
         val login = findViewById<Button>(R.id.login)
         val loading = findViewById<ProgressBar>(R.id.loading)
         val signUp = findViewById<TextView>(R.id.link_login)
+
 
         loginViewModel = ViewModelProviders.of(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
@@ -105,6 +106,15 @@ class LoginActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    override fun onCreateView(
+        parent: View?,
+        name: String,
+        context: Context,
+        attrs: AttributeSet
+    ): View? {
+        return super.onCreateView(parent, name, context, attrs)
     }
 
     fun goToSignUp(v:View){

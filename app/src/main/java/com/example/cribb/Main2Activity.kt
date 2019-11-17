@@ -1,9 +1,12 @@
 package com.example.cribb
 
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.util.AttributeSet
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -17,10 +20,24 @@ import com.example.cribb.data.App
 import com.example.cribb.ui.searchTable
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main2.*
+import com.example.cribb.ui.login.LoginActivity
+import android.content.Intent
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.FirebaseAuth
+import androidx.annotation.NonNull
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.util.Log
+import androidx.fragment.app.FragmentActivity
+
+
+
 
 val db = FirebaseFirestore.getInstance()
 lateinit var navController: NavController
 class Main2Activity : AppCompatActivity(), searchTable.OnFragmentInteractionListener {
+    var mAuthListenr : FirebaseAuth.AuthStateListener? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
@@ -43,7 +60,26 @@ class Main2Activity : AppCompatActivity(), searchTable.OnFragmentInteractionList
             nightMode?.let { delegate.localNightMode = it }
         }
         )
+
+        mAuthListenr = FirebaseAuth.AuthStateListener(object : FirebaseAuth.AuthStateListener, (FirebaseAuth) -> Unit {
+            override fun invoke(p1: FirebaseAuth) {
+            }
+
+            override fun onAuthStateChanged(p0: FirebaseAuth) {
+                var user = p0.getCurrentUser()
+                if (user != null){
+                    //do something
+                }else{
+                    Log.d("FragmentActivity", "Logout")
+                    val intent = Intent(this@Main2Activity, LoginActivity::class.java)
+                    //startActivity(intent)
+                }
+            }
+
+        })
     }
+
+
     override fun onFragmentInteraction(uri: Uri) {
 
     }
