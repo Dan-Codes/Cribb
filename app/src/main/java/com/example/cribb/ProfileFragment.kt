@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
@@ -35,9 +36,10 @@ class ProfileFragment: Fragment() {
         var managementRating = ""
 
     }
-    init {
-        //pullReviews()
-    }
+
+//    init {
+//        pullReviews()
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,8 +68,7 @@ class ProfileFragment: Fragment() {
             //Navigation.findNavController(it).navigate()
 
         }
-
-
+        pullReviews()
     }
 
     private fun pullReviews() {
@@ -121,9 +122,8 @@ class ProfileFragment: Fragment() {
         arrayList.add(property)
 
     //sharedProp = arrayList
-    //listing_list.layoutManager = LinearLayoutManager(this.requireContext())
-    cardView.adapter = ReviewListAdapter(arrayList, this.requireContext())
-}
-
-
+    //listing_list.layoutManager = LinearLayoutManager(this.requireContext()
+        cardView.layoutManager = LinearLayoutManager(this.requireContext())
+        cardView.adapter = ReviewListAdapter(arrayList, this.requireContext())
+    }
 }
