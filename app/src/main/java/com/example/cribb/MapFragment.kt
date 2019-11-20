@@ -1,6 +1,7 @@
 package com.example.cribb
 
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues.TAG
@@ -23,6 +24,7 @@ import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -177,60 +179,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
                     var avgAmenities = document.getDouble("avgAmenities")
                     var overallRating= 0.0
                     val review = document.get("reviews") as HashMap<String, *>
-//                    println(review)
-//
                     var countReviews = 0
-//                    var averageLocation:Double = 0.0
-//                    var averageManagement:Double = 0.0
-//                    var averageAmenities:Double = 0.0
-                   // for (reviewer in review) {
-//                        println(reviewer)
-//                        val reviewer = reviewer
-//                        val reviewMap = review
-//
-//                        val reviewInfo:HashMap<String,String>  = reviewMap.getValue(reviewer.key) as HashMap<String, String>
-        //                val lRating:Double = reviewInfo.getValue("locationRating") as Double
-       //                 val mRating:Double = reviewInfo.getValue("managementRating") as Double
-        //                val aRating:Double = reviewInfo.getValue("amenitiesRating") as Double
-//                        if (lRating != null && mRating != null && aRating != null){
-//                           countReviews++
-//                            averageLocation += lRating
-//                            averageManagement += mRating
-//                            averageAmenities += aRating
-                       //}
-//
-                 //   }
-//                    if (averageLocation != 0.0){
-//                        averageLocation /= countReviews
-//                        averageManagement /= countReviews
-//                        averageAmenities /= countReviews
-//
-//                    }
-
-//                      if (avgLocation != 0.0){
-//                          overallRating = (avgAmenities + avgLocation + avgManage)/3
-//                      }
-//                    val avg = db.collection("listings").document(document.id)
-//
-//                    avg
-//                        .update("avgLocation", averageLocation)
-//                        .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }
-//                        .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
-//
-//                    avg
-//                        .update("avgManage", averageManagement)
-//                        .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }
-//                        .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
-//
-//                    avg
-//                        .update("avgAmenities", averageAmenities)
-//                        .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }
-//                        .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
-
-//                                        avg
-//                        .update("avgOverallRating", overallRating)
-//                        .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }
-//                        .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
 
                     val marker = mMap.addMarker(
                         MarkerOptions().position(LatLng(location!!.latitude, location.longitude)).title(
@@ -250,29 +199,54 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
                 Log.d("TAG", "Error getting documents: ", exception)
             }
 
+        if (ContextCompat.checkSelfPermission(activity!!,
+                Manifest.permission.READ_CONTACTS)
+            != PackageManager.PERMISSION_GRANTED) {
 
-//        // Add a marker in Sydney and move the camera
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location : Location? ->
-                Log.d("location", "$location")
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity!!,
+                    Manifest.permission.READ_CONTACTS)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(activity!!,
+                    arrayOf(Manifest.permission.READ_CONTACTS),
+                    LOCATION_PERMISSION_REQUEST_CODE)
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        } else {
+            // Permission has already been granted
+
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location : Location? ->
+                    Log.d("location", "$location")
                     var current_location = LatLng(location!!.latitude,location!!.longitude)
 
                     val syracuse = LatLng(43.038710, -76.134265)
 
 
-                if (lat != 0.0) {
-                    val location = LatLng(lat,lng)
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,15.0f))
+                    if (lat != 0.0) {
+                        val location = LatLng(lat,lng)
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,15.0f))
+                    }
+                    else
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(syracuse, 15.0f))
                 }
-                else
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(syracuse, 15.0f))
-            }
 
 
 
 
-        setUpMap() //checks if location is enabled and requests users permission
-        mMap.isMyLocationEnabled = true //creates a blue location dot and location button
+            setUpMap() //checks if location is enabled and requests users permission
+            mMap.isMyLocationEnabled = true //creates a blue location dot and location button
+        }
+
+
 //
 //        //moves location button to bottom right
         val locationButton =
