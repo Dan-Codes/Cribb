@@ -22,7 +22,7 @@ class ReviewListAdapter(val items : ArrayList<ProfileFragment.Listing>, val cont
     // Binds each animal in the ArrayList to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder?.listingAddress?.text= items.get(position).address
-        //holder?.listingRating?.rating= items.get(position).rating.toFloat()
+        holder?.listingRating?.rating= items.get(position).rating
         holder?.listingDescription?.text= "Price: " + items.get(position).comment
     }
 
