@@ -145,7 +145,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
             if (it != 0.0)
                 lng = it
         }
-        setUpMap()
+
 
 
     }
@@ -167,7 +167,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
             Log.e(TAG, "Can't find style. Error: ", e)
         }
         mMap = googleMap
-
+        setUpMap()
         db.collection("listings")
             .get()
             .addOnSuccessListener { result ->
@@ -321,8 +321,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
                             var current_location = LatLng(location!!.latitude,location!!.longitude)
 
                             val syracuse = LatLng(43.038710, -76.134265)
-
-
                             if (lat != 0.0) {
                                 val location = LatLng(lat,lng)
                                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,15.0f))
