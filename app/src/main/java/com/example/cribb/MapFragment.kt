@@ -212,13 +212,10 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
                 // sees the explanation, try again to request the permission.
             } else {
                 // No explanation needed, we can request the permission.
-                ActivityCompat.requestPermissions(activity!!,
+                val request = ActivityCompat.requestPermissions(activity!!,
                     arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                     LOCATION_PERMISSION_REQUEST_CODE)
 
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
             }
         } else {
             // Permission has already been granted
@@ -268,6 +265,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 
     }
 
+
+
     private fun setUpMap() {
         if (ActivityCompat.checkSelfPermission(
                 context!!,
@@ -285,7 +284,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
-        permissions: Array<out String>,
+        permissions: Array<String>,
         grantResults: IntArray
     ) {
 
@@ -293,7 +292,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
             LOCATION_PERMISSION_REQUEST_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     Toast.makeText(context,"Permission Granted!", Toast.LENGTH_SHORT).show()
-                    permission = false
+                    permission = true
                 }
                 else{
                     Toast.makeText(context,"Permission Denied",Toast.LENGTH_SHORT).show()
