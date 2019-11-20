@@ -99,9 +99,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 
 
         Log.d("geoPoints", "$param1")
-        setUpMap()
+        //setUpMap()
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
-
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
@@ -146,6 +145,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
             if (it != 0.0)
                 lng = it
         }
+        setUpMap()
+
 
     }
 
@@ -199,46 +200,47 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
                 Log.d("TAG", "Error getting documents: ", exception)
             }
 
-        if (ContextCompat.checkSelfPermission(activity!!,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED) {
-
-            // Permission is not granted
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(activity!!,
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-            } else {
-                // No explanation needed, we can request the permission.
-                val request = ActivityCompat.requestPermissions(activity!!,
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                    LOCATION_PERMISSION_REQUEST_CODE)
-
-            }
-        } else {
-            // Permission has already been granted
-
-            fusedLocationClient.lastLocation
-                .addOnSuccessListener { location : Location? ->
-                    Log.d("location", "$location")
-                    var current_location = LatLng(location!!.latitude,location!!.longitude)
-
-                    val syracuse = LatLng(43.038710, -76.134265)
-
-
-                    if (lat != 0.0) {
-                        val location = LatLng(lat,lng)
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,15.0f))
-                    }
-                    else
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(syracuse, 15.0f))
-                }
-
-            //setUpMap() //checks if location is enabled and requests users permission
-            mMap.isMyLocationEnabled = true //creates a blue location dot and location button
-        }
+//        if (ContextCompat.checkSelfPermission(activity!!,
+//                Manifest.permission.ACCESS_FINE_LOCATION)
+//            != PackageManager.PERMISSION_GRANTED) {
+//
+//            // Permission is not granted
+//            // Should we show an explanation?
+//            if (ActivityCompat.shouldShowRequestPermissionRationale(activity!!,
+//                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+//                // Show an explanation to the user *asynchronously* -- don't block
+//                // this thread waiting for the user's response! After the user
+//                // sees the explanation, try again to request the permission.
+//            } else {
+//                // No explanation needed, we can request the permission.
+//
+//                ActivityCompat.requestPermissions(activity!!,
+//                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+//                    LOCATION_PERMISSION_REQUEST_CODE)
+//
+//            }
+//        } else {
+//            // Permission has already been granted
+//
+//            fusedLocationClient.lastLocation
+//                .addOnSuccessListener { location : Location? ->
+//                    Log.d("location", "$location")
+//                    var current_location = LatLng(location!!.latitude,location!!.longitude)
+//
+//                    val syracuse = LatLng(43.038710, -76.134265)
+//
+//
+//                    if (lat != 0.0) {
+//                        val location = LatLng(lat,lng)
+//                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,15.0f))
+//                    }
+//                    else
+//                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(syracuse, 15.0f))
+//                }
+//
+//            //setUpMap() //checks if location is enabled and requests users permission
+//            mMap.isMyLocationEnabled = true //creates a blue location dot and location button
+//        }
 
 
 //
@@ -268,31 +270,69 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 
 
     private fun setUpMap() {
-        if (ActivityCompat.checkSelfPermission(
-                context!!,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                activity!!,
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE
-            )
+        if (ContextCompat.checkSelfPermission(activity!!,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED) {
+            Log.d("mapmap", "denied")
 
-            return
+            // Permission is not granted
+            // Should we show an explanation?
+                requestPermissions(
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    LOCATION_PERMISSION_REQUEST_CODE)
+
+
+        } else {
+            // Permission has already been granted
+            Log.d("mapmap", "granted")
+
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location : Location? ->
+                    Log.d("location", "$location")
+                    var current_location = LatLng(location!!.latitude,location!!.longitude)
+
+                    val syracuse = LatLng(43.038710, -76.134265)
+
+
+                    if (lat != 0.0) {
+                        val location = LatLng(lat,lng)
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,15.0f))
+                    }
+                    else
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(syracuse, 15.0f))
+                }
+
+            //setUpMap() //checks if location is enabled and requests users permission
+            mMap.isMyLocationEnabled = true //creates a blue location dot and location button
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>, grantResults: IntArray) {
+        Log.d("mapmap", "when")
 
         when (requestCode){
             LOCATION_PERMISSION_REQUEST_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     Toast.makeText(context,"Permission Granted!", Toast.LENGTH_SHORT).show()
-                    permission = true
+                    fusedLocationClient.lastLocation
+                        .addOnSuccessListener { location : Location? ->
+                            Log.d("location", "$location")
+                            var current_location = LatLng(location!!.latitude,location!!.longitude)
+
+                            val syracuse = LatLng(43.038710, -76.134265)
+
+
+                            if (lat != 0.0) {
+                                val location = LatLng(lat,lng)
+                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,15.0f))
+                            }
+                            else
+                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(syracuse, 15.0f))
+                        }
+
+                    //setUpMap() //checks if location is enabled and requests users permission
+                    mMap.isMyLocationEnabled = true //creates a blue location dot and location button
                 }
                 else{
                     Toast.makeText(context,"Permission Denied",Toast.LENGTH_SHORT).show()
@@ -325,7 +365,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 
 
     companion object {
-        private const val LOCATION_PERMISSION_REQUEST_CODE = 1
+        public const val LOCATION_PERMISSION_REQUEST_CODE = 1
 
         @JvmStatic
         fun newInstance(param1: Double, param2: Double) =

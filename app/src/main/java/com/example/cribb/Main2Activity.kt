@@ -22,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main2.*
 import com.example.cribb.ui.login.LoginActivity
 import android.content.Intent
+import android.content.pm.PackageManager
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.FirebaseAuth
 import androidx.annotation.NonNull
@@ -29,6 +30,8 @@ import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.util.Log
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 
 
@@ -44,6 +47,8 @@ class Main2Activity : AppCompatActivity(), searchTable.OnFragmentInteractionList
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         setSupportActionBar(toolbar2)
         navController = findNavController(R.id.nav_host_fragment)
+
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
@@ -105,4 +110,25 @@ class Main2Activity : AppCompatActivity(), searchTable.OnFragmentInteractionList
         navController.navigateUp()
         return super.onSupportNavigateUp()
     }
+
+//    override fun onRequestPermissionsResult(requestCode: Int,
+//                                            permissions: Array<String>, grantResults: IntArray) {
+//        Log.d("mapmap", "when")
+//
+//        when (requestCode){
+//            MapFragment.LOCATION_PERMISSION_REQUEST_CODE -> {
+//                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+//                    Toast.makeText(this,"Permission Granted!", Toast.LENGTH_SHORT).show()
+//                    getFragmentManager().beginTransaction().detach(MapFragment).attach(this).commit()
+//                }
+//                else{
+//                    Toast.makeText(this,"Permission Denied", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//            else -> {
+//                super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//            }
+//
+//        }
+//    }
 }
