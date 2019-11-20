@@ -200,20 +200,20 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
             }
 
         if (ContextCompat.checkSelfPermission(activity!!,
-                Manifest.permission.READ_CONTACTS)
+                Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED) {
 
             // Permission is not granted
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(activity!!,
-                    Manifest.permission.READ_CONTACTS)) {
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
             } else {
                 // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(activity!!,
-                    arrayOf(Manifest.permission.READ_CONTACTS),
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                     LOCATION_PERMISSION_REQUEST_CODE)
 
                 // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
@@ -239,10 +239,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(syracuse, 15.0f))
                 }
 
-
-
-
-            setUpMap() //checks if location is enabled and requests users permission
+            //setUpMap() //checks if location is enabled and requests users permission
             mMap.isMyLocationEnabled = true //creates a blue location dot and location button
         }
 
