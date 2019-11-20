@@ -53,7 +53,6 @@ class searchTable : Fragment(), SearchView.OnQueryTextListener {
 
     private var sharedProp:ArrayList<Listing> = ArrayList()
     private var filteredProp:ArrayList<Listing> = ArrayList()
-    private var scope:String = ""
 
     init {
         addProperty()
@@ -162,8 +161,8 @@ class searchTable : Fragment(), SearchView.OnQueryTextListener {
             }
         }
 
-        listing_list.layoutManager = LinearLayoutManager(this.requireContext())
-        listing_list.adapter = ListingAdapter(sharedProp, this.requireContext())
+//        listing_list.layoutManager = LinearLayoutManager(this.requireContext())
+//        listing_list.adapter = ListingAdapter(sharedProp, this.requireContext())
 
         val searchView = getView()!!.findViewById<SearchView>(R.id.searchView)
         searchView!!.setOnQueryTextListener(this)
