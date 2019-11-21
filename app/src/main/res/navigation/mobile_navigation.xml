@@ -29,10 +29,16 @@
         tools:layout="@layout/fragment_map">
         <action
             android:id="@+id/action_mapFrag_to_displayListingFragment2"
-            app:destination="@id/displayListingFragment2" />
+            app:destination="@id/displayListingFragment2"
+            app:enterAnim="@anim/fade_in_left"
+            app:exitAnim="@anim/fade_out_left"
+            app:popExitAnim="@anim/fade_out_left" />
         <action
             android:id="@+id/action_mapFrag_to_searchTable"
-            app:destination="@id/searchTable" />
+            app:destination="@id/searchTable"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_pop_exit_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <argument
             android:name="lat"
             android:defaultValue="0.0"
@@ -53,7 +59,10 @@
             app:argType="string" />
         <action
             android:id="@+id/action_displayListingFragment2_to_writeReviewFragment2"
-            app:destination="@id/writeReviewFragment2" />
+            app:destination="@id/writeReviewFragment2"
+            app:enterAnim="@anim/fade_in_left"
+            app:exitAnim="@anim/fade_out_left"
+            app:popExitAnim="@anim/fade_out_left" />
         <action
             android:id="@+id/action_displayListingFragment2_to_reportFragment"
             app:destination="@id/reportFragment" />
@@ -80,7 +89,8 @@
         tools:layout="@layout/fragment_create_listing" >
         <action
             android:id="@+id/action_createListingFragment_to_mapFrag"
-            app:destination="@id/mapFrag" />
+            app:destination="@id/mapFrag"
+            app:enterAnim="@anim/fragment_open_enter" />
     </fragment>
     <fragment
         android:id="@+id/searchTable"
@@ -89,7 +99,10 @@
         tools:layout="@layout/fragment_search_table">
         <action
             android:id="@+id/action_searchTable_to_displayListingFragment2"
-            app:destination="@id/displayListingFragment2" />
+            app:destination="@id/displayListingFragment2"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_pop_exit_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/reportFragment"
