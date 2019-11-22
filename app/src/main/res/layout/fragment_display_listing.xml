@@ -1,200 +1,281 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              tools:context=".DisplayListingFragment"
-              android:background="@color/cribbDarkGrey"
->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cribbDarkGrey"
+    tools:context=".DisplayListingFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true" android:layout_alignParentLeft="true">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true">
 
         <TextView
-                android:text="@string/address"
-                android:layout_width="350dp"
-                android:layout_height="52dp" android:id="@+id/address_passed" android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
-                app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintVertical_bias="0.028" android:gravity="center" android:textStyle="bold"
-                android:textSize="25sp"/>
+            android:id="@+id/address_passed"
+            android:layout_width="350dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:text="@string/address"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
-                android:text="@string/landlord"
-                android:layout_width="383dp"
-                android:layout_height="32dp"
-                android:id="@+id/landlord"
-                android:layout_below="@id/address_passed" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp" app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-                app:layout_constraintVertical_bias="0.114" android:gravity="center"/>
-        <EditText
-                android:layout_width="70dp"
-                android:layout_height="47dp"
-                android:inputType="text"
-                android:ems="10"
-                android:id="@+id/overall_avg_num"
-                app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
-                app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="0.193"
-                app:layout_constraintVertical_bias="0.202" android:text="@string/overall_rating"
-                android:gravity="center|left" android:textStyle="bold" android:textSize="25sp"
-                android:autoText="false"/>
+            android:id="@+id/landlord"
+            android:layout_width="383dp"
+            android:layout_height="32dp"
+            android:layout_below="@id/address_passed"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:text="@string/landlord"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/address_passed" />
+
         <TextView
-                android:layout_width="170dp"
-                android:layout_height="65dp"
-                android:id="@+id/price"
-                android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-                app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/landlord" app:layout_constraintHorizontal_bias="0.581"
-                app:layout_constraintStart_toEndOf="@+id/overall_avg_num"
-                android:text="@string/rent" android:gravity="center" android:textSize="20sp"
-                android:background="@color/cribbMiddleGrey"
-                android:textAllCaps="true" android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/amenities_text"/>
+            android:id="@+id/overall_avg_num"
+            android:layout_width="70dp"
+            android:layout_height="47dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:autoText="false"
+            android:ems="10"
+            android:gravity="center|left"
+            android:inputType="text"
+            android:text="@string/overall_rating"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/price"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/landlord" />
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="170dp"
+            android:layout_height="65dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/cribbMiddleGrey"
+            android:gravity="center"
+            android:text="@string/rent"
+            android:textAllCaps="true"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/amenities_text"
+            app:layout_constraintEnd_toEndOf="@+id/amenities_text"
+            app:layout_constraintTop_toBottomOf="@+id/landlord" />
+
         <RatingBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="?android:attr/ratingBarStyleSmall"
-                android:progressTint="@color/cribbLightBlue"
-                android:progressBackgroundTint="#000"
-                android:id="@+id/overallRatingBar" android:numStars="5"
-                android:rating="4" android:max="5" android:isIndicator="true"
-                app:layout_constraintTop_toBottomOf="@+id/overall_avg_num" android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent" android:layout_marginStart="8dp"
-                app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
-                android:layout_marginEnd="8dp" app:layout_constraintEnd_toStartOf="@+id/price"
-                android:layout_marginRight="8dp"
-                app:layout_constraintHorizontal_bias="0.519" app:layout_constraintVertical_bias="0.0"/>
+            android:id="@+id/overallRatingBar"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isIndicator="true"
+            android:max="5"
+            android:numStars="5"
+            android:progressBackgroundTint="#000"
+            android:progressTint="@color/cribbLightBlue"
+            android:rating="4"
+            app:layout_constraintStart_toStartOf="@+id/overall_avg_num"
+            app:layout_constraintTop_toBottomOf="@+id/overall_avg_num" />
+
         <TextView
-                android:text="Amenities"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/amenities_text" android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/reviews_scrollView"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/overallRatingBar"
-                app:layout_constraintStart_toEndOf="@+id/location_text" android:layout_marginLeft="32dp"
-                android:layout_marginStart="32dp"
-                app:layout_constraintVertical_bias="0.123" android:textAllCaps="true"/>
+            android:id="@+id/amenities_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Amenities"
+            android:textAllCaps="true"
+            app:layout_constraintBottom_toTopOf="@+id/reviews_scrollView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/location_text"
+            app:layout_constraintTop_toBottomOf="@+id/overallRatingBar"
+            app:layout_constraintVertical_bias="0.123" />
+
         <TextView
-                android:text="Location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/location_text"
-                app:layout_constraintBottom_toTopOf="@+id/reviews_scrollView"
-                android:layout_marginBottom="8dp" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/overallRatingBar" app:layout_constraintVertical_bias="0.123"
-                android:textAllCaps="true"
-                app:layout_constraintEnd_toStartOf="@+id/guideline3"/>
+            android:id="@+id/location_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Location"
+            android:textAllCaps="true"
+            app:layout_constraintBottom_toTopOf="@+id/reviews_scrollView"
+            app:layout_constraintEnd_toStartOf="@+id/amenities_text"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/manage_text"
+            app:layout_constraintTop_toBottomOf="@+id/overallRatingBar"
+            app:layout_constraintVertical_bias="0.123" />
+
         <TextView
-                android:text="Management"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/manage_text" android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/reviews_scrollView" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/overallRatingBar"
-                app:layout_constraintVertical_bias="0.123" android:textAllCaps="true"
-                android:layout_marginEnd="32dp" app:layout_constraintEnd_toStartOf="@+id/location_text"
-                android:layout_marginRight="32dp"/>
-        <EditText
-                android:layout_width="84dp"
-                android:layout_height="48dp"
-                android:inputType="number"
-                android:ems="10"
-                android:id="@+id/manage_avg_num"
-                android:text="@string/manage_rating" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/manage_text" android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/reviews_scrollView" app:layout_constraintVertical_bias="0.0"
-                android:singleLine="false" android:textSize="25sp"
-                android:textStyle="bold" android:textColor="#9CDEFF"
-                app:layout_constraintStart_toStartOf="@+id/manage_text"/>
-        <EditText
-                android:layout_width="84dp"
-                android:layout_height="48dp"
-                android:inputType="number"
-                android:ems="10"
-                android:id="@+id/location_avg_num" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/location_text"
-                android:text="@string/location_rating"
-                android:textSize="25sp" android:textStyle="bold" android:textColor="#9CDEFF"
-                app:layout_constraintStart_toStartOf="@+id/location_text"
-        />
-        <EditText
-                android:layout_width="84dp"
-                android:layout_height="48dp"
-                android:inputType="number"
-                android:ems="10"
-                android:id="@+id/amenities_avg_num" android:text="@string/amenities_rating"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/amenities_text"
-                android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/reviews_scrollView"
-                app:layout_constraintVertical_bias="0.0" android:textSize="25sp" android:textStyle="bold"
-                android:textColor="#9CDEFF"
-                app:layout_constraintStart_toStartOf="@+id/amenities_text"/>
+            android:id="@+id/manage_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="8dp"
+            android:text="Management"
+            android:textAllCaps="true"
+            app:layout_constraintBottom_toTopOf="@+id/reviews_scrollView"
+            app:layout_constraintEnd_toStartOf="@+id/location_text"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/overallRatingBar"
+            app:layout_constraintVertical_bias="0.123" />
+
+        <TextView
+            android:id="@+id/manage_avg_num"
+            android:layout_width="84dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:ems="10"
+            android:inputType="number"
+            android:singleLine="false"
+            android:text="@string/manage_rating"
+            android:textColor="#9CDEFF"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/reviews_scrollView"
+            app:layout_constraintStart_toStartOf="@+id/manage_text"
+            app:layout_constraintTop_toBottomOf="@+id/manage_text"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/location_avg_num"
+            android:layout_width="84dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:inputType="number"
+            android:text="@string/location_rating"
+            android:textColor="#9CDEFF"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/location_text"
+            app:layout_constraintTop_toBottomOf="@+id/location_text" />
+
+        <TextView
+            android:id="@+id/amenities_avg_num"
+            android:layout_width="84dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:ems="10"
+            android:inputType="number"
+            android:text="@string/amenities_rating"
+            android:textColor="#9CDEFF"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/reviews_scrollView"
+            app:layout_constraintStart_toStartOf="@+id/amenities_text"
+            app:layout_constraintTop_toBottomOf="@+id/amenities_text"
+            app:layout_constraintVertical_bias="0.0" />
+
         <ScrollView
-                android:layout_width="0dp"
-                android:layout_height="0dp" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:id="@+id/reviews_scrollView"
-                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintTop_toBottomOf="@id/space"
-                android:layout_marginBottom="75dp">
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                          android:orientation="vertical" android:id="@+id/LinearLayout_in_scroll">
+            android:id="@+id/reviews_scrollView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="75dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/space">
+
+            <LinearLayout
+                android:id="@+id/LinearLayout_in_scroll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
                 <ImageView
-                        android:src="@drawable/display_listing"
-                        android:layout_width="389dp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/imageView4" android:layout_marginTop="8dp"
-                />
+                    android:id="@+id/imageView4"
+                    android:layout_width="389dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/display_listing"
+                    app:layout_constraintEnd_toEndOf="parent" />
             </LinearLayout>
         </ScrollView>
+
         <Space
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/location_avg_num" android:id="@+id/space"/>
+            android:id="@+id/space"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/location_avg_num" />
+
         <ImageButton
-                android:src="@drawable/delete_review"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:id="@+id/imageButton" android:scaleType="fitXY" android:layout_marginBottom="16dp"
-                android:background="#00FFFFFF" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/reviews_scrollView"
-                android:layout_marginStart="20dp" app:layout_constraintStart_toStartOf="@+id/manage_avg_num"
-                android:layout_marginLeft="20dp" app:layout_constraintVertical_bias="0.0"/>
+            android:id="@+id/imageButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="#00FFFFFF"
+            android:scaleType="fitXY"
+            android:src="@drawable/delete_review"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/manage_avg_num"
+            app:layout_constraintTop_toBottomOf="@+id/reviews_scrollView"
+            app:layout_constraintVertical_bias="0.0" />
+
         <ImageButton
-                android:src="@drawable/write_review_blue"
-                android:layout_width="50dp"
-                android:layout_height="50dp" app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginBottom="16dp" android:id="@+id/writeReview" android:scaleType="fitXY"
-                android:background="@color/cribbDarkGrey" app:layout_constraintHorizontal_bias="0.498"
-                android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/reviews_scrollView"/>
+            android:id="@+id/writeReview"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/cribbDarkGrey"
+            android:scaleType="fitXY"
+            android:src="@drawable/write_review_blue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reviews_scrollView" />
+
         <ImageView
-                android:src="@drawable/write_report"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"
-                android:id="@+id/reportButton" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/writeReview" android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/reviews_scrollView"/>
+            android:id="@+id/reportButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/write_report"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/writeReview"
+            app:layout_constraintTop_toBottomOf="@+id/reviews_scrollView" />
+
         <androidx.constraintlayout.widget.Guideline
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintGuide_percent="0.6"
-                android:id="@+id/guideline3"/>
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>
+</RelativeLayout>
