@@ -76,6 +76,9 @@
             android:name="dynamicAddress"
             app:argType="string"
             android:defaultValue="string" />
+        <action
+            android:id="@+id/action_writeReviewFragment2_to_displayListingFragment2"
+            app:destination="@id/displayListingFragment2" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
