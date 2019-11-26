@@ -36,6 +36,8 @@ private const val ARG_PARAM2 = "param2"
  */
 class writeReviewFragment : Fragment() {
 
+
+
     private var edited:Boolean = false
     private lateinit var address:String
     override fun onCreateView(
@@ -103,18 +105,22 @@ class writeReviewFragment : Fragment() {
                     "timeStamp" to FieldValue.serverTimestamp()
                 )
 
-                propertyFields["reviews"] = reviewer
-                reviewer[user!!.email!!] = reviewDetail
-
                 userFields["Review History"] = property
                 property[address] = reviewDetail
 
+                propertyFields["reviews"] = reviewer
+                reviewer[user!!.email!!] = reviewDetail
 
-                var avgAmR = 0.0
-                var avgMnR = 0.0
-                var avgLcR = 0.0
-                var avgOAR = 0.0
-                addressRef.get().addOnSuccessListener { document ->
+                addressRef.set(propertyFields, SetOptions.merge()).addOnSuccessListener {
+
+
+
+                    var avgAmR = 0.0
+                    var avgMnR = 0.0
+                    var avgLcR = 0.0
+                    var avgOAR = 0.0
+
+                    addressRef.get().addOnSuccessListener { document ->
                         if (document != null) {
                             var totalOverallRating = 0.0
                             var totalAmentRating = 0.0
@@ -141,16 +147,20 @@ class writeReviewFragment : Fragment() {
 
                             avgOAR = totalOverallRating/reviewerNum
                         }
+
+                        Log.d(TAG,avgAmR.toString())
+                        propertyFields = hashMapOf(
+                            "avgAmenities" to avgAmR,
+                            "avgLocation" to avgLcR,
+                            "avgManage" to avgMnR,
+                            "avgOverallRating" to avgOAR
+                        )
+
+                        addressRef.set(propertyFields, SetOptions.merge())
                     }
 
-                propertyFields = hashMapOf(
-                    "avgAmenities" to avgAmR,
-                    "avgLocation" to avgLcR,
-                    "avgManage" to avgMnR,
-                    "avgOverallRating" to avgOAR
-                )
+                    Thread.sleep(500)
 
-                addressRef.set(propertyFields, SetOptions.merge()).addOnSuccessListener {
                     Log.d(TAG, "DocumentSnapshot successfully written!")
                     var nextAction = writeReviewFragmentDirections.actionWriteReviewFragment2ToDisplayListingFragment2()
                     nextAction.dynamicAddress = address
@@ -178,54 +188,62 @@ class writeReviewFragment : Fragment() {
                     "timeStamp" to FieldValue.serverTimestamp()
                 )
 
-                propertyFields["reviews"] = reviewer
-                reviewer[user!!.email!!] = reviewDetail
-
                 userFields["Review History"] = property
                 property[address] = reviewDetail
 
-
-                var avgAmR = 0.0
-                var avgMnR = 0.0
-                var avgLcR = 0.0
-                var avgOAR = 0.0
-                addressRef.get().addOnSuccessListener { document ->
-                    if (document != null) {
-                        var totalOverallRating = 0.0
-                        var totalAmentRating = 0.0
-                        var totalLocRating = 0.0
-                        var totalManageRating = 0.0
-
-                        var reviewerNum = 0
-
-                        val review = document.get("reviews") as HashMap<String, *>
-
-                        for (reviewer in review) {
-                            reviewerNum++
-                            val reviewMap = review
-                            val reviewInfo:HashMap<String,*>  = reviewMap.getValue(reviewer.key) as HashMap<String, *>
-                            totalLocRating += (reviewInfo.getValue("locationRating")).toString().toFloat()
-                            totalAmentRating += (reviewInfo.getValue("amenitiesRating")).toString().toFloat()
-                            totalManageRating += (reviewInfo.getValue("managementRating")).toString().toFloat()
-
-                            totalOverallRating += (reviewInfo.getValue("rating")).toString().toFloat()
-                        }
-                        avgAmR = totalAmentRating/reviewerNum
-                        avgMnR = totalManageRating/reviewerNum
-                        avgLcR = totalLocRating/reviewerNum
-
-                        avgOAR = totalOverallRating/reviewerNum
-                    }
-                }
-
-                propertyFields = hashMapOf(
-                    "avgAmenities" to avgAmR,
-                    "avgLocation" to avgLcR,
-                    "avgManage" to avgMnR,
-                    "avgOverallRating" to avgOAR
-                )
+                propertyFields["reviews"] = reviewer
+                reviewer[user!!.email!!] = reviewDetail
 
                 addressRef.set(propertyFields, SetOptions.merge()).addOnSuccessListener {
+
+
+
+                    var avgAmR = 0.0
+                    var avgMnR = 0.0
+                    var avgLcR = 0.0
+                    var avgOAR = 0.0
+
+                    addressRef.get().addOnSuccessListener { document ->
+                        if (document != null) {
+                            var totalOverallRating = 0.0
+                            var totalAmentRating = 0.0
+                            var totalLocRating = 0.0
+                            var totalManageRating = 0.0
+
+                            var reviewerNum = 0
+
+                            val review = document.get("reviews") as HashMap<String, *>
+
+                            for (reviewer in review) {
+                                reviewerNum++
+                                val reviewMap = review
+                                val reviewInfo:HashMap<String,*>  = reviewMap.getValue(reviewer.key) as HashMap<String, *>
+                                totalLocRating += (reviewInfo.getValue("locationRating")).toString().toFloat()
+                                totalAmentRating += (reviewInfo.getValue("amenitiesRating")).toString().toFloat()
+                                totalManageRating += (reviewInfo.getValue("managementRating")).toString().toFloat()
+
+                                totalOverallRating += (reviewInfo.getValue("rating")).toString().toFloat()
+                            }
+                            avgAmR = totalAmentRating/reviewerNum
+                            avgMnR = totalManageRating/reviewerNum
+                            avgLcR = totalLocRating/reviewerNum
+
+                            avgOAR = totalOverallRating/reviewerNum
+                        }
+
+                        Log.d(TAG,avgAmR.toString())
+                        propertyFields = hashMapOf(
+                            "avgAmenities" to avgAmR,
+                            "avgLocation" to avgLcR,
+                            "avgManage" to avgMnR,
+                            "avgOverallRating" to avgOAR
+                        )
+
+                        addressRef.set(propertyFields, SetOptions.merge())
+                    }
+
+                    Thread.sleep(500)
+
                     Log.d(TAG, "DocumentSnapshot successfully written!")
                     var nextAction = writeReviewFragmentDirections.actionWriteReviewFragment2ToDisplayListingFragment2()
                     nextAction.dynamicAddress = address

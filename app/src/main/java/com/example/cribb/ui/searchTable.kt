@@ -45,7 +45,6 @@ class searchTable : Fragment(), SearchView.OnQueryTextListener {
     private var listener: OnFragmentInteractionListener? = null
 
     class Listing{
-
         var name:String = ""
         var rating:String = ""
         var price:String = ""
