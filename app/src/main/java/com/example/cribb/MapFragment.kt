@@ -299,7 +299,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,15.0f))
                     }
                     else
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(syracuse, 15.0f))
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(current_location, 15.0f))
                 }
 
             //setUpMap() //checks if location is enabled and requests users permission

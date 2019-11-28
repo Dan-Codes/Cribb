@@ -7,171 +7,217 @@
                                                    android:layout_height="match_parent"
                                                    android:background="@color/cribbDarkGrey"
                                                    tools:context=".writeReviewFragment" android:id="@+id/frameLayout">
-    <ImageView
-            android:src="@drawable/rate_this_cribb"
-            android:layout_width="0dp"
-            android:layout_height="84dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:id="@+id/imageView3"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline4"
-            app:layout_constraintEnd_toStartOf="@+id/guideline5"
-    />
-    <androidx.constraintlayout.widget.Guideline
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintGuide_percent=".1"
-            android:id="@+id/guideline4"/>
-    <androidx.constraintlayout.widget.Guideline
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" app:layout_constraintGuide_percent=".9" android:id="@+id/guideline5"/>
-    <TextView
-            android:text="Tell us what you think about"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:autoSizeTextType="uniform"
-            app:layout_constraintStart_toStartOf="@+id/guideline4"
-            android:id="@+id/tell_us_what" app:layout_constraintTop_toBottomOf="@+id/imageView3"
-            android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/guideline5" android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"/>
-    <TextView
-            android:text="@string/address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@+id/guideline4"
-            android:id="@+id/address_review" android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/guideline5" android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp" app:layout_constraintStart_toEndOf="@+id/guideline4"
-            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintTop_toBottomOf="@+id/tell_us_what"
-            android:layout_marginTop="24dp"/>
-    <ImageView
-            android:src="@drawable/awful"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@+id/guideline4"
-            android:id="@+id/imageView6" android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/address_review" android:layout_marginTop="16dp"/>
-    <SeekBar
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:progressTint="@color/cribbLightBlue"
-            android:thumbTint="@color/cribbBlue"
-            android:id="@+id/seekBar"
-            app:layout_constraintStart_toEndOf="@+id/imageView6" app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toStartOf="@+id/imageView7"
-            app:layout_constraintTop_toBottomOf="@+id/address_review" android:layout_marginTop="16dp"
-            android:layout_marginLeft="16dp" android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp" android:max="5" android:progress="2" android:indeterminate="false"
-            style="@style/Widget.AppCompat.SeekBar" android:clickable="true"/>
-    <ImageView
-            android:src="@drawable/great"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView7" app:layout_constraintEnd_toStartOf="@+id/guideline5"
-            android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/address_review" android:layout_marginTop="16dp"/>
 
-    <TextView
-        android:id="@+id/overall_rating"
-        android:layout_width="0dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/cribbRed"
-        android:gravity="center"
-        android:text="@string/change_overall_rating"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seekBar" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
-    <RatingBar
-        android:id="@+id/location_ratingBar"
-        style="@style/Widget.AppCompat.RatingBar.Small"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="40dp"
-        android:adjustViewBounds="true"
-        android:clickable="true"
-        android:isIndicator="false"
-        android:max="5"
-        android:numStars="5"
-        android:progress="0"
-        android:rating="0"
-        android:scaleType="fitXY"
-        android:stepSize=".25"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/overall_rating" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <RatingBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/Widget.AppCompat.RatingBar.Small"
-            android:id="@+id/manage_ratingBar" app:layout_constraintEnd_toStartOf="@+id/guideline5"
-            android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/location_ratingBar"
-            android:clickable="true" android:isIndicator="false"/>
-    <RatingBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/Widget.AppCompat.RatingBar.Small"
-            android:id="@+id/amenities_ratingBar" app:layout_constraintEnd_toStartOf="@+id/guideline5"
-            android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/manage_ratingBar"
-            android:clickable="true" android:isIndicator="false"/>
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="0dp"
+                android:layout_height="84dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/rate_this_cribb"
+                app:layout_constraintEnd_toStartOf="@+id/guideline5"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/review_comments"
-        android:layout_width="329dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="41dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="41dp"
-        android:gravity="top|left"
-        android:inputType="textMultiLine"
-        android:lines="8"
-        android:maxLines="10"
-        android:minLines="1"
-        android:scrollbars="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/amenities_ratingBar" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent=".1" />
 
-    <Switch
-        android:id="@+id/live_here_again_switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="20dp"
-        android:text="Would you live here again?  "
-        app:layout_constraintEnd_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/review_comments" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent=".9" />
 
-    <Switch
-            android:text="Post anonymously?  "
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/anonymous_switch" android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/live_here_again_switch"
-            app:layout_constraintEnd_toStartOf="@+id/guideline5"
-            android:layout_marginRight="16dp" android:layout_marginEnd="16dp"/>
+            <TextView
+                android:id="@+id/tell_us_what"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:autoSizeTextType="uniform"
+                android:text="Tell us what you think about"
+                app:layout_constraintEnd_toStartOf="@+id/guideline5"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
-    <Button
-        android:id="@+id/button_post_review"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="133dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="132dp"
-        android:autoText="false"
-        android:gravity="bottom"
-        android:text="Post My Review"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/anonymous_switch" />
+            <TextView
+                android:id="@+id/address_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:text="@string/address"
+                app:layout_constraintEnd_toStartOf="@+id/guideline5"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/guideline4"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@+id/tell_us_what" />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/awful"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@+id/address_review" />
+
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:clickable="true"
+                android:indeterminate="false"
+                android:max="5"
+                android:progress="2"
+                android:progressTint="@color/cribbLightBlue"
+                android:thumbTint="@color/cribbBlue"
+                app:layout_constraintEnd_toStartOf="@+id/imageView7"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/imageView6"
+                app:layout_constraintTop_toBottomOf="@+id/address_review" />
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/great"
+                app:layout_constraintEnd_toStartOf="@+id/guideline5"
+                app:layout_constraintTop_toBottomOf="@+id/address_review" />
+
+            <TextView
+                android:id="@+id/overall_rating"
+                android:layout_width="0dp"
+                android:layout_height="47dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/cribbRed"
+                android:gravity="center"
+                android:text="@string/change_overall_rating"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seekBar" />
+
+            <RatingBar
+                android:id="@+id/location_ratingBar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:clickable="true"
+                android:isIndicator="false"
+                android:max="5"
+                android:numStars="5"
+                android:progress="0"
+                android:rating="0"
+                android:stepSize=".25"
+                app:layout_constraintEnd_toStartOf="@+id/guideline5"
+                app:layout_constraintTop_toBottomOf="@+id/overall_rating" />
+
+            <RatingBar
+                android:id="@+id/manage_ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:isIndicator="false"
+                app:layout_constraintEnd_toStartOf="@+id/guideline5"
+                app:layout_constraintTop_toBottomOf="@+id/location_ratingBar" />
+
+            <RatingBar
+                android:id="@+id/amenities_ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:isIndicator="false"
+                app:layout_constraintEnd_toStartOf="@+id/guideline5"
+                app:layout_constraintTop_toBottomOf="@+id/manage_ratingBar" />
+
+            <EditText
+                android:id="@+id/review_comments"
+                android:layout_width="329dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="41dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="41dp"
+                android:gravity="top|left"
+                android:inputType="textMultiLine"
+                android:lines="8"
+                android:maxLines="10"
+                android:minLines="1"
+                android:scrollbars="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/amenities_ratingBar" />
+
+            <Switch
+                android:id="@+id/live_here_again_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
+                android:text="Would you live here again?  "
+                app:layout_constraintEnd_toStartOf="@+id/guideline5"
+                app:layout_constraintTop_toBottomOf="@+id/review_comments" />
+
+            <Switch
+                android:id="@+id/anonymous_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="Post anonymously?  "
+                app:layout_constraintEnd_toEndOf="@+id/live_here_again_switch"
+                app:layout_constraintEnd_toStartOf="@+id/guideline5"
+                app:layout_constraintTop_toBottomOf="@+id/live_here_again_switch" />
+
+            <Button
+                android:id="@+id/button_post_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="133dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="132dp"
+                android:layout_marginBottom="32dp"
+                android:autoText="false"
+                android:gravity="bottom"
+                android:text="Post My Review"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/anonymous_switch" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

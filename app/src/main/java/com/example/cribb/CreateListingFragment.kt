@@ -4,15 +4,13 @@ import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_create_listing.*
 import com.google.android.libraries.places.api.Places
 import android.location.Address
 import android.location.Geocoder
 import android.os.StrictMode
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.Navigation
@@ -46,6 +44,7 @@ class CreateListingFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_create_listing, container, false)
+        activity!!.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
