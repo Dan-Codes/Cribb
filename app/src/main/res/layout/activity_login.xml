@@ -47,6 +47,8 @@
 
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:imeOptions="actionDone"
                     android:selectAllOnFocus="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

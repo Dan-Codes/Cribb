@@ -58,7 +58,7 @@ class ProfileFragment: Fragment() {
         val darkThemeSwitch: SwitchMaterial = view.findViewById(R.id.dark_theme_switch)
         val preferenceRepository = (requireActivity().application as App).preferenceRepository
 
-        preferenceRepository.isDarkThemeLive.observe(this, Observer { isDarkTheme ->
+        preferenceRepository.isDarkThemeLive.observe(activity!!, Observer { isDarkTheme ->
             isDarkTheme?.let { darkThemeSwitch.isChecked = it }
         })
 
@@ -68,8 +68,8 @@ class ProfileFragment: Fragment() {
 
         logoutButton.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
-            //Navigation.findNavController(it).navigate()
-
+            val nextAction = ProfileFragmentDirections.actionProfileFragmentToLoginActivity()
+            Navigation.findNavController(it).navigate(nextAction)
         }
         pullReviews()
     }
