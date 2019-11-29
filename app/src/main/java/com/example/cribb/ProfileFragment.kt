@@ -71,6 +71,10 @@ class ProfileFragment: Fragment() {
             val nextAction = ProfileFragmentDirections.actionProfileFragmentToLoginActivity()
             Navigation.findNavController(it).navigate(nextAction)
         }
+        adminButton.setOnClickListener {
+            val nextAction = ProfileFragmentDirections.actionProfileFragmentToAdminView()
+            Navigation.findNavController(it).navigate(nextAction)
+        }
         pullReviews()
     }
 

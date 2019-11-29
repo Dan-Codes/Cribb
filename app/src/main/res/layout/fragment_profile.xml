@@ -55,7 +55,7 @@
             app:layout_constraintTop_toBottomOf="@+id/logoutButton" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/adminButton"
             style="@style/Widget.MaterialComponents.MaterialCalendar.HeaderConfirmButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
