@@ -47,6 +47,14 @@
                 android:text="description"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
+            <TextView
+                android:id="@+id/timeStamp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="timestamp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
         </LinearLayout>
 
 

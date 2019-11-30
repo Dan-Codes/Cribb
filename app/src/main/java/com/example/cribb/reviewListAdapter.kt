@@ -21,9 +21,10 @@ class ReviewListAdapter(val items : ArrayList<ProfileFragment.Listing>, val cont
 
     // Binds each animal in the ArrayList to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder?.listingAddress?.text= items.get(position).address
-        holder?.listingRating?.rating= items.get(position).rating
-        holder?.listingDescription?.text= "Price: " + items.get(position).comment
+        holder?.listingAddress?.text= items[position].address
+        holder?.listingRating?.rating= items[position].rating
+        holder?.listingDescription?.text= "Review: " + items[position].comment
+        holder?.listingTimeStamp.text = items[position].timeStamp
     }
 
     interface OnItemClickListener {
@@ -51,5 +52,6 @@ class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
     val listingAddress = view.cell_address
     val listingRating = view.ratingBar
     val listingDescription = view.cell_description
+    val listingTimeStamp = view.timeStamp
 
 }
