@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
@@ -126,6 +127,7 @@ class ProfileFragment: Fragment() {
                 actionState: Int,
                 isCurrentlyActive: Boolean
             ) {
+                Toast.makeText(context!!, "Swipe to the end will delete this review!", Toast.LENGTH_SHORT).show()
                 val itemView = viewHolder.itemView
                 val iconMargin = (itemView.height - deleteIcon.intrinsicHeight) / 2
 
