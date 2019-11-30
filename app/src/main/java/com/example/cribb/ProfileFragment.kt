@@ -18,6 +18,7 @@ import com.example.cribb.ui.login.LoginActivity
 import com.example.cribb.ui.searchTable
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.firebase.auth.FirebaseAuth
+import com.mikhaellopez.circularimageview.CircularImageView
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_search_table.*
 import kotlin.math.round
@@ -55,6 +56,16 @@ class ProfileFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val user = FirebaseAuth.getInstance().currentUser!!
+        user?.let {
+            // Name, email address, and profile photo Url
+            val fullName = user.displayName
+            name.text = fullName
+            Log.d("checkfor", "$fullName")
+        }
+
+        val circularImageView = view.findViewById<CircularImageView>(R.id.circularImageView)
+        circularImageView.setImageResource(R.mipmap.ic_launcher)
         val darkThemeSwitch: SwitchMaterial = view.findViewById(R.id.dark_theme_switch)
         val preferenceRepository = (requireActivity().application as App).preferenceRepository
 
@@ -91,6 +102,10 @@ class ProfileFragment: Fragment() {
             .addOnSuccessListener { document ->
 
                     Log.d(TAG, "${document.id} => ${document.data}")
+                val firstName = document.get("First Name").toString()
+                val lastName = document.get("Last Name").toString().first()
+                val fullName = "$firstName $lastName."
+                name.text = fullName
                 if (document.data != null) {
 
                     val review = document.get("Review History") as HashMap<String, String>
