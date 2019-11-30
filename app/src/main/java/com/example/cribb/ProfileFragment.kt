@@ -30,6 +30,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.mikhaellopez.circularimageview.CircularImageView
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_search_table.*
+import java.sql.Timestamp
 import java.text.FieldPosition
 import kotlin.math.round
 import kotlin.math.roundToLong
@@ -191,7 +192,9 @@ class ProfileFragment: Fragment() {
                         property.locationRating = reviewInfo.getValue("locationRating").toString()
                         property.managementRating =
                             reviewInfo.getValue("managementRating").toString()
-                        property.timeStamp = reviewInfo.getValue("timeStamp").toString()
+                        var timeStamp = reviewInfo.getValue("timeStamp") as com.google.firebase.Timestamp
+                        timeStamp.toDate()
+                        property.timeStamp = timeStamp.toDate().toString()
 
                         arrayList.add(property)
                     }
