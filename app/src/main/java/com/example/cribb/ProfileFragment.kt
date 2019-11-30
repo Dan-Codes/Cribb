@@ -2,16 +2,24 @@ package com.example.cribb
 
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.cribb.data.App
 import com.example.cribb.ui.ListingAdapter
 import com.example.cribb.ui.login.LoginActivity
@@ -22,6 +30,7 @@ import com.mikhaellopez.circularimageview.CircularImageView
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_search_table.*
 import java.sql.Timestamp
+import java.text.FieldPosition
 import kotlin.math.round
 import kotlin.math.roundToLong
 
@@ -41,11 +50,11 @@ class ProfileFragment: Fragment() {
         var managementRating = ""
 
     }
+    private var arrayList:ArrayList<Listing> = ArrayList()
 
-//    init {
-//        pullReviews()
-//    }
-
+    private var swipeBackground:ColorDrawable = ColorDrawable(Color.parseColor("#FF0000"))
+    private lateinit var deleteIcon:Drawable
+    
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -70,6 +79,7 @@ class ProfileFragment: Fragment() {
         val darkThemeSwitch: SwitchMaterial = view.findViewById(R.id.dark_theme_switch)
         val preferenceRepository = (requireActivity().application as App).preferenceRepository
 
+
         preferenceRepository.isDarkThemeLive.observe(activity!!, Observer { isDarkTheme ->
             isDarkTheme?.let { darkThemeSwitch.isChecked = it }
         })
@@ -87,17 +97,71 @@ class ProfileFragment: Fragment() {
             val nextAction = ProfileFragmentDirections.actionProfileFragmentToAdminView()
             Navigation.findNavController(it).navigate(nextAction)
         }
+
+        cardView.adapter = ReviewListAdapter(arrayList, this.requireContext())
+        cardView.layoutManager = LinearLayoutManager(this.requireContext())
+
+        deleteIcon = ContextCompat.getDrawable(this.requireContext(), R.drawable.ic_delete)!!
+
         pullReviews()
+
+        val itemTouchHelperCallback  = object:ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                 return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, position : Int) {
+                (cardView.adapter as ReviewListAdapter).removeItem(viewHolder)
+            }
+
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                val itemView = viewHolder.itemView
+                val iconMargin = (itemView.height - deleteIcon.intrinsicHeight) / 2
+
+
+                swipeBackground.setBounds(itemView.right + dX.toInt(), itemView.top, itemView.right, itemView.bottom)
+                deleteIcon.setBounds(itemView.right - iconMargin - deleteIcon.intrinsicWidth, itemView.top + iconMargin,
+                    itemView.right - iconMargin, itemView.bottom - iconMargin)
+
+                swipeBackground.draw(c)
+                c.save()
+                c.clipRect(itemView.right + dX.toInt(), itemView.top, itemView.right, itemView.bottom )
+
+                deleteIcon.draw(c)
+
+                c.restore()
+
+                super.onChildDraw(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+            }
+
+        }
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(cardView)
     }
 
     private fun pullReviews() {
         val user = FirebaseAuth.getInstance().currentUser!!.email.toString()
 
-        var arrayList: ArrayList<Listing> = ArrayList()
-//        var property = Listing()
-//        property.address = "404 University Ave."
-//        property.comment = "this is a test"
-//        property.rating = 5.0F
         val docRef = db.collection("Users").document(user)
         docRef.get()
             .addOnSuccessListener { document ->
@@ -132,17 +196,17 @@ class ProfileFragment: Fragment() {
 
                         arrayList.add(property)
                     }
-                        //sharedProp = arrayList
-                        //listing_list.layoutManager = LinearLayoutManager(this.requireContext()
-                        cardView.layoutManager = LinearLayoutManager(this.requireContext())
-                        cardView.adapter = ReviewListAdapter(arrayList, this.requireContext())
-                    }
+                    cardView.adapter = ReviewListAdapter(arrayList, this.requireContext())
+                }
 
             }
     }
+
     fun Double.round(decimals: Int): Double {
         var multiplier = 1.0
         repeat(decimals) { multiplier *= 10 }
         return round(this * multiplier) / multiplier
     }
+
+
 }

@@ -65,7 +65,7 @@ class DisplayListingFragment : androidx.fragment.app.Fragment() {
                     val locationRating:Double? = document.getDouble("avgLocation")
                     val manageRating:Double? = document.getDouble("avgManage")
                     val review = document.get("reviews") as HashMap<String, *>
-                    landlord.text = landlordName
+                    landlord.text = landlordName ?: "No Landlord Info"
                     price.text = "$$getRent"
 
                     if (overallRating != null) overallRatingBar.rating = overallRating.toFloat()
