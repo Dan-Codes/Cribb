@@ -129,7 +129,8 @@
 
             <RatingBar
                 android:id="@+id/location_ratingBar"
-                android:layout_width="0dp"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:clickable="true"
@@ -138,46 +139,53 @@
                 android:numStars="5"
                 android:progress="0"
                 android:rating="0"
+                android:scaleX="1.5"
+                android:scaleY="1.5"
                 android:stepSize=".25"
                 app:layout_constraintEnd_toStartOf="@+id/guideline5"
                 app:layout_constraintTop_toBottomOf="@+id/overall_rating" />
 
             <RatingBar
                 android:id="@+id/manage_ratingBar"
+                style="@style/Widget.AppCompat.RatingBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:clickable="true"
                 android:isIndicator="false"
+                android:scaleX="1.5"
+                android:scaleY="1.5"
+                android:stepSize=".25"
                 app:layout_constraintEnd_toStartOf="@+id/guideline5"
                 app:layout_constraintTop_toBottomOf="@+id/location_ratingBar" />
 
             <RatingBar
                 android:id="@+id/amenities_ratingBar"
+                style="@style/Widget.AppCompat.RatingBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:clickable="true"
                 android:isIndicator="false"
+                android:scaleX="1.5"
+                android:scaleY="1.5"
+                android:stepSize=".25"
                 app:layout_constraintEnd_toStartOf="@+id/guideline5"
                 app:layout_constraintTop_toBottomOf="@+id/manage_ratingBar" />
 
             <EditText
                 android:id="@+id/review_comments"
-                android:layout_width="329dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="41dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="41dp"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="24dp"
                 android:gravity="top|left"
                 android:inputType="textMultiLine"
                 android:lines="8"
                 android:maxLines="10"
                 android:minLines="1"
                 android:scrollbars="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline5"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
                 app:layout_constraintTop_toBottomOf="@+id/amenities_ratingBar" />
 
             <Switch
@@ -216,6 +224,36 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/anonymous_switch" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Location"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                app:layout_constraintBottom_toBottomOf="@+id/location_ratingBar"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
+                app:layout_constraintTop_toTopOf="@+id/location_ratingBar" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Management"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                app:layout_constraintBottom_toBottomOf="@+id/manage_ratingBar"
+                app:layout_constraintStart_toStartOf="@+id/textView2"
+                app:layout_constraintTop_toTopOf="@+id/manage_ratingBar" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Amenitites"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                app:layout_constraintBottom_toBottomOf="@+id/amenities_ratingBar"
+                app:layout_constraintStart_toStartOf="@+id/textView3"
+                app:layout_constraintTop_toTopOf="@+id/amenities_ratingBar" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

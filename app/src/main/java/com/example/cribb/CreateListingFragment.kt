@@ -10,8 +10,11 @@ import com.google.android.libraries.places.api.Places
 import android.location.Address
 import android.location.Geocoder
 import android.os.StrictMode
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.*
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
@@ -43,12 +46,27 @@ class CreateListingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_listing, container, false)
-        activity!!.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-    }
 
+
+        return inflater.inflate(R.layout.fragment_create_listing, container, false)
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        activity!!.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+        rent.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                if (rent.text.toString().startsWith("$") || rent.text.toString().isEmpty()) return
+                rent.setText("$${rent.text.toString()}")
+                rent.setSelection(rent.text!!.length)
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+        })
         // Initialize Places.
         formView = view
         Log.d("view", "$formView")
@@ -109,7 +127,6 @@ class CreateListingFragment : Fragment() {
             }
             geoPoint = GeoPoint(listAddress[0].latitude, listAddress[0].longitude)
             Log.d("GeoPoint", "$geoPoint")
-            //Log.d("added", "$check")
 
             val nestedData = HashMap<String,Any?>()
             val docData = hashMapOf(
