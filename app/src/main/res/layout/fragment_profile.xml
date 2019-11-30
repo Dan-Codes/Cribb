@@ -33,7 +33,7 @@
             app:layout_constraintBottom_toTopOf="@+id/guideline6"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/circularImageView" />
+            app:layout_constraintTop_toBottomOf="@+id/reviews" />
 
         <Button
             android:id="@+id/logoutButton"
@@ -44,6 +44,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dark_theme_switch" />
+
+        <TextView
+            android:id="@+id/reviews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/ubuntu_bold"
+            android:text="Reviews You've Written"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/design_default_color_secondary_variant"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/circularImageView" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/dark_theme_switch"
