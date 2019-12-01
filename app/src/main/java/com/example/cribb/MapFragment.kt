@@ -31,9 +31,6 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.firebase.firestore.FirebaseFirestore
@@ -59,7 +56,7 @@ import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRe
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import kotlinx.android.synthetic.main.fragment_map.*
 import com.google.android.gms.location.places.*
-import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.*
 import com.google.android.gms.common.api.ApiException as ApiException
 
 
@@ -185,7 +182,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
                     val marker = mMap.addMarker(
                         MarkerOptions().position(LatLng(location!!.latitude, location.longitude)).title(
                             address
-                        )
+                        ).icon(BitmapDescriptorFactory.fromResource(drawable.logo1))
                     )
                     //(abs(lat - ThirdState.shared.varLat) < 0.000001 || abs(long - ThirdState.shared.varLong) < 0.000001)
                     //if ((location!!.latitude - lat) < 0.000001 && (location!!.longitude - lng) < 0.000001){
@@ -261,7 +258,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 //                val currentLatLng = LatLng(mLastKnownLocation.latitude, mLastKnownLocation.longitude)
 //                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12f))
 //            }
-//        }
+//        }i
 
         mMap.setOnInfoWindowClickListener(this)
 
