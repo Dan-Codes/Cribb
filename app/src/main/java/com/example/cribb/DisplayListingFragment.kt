@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.LinearLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
@@ -21,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_display_listing.view.*
 
 class DisplayListingFragment : androidx.fragment.app.Fragment() {
     private lateinit var address:String
+    private lateinit var nameOfReviwer:String
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
@@ -59,15 +61,15 @@ class DisplayListingFragment : androidx.fragment.app.Fragment() {
                 if (document != null) {
                     Log.d(TAG, "DocumentSnapshot data: ${document.data}")
                     val landlordName:String? = document.get("landlordName") as String
-                    val getRent:String? = document.get("rent") as String
+                    var getRent:String? = document.get("rent") as String
                     val overallRating:Double? = document.getDouble("avgOverallRating")
                     val amenitiesRating:Double? = document.getDouble("avgAmenities")
                     val locationRating:Double? = document.getDouble("avgLocation")
                     val manageRating:Double? = document.getDouble("avgManage")
                     val review = document.get("reviews") as HashMap<String, *>
                     landlord.text = landlordName ?: "No Landlord Info"
+                    getRent = getRent?.removePrefix("$")
                     price.text = "$$getRent"
-
                     if (overallRating != null) overallRatingBar.rating = overallRating.toFloat()
                     overall_avg_num.setText(String.format("%.1f", overallRating))
                     amenities_avg_num.setText(String.format("%.1f", amenitiesRating))
@@ -84,6 +86,10 @@ class DisplayListingFragment : androidx.fragment.app.Fragment() {
                         var overall_rating: String = (String.format("%.1f", reviewInfo.getValue("rating")))
                         //overall_rating = (String.format("%.1f", overall_rating))
                         val isAnonymous:Boolean = reviewInfo.getValue("isAnonymous") as Boolean
+                        if (isAnonymous)
+                            nameOfReviwer = "Anonymous"
+                        else
+                            nameOfReviwer = reviewer.key
                         val isEdited:Boolean = reviewInfo.getValue("isEdited") as Boolean
                         var willLiveAgain:String = if (reviewInfo.getValue("willLiveAgain") as Boolean) "Yes" else "No"
                         val timestamp = reviewInfo.getValue("timeStamp") as Timestamp
@@ -91,10 +97,13 @@ class DisplayListingFragment : androidx.fragment.app.Fragment() {
                         val linearLayout = (activity)!!.findViewById<LinearLayout>(R.id.LinearLayout_in_scroll)
                         val textView = TextView(activity)
                         textView.text = "Overall Rating: $overall_rating \n$comments  \n" +
-                                " Will live again: $willLiveAgain\nTimestamp: ${timestamp.toDate()}\n"
+                                "Will live again: $willLiveAgain\n$nameOfReviwer\nTimestamp: ${timestamp.toDate()}\n"
                         val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                         params.setMargins(100,10,48,10)
                         textView.layoutParams = params
+                        var typeface = ResourcesCompat.getFont(context!!, R.font.raleway)
+                        textView.typeface = typeface
+
 
 //                        var params = textView.layoutParams as? LinearLayout.LayoutParams
 //                        val params = LinearLayout.LayoutParams(

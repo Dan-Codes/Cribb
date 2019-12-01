@@ -173,9 +173,8 @@ class ProfileFragment: Fragment() {
                 val lastName = document.get("Last Name").toString().first()
                 val fullName = "$firstName $lastName."
                 name.text = fullName
-                if (document.data != null) {
-
-                    val review = document.get("Review History") as HashMap<String, String>
+                val review = document.get("Review History") as HashMap<String, String>?
+                if (document.data != null && review != null) {
 
                     for (address in review) {
                         var property = Listing()
@@ -199,6 +198,9 @@ class ProfileFragment: Fragment() {
                         arrayList.add(property)
                     }
                     cardView.adapter = ReviewListAdapter(arrayList, this.requireContext())
+                }
+                else {
+                    reviews.text = "You Have No Reviews"
                 }
 
             }
