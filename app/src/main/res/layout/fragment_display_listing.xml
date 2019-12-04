@@ -32,16 +32,15 @@
 
         <TextView
             android:id="@+id/landlord"
-            android:layout_width="383dp"
+            android:layout_width="wrap_content"
             android:layout_height="32dp"
             android:layout_below="@id/address_passed"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:gravity="center"
             android:text="@string/landlord"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/phoneNumberDisplay"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textView6"
             app:layout_constraintTop_toBottomOf="@+id/address_passed" />
 
         <TextView
@@ -228,22 +227,6 @@
             app:layout_constraintTop_toBottomOf="@+id/location_avg_num" />
 
         <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
-            android:background="#00FFFFFF"
-            android:scaleType="fitXY"
-            android:src="@drawable/delete_review"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/manage_avg_num"
-            app:layout_constraintTop_toBottomOf="@+id/reviews_scrollView"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <ImageButton
             android:id="@+id/writeReview"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -254,7 +237,8 @@
             android:src="@drawable/write_review_blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintEnd_toStartOf="@+id/reportButton"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/reviews_scrollView" />
 
@@ -263,12 +247,12 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
             android:src="@drawable/write_report"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/writeReview"
             app:layout_constraintTop_toBottomOf="@+id/reviews_scrollView" />
 
@@ -278,6 +262,30 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.5" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Contact Info"
+            app:layout_constraintEnd_toStartOf="@+id/landlord"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/address_passed" />
+
+        <TextView
+            android:id="@+id/phoneNumberDisplay"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="800-800-8000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/landlord"
+            app:layout_constraintTop_toBottomOf="@+id/address_passed" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

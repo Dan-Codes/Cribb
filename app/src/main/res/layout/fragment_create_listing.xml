@@ -147,7 +147,7 @@
                 app:errorEnabled="true"
                 app:layout_constraintEnd_toStartOf="@+id/guide_right"
                 app:layout_constraintStart_toStartOf="@+id/guide_left"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout7">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/rent"
@@ -217,6 +217,28 @@
                     android:maxLines="1"
                     android:inputType="number"
                     android:hint="Zipcode" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginTop="16dp"
+
+                app:layout_constraintEnd_toStartOf="@id/guide_right"
+                app:layout_constraintStart_toStartOf="@+id/guide_left"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout5"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phoneNum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:hint="Phone Number"
+                    />
+
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>

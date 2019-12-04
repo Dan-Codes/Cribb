@@ -66,6 +66,7 @@ class DisplayListingFragment : androidx.fragment.app.Fragment() {
                     val amenitiesRating:Double? = document.getDouble("avgAmenities")
                     val locationRating:Double? = document.getDouble("avgLocation")
                     val manageRating:Double? = document.getDouble("avgManage")
+                    val phoneNumber:String? = document.get("phoneNumber").toString()
                     val review = document.get("reviews") as HashMap<String, *>
                     landlord.text = landlordName ?: "No Landlord Info"
                     getRent = getRent?.removePrefix("$")
@@ -75,6 +76,7 @@ class DisplayListingFragment : androidx.fragment.app.Fragment() {
                     amenities_avg_num.setText(String.format("%.1f", amenitiesRating))
                     location_avg_num.setText(String.format("%.1f", locationRating))
                     manage_avg_num.setText(String.format("%.1f", manageRating))
+                    if (phoneNumber != "null") phoneNumberDisplay.text = phoneNumber.toString()
 
                     for (reviewer in review){
                           println(reviewer)

@@ -27,6 +27,8 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.GeoPoint
 import com.google.type.Date
 import com.squareup.okhttp.Dispatcher
+import kotlinx.android.synthetic.main.fragment_create_listing.landlord
+import kotlinx.android.synthetic.main.fragment_display_listing.*
 import kotlinx.coroutines.*
 import java.text.Normalizer
 import kotlin.math.abs
@@ -140,7 +142,8 @@ class CreateListingFragment : Fragment() {
                 "avgAmenities" to 0.0,
                 "avgLocation" to 0.0,
                 "avgManage" to 0.0,
-                "avgOverallRating" to 0.0
+                "avgOverallRating" to 0.0,
+                "phoneNumber" to phoneNum.text.toString()
             )
 
             val docRef = db.collection("listings")
