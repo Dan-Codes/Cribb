@@ -39,6 +39,8 @@ import com.mancj.materialsearchbar.MaterialSearchBar
 import androidx.navigation.Navigation
 import androidx.transition.FragmentTransitionSupport
 import com.example.cribb.R.*
+import com.example.cribb.ui.login.IPaddress
+import com.example.cribb.ui.login.getIPAddress
 import com.example.cribb.ui.searchTable
 import com.google.android.gms.maps.MapFragment
 import com.google.android.gms.tasks.OnCompleteListener
@@ -57,6 +59,10 @@ import com.google.android.libraries.places.widget.listener.PlaceSelectionListene
 import kotlinx.android.synthetic.main.fragment_map.*
 import com.google.android.gms.location.places.*
 import com.google.android.gms.maps.model.*
+import java.net.NetworkInterface
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 import com.google.android.gms.common.api.ApiException as ApiException
 
 
@@ -356,8 +362,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
         println("finished clicking")
 
     }
-
-
 
     companion object {
         public const val LOCATION_PERMISSION_REQUEST_CODE = 1

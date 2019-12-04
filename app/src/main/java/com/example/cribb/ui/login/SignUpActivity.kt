@@ -20,9 +20,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.cribb.Main2Activity
 import com.example.cribb.R
+import com.example.cribb.db
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import java.net.NetworkInterface
+import java.util.*
 import kotlin.math.sign
 
 class SignUpActivity : AppCompatActivity() {
@@ -155,12 +159,16 @@ class SignUpActivity : AppCompatActivity() {
                         "Dark Mode" to false,
                         "Email" to email,
                         "First Name" to fName,
-                        "Last Name" to lName
+                        "Last Name" to lName,
+                        "IP Address" to getIPAddress(true)
                     )
 
                     db.collection("Users").document(email)
                         .set(signUpInfo)
-                        .addOnSuccessListener { Log.d("Success", "DocumentSnapshot successfully written!") }
+                        .addOnSuccessListener {
+                            Log.d("Success", "DocumentSnapshot successfully written!")
+                            IPaddress(getIPAddress(true))
+                        }
                         .addOnFailureListener { e -> Log.w("Fail", "Error writing document", e) }
 
                 } else {
@@ -189,6 +197,8 @@ class SignUpActivity : AppCompatActivity() {
         val currentUser = auth.currentUser
         //updateUI(currentUser)
     }
+
+
 }
 
 /**
@@ -204,5 +214,58 @@ private fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
     })
+}
+
+fun IPaddress(ipAddress:String){
+    val data = hashMapOf(
+        "occurrences" to 1
+    )
+   var docRef = db.collection("IP").document(ipAddress)
+    docRef.get()
+        .addOnSuccessListener {
+
+            if (it.exists()) {
+                docRef.update("occurrences",FieldValue.increment(1))
+                    .addOnSuccessListener { }
+                    .addOnFailureListener { }
+
+            } else {
+                docRef.set(data)
+                    .addOnSuccessListener { }
+                    .addOnFailureListener { }
+            }
+        }
+        .addOnFailureListener { }
+}
+
+fun getIPAddress(useIPv4 : Boolean): String {
+    try {
+        var interfaces = Collections.list(NetworkInterface.getNetworkInterfaces())
+        for (intf in interfaces) {
+            var addrs = Collections.list(intf.getInetAddresses());
+            for (addr in addrs) {
+                if (!addr.isLoopbackAddress()) {
+                    var sAddr = addr.getHostAddress();
+                    var isIPv4: Boolean
+                    isIPv4 = sAddr.indexOf(':')<0
+                    if (useIPv4) {
+                        if (isIPv4)
+                            return sAddr;
+                    } else {
+                        if (!isIPv4) {
+                            var delim = sAddr.indexOf('%') // drop ip6 zone suffix
+                            if (delim < 0) {
+                                return sAddr.toUpperCase()
+                            }
+                            else {
+                                return sAddr.substring(0, delim).toUpperCase()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    } catch (e: java.lang.Exception) { }
+    return ""
 }
 
