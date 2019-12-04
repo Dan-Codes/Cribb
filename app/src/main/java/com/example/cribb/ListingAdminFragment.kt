@@ -31,7 +31,7 @@ class ListingAdminFragment : Fragment() {
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
 
-    private lateinit var Listing:ArrayList<searchTable.Listing>
+    private var Listing:ArrayList<searchTable.Listing> = ArrayList()
 
     init {
         addProperty()
@@ -80,6 +80,9 @@ class ListingAdminFragment : Fragment() {
                     arrayList.add(property)
                 }
                 Listing = arrayList
+
+                listing_list.layoutManager = LinearLayoutManager(this.requireContext())
+                listing_list.adapter = ListingAdapter(Listing, this.requireContext())
             }
     }
 
@@ -93,8 +96,7 @@ class ListingAdminFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        listing_list.layoutManager = LinearLayoutManager(this.requireContext())
-        listing_list.adapter = ListingAdapter(Listing, this.requireContext())
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
