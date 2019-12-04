@@ -100,7 +100,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
         }
         setHasOptionsMenu(true)
 
-
         Log.d("geoPoints", "$param1")
         //setUpMap()
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
@@ -149,10 +148,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
                 lng = it
         }
 
-
-
     }
-
 
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {

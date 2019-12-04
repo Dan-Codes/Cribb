@@ -217,8 +217,10 @@ private fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
 }
 
 fun IPaddress(ipAddress:String){
-    val data = hashMapOf(
-        "occurrences" to 1
+
+    data class Add(
+        val occurrences: Long? = null,
+        val emails: List<String>? = null
     )
    var docRef = db.collection("IP").document(ipAddress)
     docRef.get()
@@ -226,11 +228,16 @@ fun IPaddress(ipAddress:String){
 
             if (it.exists()) {
                 docRef.update("occurrences",FieldValue.increment(1))
-                    .addOnSuccessListener { }
+                    .addOnSuccessListener {
+                        val email:String = FirebaseAuth.getInstance().currentUser!!.email!!
+                        docRef.update("emails",FieldValue.arrayUnion(email))
+                    }
                     .addOnFailureListener { }
 
             } else {
-                docRef.set(data)
+                val email:String = FirebaseAuth.getInstance().currentUser!!.email!!
+                val add = Add(1,listOf(email))
+                docRef.set(add)
                     .addOnSuccessListener { }
                     .addOnFailureListener { }
             }
