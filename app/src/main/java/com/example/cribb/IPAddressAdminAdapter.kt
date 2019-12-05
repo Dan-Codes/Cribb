@@ -22,7 +22,7 @@ class IPAddressAdminAdapter(val items : ArrayList<IPAddressFragment.IPAddress>, 
     // Binds each animal in the ArrayList to a view
     override fun onBindViewHolder(holder: IPAdminViewHolder, position: Int) {
         holder?.ipAddressForViewHolder?.text = items.get(position).ipAddress
-        holder?.ipOccurrenceForViewHolder?.text = "There are " + items.get(position).occurrence.toString() + "users registered on this IP address!"
+        holder?.ipOccurrenceForViewHolder?.text = "There are " + items.get(position).occurrence.toString() + " users registered on this IP address!"
     }
 
     interface OnItemClickListener {
