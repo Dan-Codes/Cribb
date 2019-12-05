@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/reportbtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
@@ -44,12 +44,13 @@
         android:id="@+id/report_message"
         android:layout_width="318dp"
         android:layout_height="581dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="Report Here"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/report_address" />
 

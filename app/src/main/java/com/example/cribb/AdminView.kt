@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.example.cribb.data.App
 import kotlinx.android.synthetic.main.activity_admin_view.*
 
@@ -19,11 +20,11 @@ class AdminView : AppCompatActivity(), ListingAdminFragment.OnFragmentInteractio
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin_view)
 
-        (application as App).preferenceRepository
-            .nightModeLive.observe(this, Observer { nightMode ->
-            nightMode?.let { delegate.localNightMode = it }
-        }
-        )
+//        (application as App).preferenceRepository
+//            .nightModeLive.observe(this, Observer { nightMode ->
+//            nightMode?.let { delegate.localNightMode = it }
+//        } )
+
 
         viewP3.adapter = SimplePagerAdapter(supportFragmentManager)
 

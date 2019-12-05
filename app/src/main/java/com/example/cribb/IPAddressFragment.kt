@@ -1,5 +1,6 @@
 package com.example.cribb
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
@@ -7,6 +8,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.util.Log
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.fragment_ipaddress.*
+import kotlinx.android.synthetic.main.fragment_search_table.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,6 +36,52 @@ class IPAddressFragment : Fragment() {
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
 
+    class IPAddress{
+        var occurrence:Int = 0
+        var ipAddress:String = ""
+    }
+
+    private var ipAdds:ArrayList<IPAddress> = ArrayList()
+
+    private fun addIPAddress(){
+        var flagedIp = IPAddress()
+        db.collection("IP")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.d(TAG, "${document.id} => ${document.data}")
+
+                    val occurrenceOfThisIp:Int = document.get("occurrences").toString().toInt()
+                    if(occurrenceOfThisIp > 1){
+                        flagedIp.occurrence = occurrenceOfThisIp
+                        flagedIp.ipAddress = document.id
+                        ipAdds.add(flagedIp)
+                    }
+                }
+                IPAddressListing_list.layoutManager = LinearLayoutManager(this.requireContext())
+                IPAddressListing_list.adapter = IPAddressAdminAdapter(ipAdds, this.requireContext())
+//                ReportListing_list.layoutManager = LinearLayoutManager(this.requireContext())
+//                ReportListing_list.adapter = ReportAdminAdapter(reports, this.requireContext())
+            }
+            .addOnFailureListener { exception ->
+                Log.d(TAG, "Error getting documents: ", exception)
+            }
+
+//        IPAddressListing_list.addOnItemClickListener(object: IPAddressAdminAdapter.OnItemClickListener {
+//            override fun onItemClicked(position: Int, view: View) {
+////                var nextAction = searchTableDirections.actionSearchTableToDisplayListingFragment2()
+////
+////                Navigation.findNavController(searchView).navigate(nextAction)
+//                var nextAction = IPAddressFragmentDirections.actionIPAddressFragmentToIPAddressItemFragment()
+//
+//                nextAction.dynamicIPAddress = ipAdds.get(position).ipAddress
+//
+//                val navController = findNavController()
+//                navController.navigate(nextAction)
+//            }
+//        })
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -46,6 +101,11 @@ class IPAddressFragment : Fragment() {
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        addIPAddress()
     }
 
     override fun onAttach(context: Context) {

@@ -113,24 +113,4 @@ class Main2Activity : AppCompatActivity(), searchTable.OnFragmentInteractionList
         return super.onSupportNavigateUp()
     }
 
-//    override fun onRequestPermissionsResult(requestCode: Int,
-//                                            permissions: Array<String>, grantResults: IntArray) {
-//        Log.d("mapmap", "when")
-//
-//        when (requestCode){
-//            MapFragment.LOCATION_PERMISSION_REQUEST_CODE -> {
-//                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-//                    Toast.makeText(this,"Permission Granted!", Toast.LENGTH_SHORT).show()
-//                    getFragmentManager().beginTransaction().detach(MapFragment).attach(this).commit()
-//                }
-//                else{
-//                    Toast.makeText(this,"Permission Denied", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//            else -> {
-//                super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//            }
-//
-//        }
-//    }
 }

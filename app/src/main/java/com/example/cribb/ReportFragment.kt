@@ -3,10 +3,15 @@ package com.example.cribb
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.SetOptions
 import kotlinx.android.synthetic.main.fragment_report.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -28,6 +33,7 @@ class ReportFragment : Fragment() {
     private var param2: String? = null
     private var address: String? = null
     private var listener: OnFragmentInteractionListener? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +62,27 @@ class ReportFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         report_address.text = address
+
+        reportbtn.setOnClickListener {
+            val user = FirebaseAuth.getInstance().currentUser
+
+            val ReportInfo = hashMapOf<Any,Any>()
+
+            val ReportDetail = hashMapOf(
+                    "Report" to report_message.text.toString(),
+                    "timeStamp" to FieldValue.serverTimestamp()
+            )
+
+            ReportInfo["schen23@syr.edu"] = ReportDetail
+
+            db.collection("Reports").document(address!!)
+                .set(ReportInfo, SetOptions.merge())
+                .addOnSuccessListener {
+                    Log.d("Success", "DocumentSnapshot successfully written!")
+                    Toast.makeText(context!!, "Report has been received!", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener { e -> Log.w("Fail", "Error writing document", e) }
+        }
     }
 
 //    override fun onAttach(context: Context) {

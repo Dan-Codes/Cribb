@@ -7,12 +7,11 @@
     tools:context=".ListingAdminFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listing_list"
+        android:id="@+id/AdminListing_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </FrameLayout>

@@ -1,12 +1,16 @@
 package com.example.cribb
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.fragment_report_admin.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,6 +31,33 @@ class ReportAdminFragment : Fragment() {
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
 
+    class report{
+        var reportedAddress:String = ""
+        var detail:String = ""
+    }
+
+    private var reports:ArrayList<report> = ArrayList()
+
+    private fun addReports(){
+        db.collection("Reports")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.d(TAG, "${document.id} => ${document.data}")
+
+                    var SingleReport = report()
+                    SingleReport.reportedAddress= document.id
+                    SingleReport.detail= document.data.toString()
+
+                    reports.add(SingleReport)
+                }
+                ReportListing_list.layoutManager = LinearLayoutManager(this.requireContext())
+                ReportListing_list.adapter = ReportAdminAdapter(reports, this.requireContext())
+//                AdminListing_list.layoutManager = LinearLayoutManager(this.requireContext())
+//                AdminListing_list.adapter = ListingAdapter(Listing, this.requireContext())
+            }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -46,6 +77,11 @@ class ReportAdminFragment : Fragment() {
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        addReports()
     }
 
     override fun onAttach(context: Context) {

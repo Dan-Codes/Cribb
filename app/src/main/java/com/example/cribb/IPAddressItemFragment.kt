@@ -1,19 +1,14 @@
 package com.example.cribb
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
-import com.example.cribb.R
-import com.example.cribb.db
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.cribb.ui.ListingAdapter
-import com.example.cribb.ui.searchTable
-import kotlinx.android.synthetic.main.fragment_listing_admin.*
-import kotlinx.android.synthetic.main.fragment_search_table.*
+import android.util.Log
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,18 +18,19 @@ private const val ARG_PARAM2 = "param2"
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [ListingAdminFragment.OnFragmentInteractionListener] interface
+ * [IPAddressItemFragment.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [ListingAdminFragment.newInstance] factory method to
+ * Use the [IPAddressItemFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ListingAdminFragment : Fragment() {
+class IPAddressItemFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
 
-    private var Listing:ArrayList<searchTable.Listing> = ArrayList()
+    private lateinit var ipAddress:String
+    private var flagedEmails:ArrayList<String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,53 +45,21 @@ class ListingAdminFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_listing_admin, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        db.collection("listings")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    //Log.d(TAG, "${document.id} => ${document.data}")
-
-                    var property = com.example.cribb.ui.searchTable.Listing()
-
-                    val review = document.get("reviews") as HashMap<String, HashMap<String, Any>>
-
-                    property.name = document.get("address") as String
-                    property.price = (document.get("rent") as String)
-
-                    var totalRating = 0.0
-                    var reviewCount = 0.0
-
-                    review.forEach { k, v ->
-                        var eachReview = v
-
-                        for ((k, v) in eachReview) {
-                            if (k == "rating")
-                                totalRating += v as Double
-                            reviewCount++
-                        }
-                    }
-                    if (document.get("avgOverallRating") == 0.0)
-                        property.rating = "Not rated!"
-                    else
-                        property.rating = (document.get("avgOverallRating")).toString()
-
-                    Listing.add(property)
-                }
-                AdminListing_list.layoutManager = LinearLayoutManager(this.requireContext())
-                AdminListing_list.adapter = ListingAdapter(Listing, this.requireContext())
-            }
-
+        return inflater.inflate(R.layout.fragment_ipaddress_item, container, false)
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        arguments?.let {
+            val safeArgs = IPAddressItemFragmentArgs.fromBundle(it)
+            ipAddress = "${safeArgs.dynamicIPAddress}"
+        }
+        Log.d(TAG, ipAddress)
     }
 
     override fun onAttach(context: Context) {
@@ -135,12 +99,12 @@ class ListingAdminFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment ListingAdminFragment.
+         * @return A new instance of fragment IPAddressItemFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            ListingAdminFragment().apply {
+            IPAddressItemFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

@@ -160,9 +160,6 @@ class searchTable : Fragment(), SearchView.OnQueryTextListener {
             }
         }
 
-//        listing_list.layoutManager = LinearLayoutManager(this.requireContext())
-//        listing_list.adapter = ListingAdapter(sharedProp, this.requireContext())
-
         val searchView = getView()!!.findViewById<SearchView>(R.id.searchView)
         searchView!!.setOnQueryTextListener(this)
 

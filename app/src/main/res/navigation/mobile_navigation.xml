@@ -139,4 +139,23 @@
         android:name="com.example.cribb.AdminView"
         android:label="activity_admin_view"
         tools:layout="@layout/activity_admin_view" />
+    <fragment
+        android:id="@+id/IPAddressFragment"
+        android:name="com.example.cribb.IPAddressFragment"
+        android:label="fragment_ipaddress"
+        tools:layout="@layout/fragment_ipaddress" >
+        <action
+            android:id="@+id/action_IPAddressFragment_to_IPAddressItemFragment"
+            app:destination="@id/IPAddressItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/IPAddressItemFragment"
+        android:name="com.example.cribb.IPAddressItemFragment"
+        android:label="fragment_ipaddress_item"
+        tools:layout="@layout/fragment_ipaddress_item" >
+        <argument
+            android:name="dynamicIPAddress"
+            app:argType="string"
+            android:defaultValue="string" />
+    </fragment>
 </navigation>
