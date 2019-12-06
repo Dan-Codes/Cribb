@@ -146,7 +146,7 @@ class CreateListingFragment : Fragment() {
                 "geopoint" to geoPoint,
                 "property" to true,
                 "landlordName" to landlord.text.toString(),
-                "rent" to rent.text.toString(),
+                "rent" to rent.text.toString().trimStart(),
                 "addedby" to "dli123@syr.edu",
                 "reviews" to nestedData,
                 "avgAmenities" to 0.0,
