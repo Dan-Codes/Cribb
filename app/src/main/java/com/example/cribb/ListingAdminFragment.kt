@@ -1,6 +1,9 @@
 package com.example.cribb
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -99,7 +102,19 @@ class ListingAdminFragment : Fragment() {
 
         AdminListing_list.addOnItemLongClickListener(object: ListingAdapter.OnItemLongClickListener{
             override fun onItemLongClicked(position: Int, view: View) {
-                (AdminListing_list.adapter as ListingAdapter).removeItem(position)
+                val builder = AlertDialog.Builder(requireContext())
+
+                builder.setTitle("Delete Alert!")
+                builder.setMessage("Do you want to delete this listing?")
+
+                builder.setPositiveButton(android.R.string.yes) { dialog, which ->
+                    (AdminListing_list.adapter as ListingAdapter).removeItem(position)
+                }
+
+                builder.setNegativeButton(android.R.string.no) { dialog, which ->
+                }
+
+                builder.show()
             }
         })
     }

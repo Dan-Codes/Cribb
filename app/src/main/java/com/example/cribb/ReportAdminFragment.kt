@@ -1,5 +1,6 @@
 package com.example.cribb
 
+import android.app.AlertDialog
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.net.Uri
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_report_admin.*
 
@@ -84,7 +86,21 @@ class ReportAdminFragment : Fragment() {
         addReports()
         ReportListing_list.addOnItemLongClickListener(object: ReportAdminAdapter.OnItemLongClickListener{
             override fun onItemLongClicked(position: Int, view: View) {
-                (ReportListing_list.adapter as ReportAdminAdapter).removeItem(position)
+                //(ReportListing_list.adapter as ReportAdminAdapter).removeItem(position)
+
+                val builder = AlertDialog.Builder(requireContext())
+                builder.setTitle("Delete Alert!")
+                builder.setMessage("Do you want to delete all reports on this listing?")
+                //builder.setPositiveButton("OK", DialogInterface.OnClickListener(function = x))
+
+                builder.setPositiveButton(android.R.string.yes) { dialog, which ->
+                    (ReportListing_list.adapter as ReportAdminAdapter).removeItem(position)
+                }
+
+                builder.setNegativeButton(android.R.string.no) { dialog, which ->
+                }
+
+                builder.show()
             }
         })
     }
