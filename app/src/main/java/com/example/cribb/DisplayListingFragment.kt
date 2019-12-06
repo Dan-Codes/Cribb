@@ -16,6 +16,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.SetOptions
 import kotlinx.android.synthetic.main.fragment_display_listing.*
 import kotlinx.android.synthetic.main.fragment_display_listing.view.*
 

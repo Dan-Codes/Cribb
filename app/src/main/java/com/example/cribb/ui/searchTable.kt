@@ -47,7 +47,7 @@ class searchTable : Fragment(), SearchView.OnQueryTextListener {
     class Listing{
         var name:String = ""
         var rating:String = ""
-        var price:String = ""
+        var price:Int= 0
     }
 
     private var sharedProp:ArrayList<Listing> = ArrayList()
@@ -70,7 +70,8 @@ class searchTable : Fragment(), SearchView.OnQueryTextListener {
                     val review = document.get("reviews") as HashMap<String, HashMap<String, Any>>
 
                     property.name = document.get("address") as String
-                    property.price = (document.get("rent") as String)
+                    var getPrice = (document.get("rent") as String).removePrefix("$")
+                    property.price = getPrice.toInt()
 
                     var totalRating = 0.0
                     var reviewCount = 0.0
