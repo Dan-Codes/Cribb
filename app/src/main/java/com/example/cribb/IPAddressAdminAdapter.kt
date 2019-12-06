@@ -38,22 +38,6 @@ class IPAddressAdminAdapter(val items : ArrayList<IPAddressFragment.IPAddress>, 
     }
 }
 
-fun RecyclerView.addOnItemClickListener(onClickListener: IPAddressAdminAdapter.OnItemClickListener) {
-    this.addOnChildAttachStateChangeListener(object: RecyclerView.OnChildAttachStateChangeListener {
-        override fun onChildViewDetachedFromWindow(view: View) {
-            view?.setOnClickListener(null)
-        }
-
-        override fun onChildViewAttachedToWindow(view: View) {
-            view.setOnClickListener {
-                val holder = getChildViewHolder(view)
-                onClickListener.onItemClicked(holder.adapterPosition, view)
-            }
-        }
-    })
-}
-
-
 class IPAdminViewHolder (view: View) : RecyclerView.ViewHolder(view) {
     // Holds the TextView that will add each animal to
     val ipAddressForViewHolder = view.ipAddress

@@ -36,25 +36,7 @@ class ListingAdminFragment : Fragment() {
 
     private var Listing:ArrayList<searchTable.Listing> = ArrayList()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_listing_admin, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    private fun addListing(){
         db.collection("listings")
             .get()
             .addOnSuccessListener { result ->
@@ -90,7 +72,29 @@ class ListingAdminFragment : Fragment() {
                 AdminListing_list.layoutManager = LinearLayoutManager(this.requireContext())
                 AdminListing_list.adapter = ListingAdapter(Listing, this.requireContext())
             }
+    }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_listing_admin, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        AdminListing_list.layoutManager = LinearLayoutManager(this.requireContext())
+        AdminListing_list.adapter = ListingAdapter(Listing, this.requireContext())
+        addListing()
     }
 
     // TODO: Rename method, update argument and hook method into UI event

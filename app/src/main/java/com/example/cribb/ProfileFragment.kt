@@ -27,6 +27,7 @@ import com.example.cribb.ui.login.LoginActivity
 import com.example.cribb.ui.searchTable
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.auth.User
 import com.mikhaellopez.circularimageview.CircularImageView
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_search_table.*
@@ -88,6 +89,8 @@ class ProfileFragment: Fragment() {
         darkThemeSwitch.setOnCheckedChangeListener { _, checked ->
             preferenceRepository.isDarkTheme = checked
         }
+
+        checkAdmin()
 
         logoutButton.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
@@ -210,6 +213,18 @@ class ProfileFragment: Fragment() {
         var multiplier = 1.0
         repeat(decimals) { multiplier *= 10 }
         return round(this * multiplier) / multiplier
+    }
+
+    private fun checkAdmin(){
+        val user = FirebaseAuth.getInstance().currentUser!!.email.toString()
+
+        db.collection("Users").document(user)
+            .get()
+            .addOnSuccessListener { document ->
+                val adminStatus = document.get("Admin") as Boolean
+
+                if (adminStatus) adminButton.visibility = View.VISIBLE
+            }
     }
 
 

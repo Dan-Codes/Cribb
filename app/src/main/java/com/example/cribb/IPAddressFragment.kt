@@ -51,7 +51,6 @@ class IPAddressFragment : Fragment() {
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    Log.d(TAG, "${document.id} => ${document.data}")
                     var flagedIp = IPAddress()
                     val occurrenceOfThisIp:Int = document.get("occurrences").toString().toInt()
                     if(occurrenceOfThisIp > 1){
@@ -61,34 +60,13 @@ class IPAddressFragment : Fragment() {
                         flagedIp.ipEamils = email
                         ipAdds.add(flagedIp)
                     }
-                    Log.d("**********", flagedIp.ipAddress)
                 }
-
-
                 IPAddressListing_list.layoutManager = LinearLayoutManager(this.requireContext())
                 IPAddressListing_list.adapter = IPAddressAdminAdapter(ipAdds, this.requireContext())
             }
             .addOnFailureListener { exception ->
                 Log.d(TAG, "Error getting documents: ", exception)
             }
-
-//        IPAddressListing_list.addOnItemClickListener(object: IPAddressAdminAdapter.OnItemClickListener {
-//            override fun onItemClicked(position: Int, view: View) {
-////                var nextAction = searchTableDirections.actionSearchTableToDisplayListingFragment2()
-////
-////                Navigation.findNavController(searchView).navigate(nextAction)
-////                var nextAction = IPAddressFragmentDirections.actionIPAddressFragmentToIPAddressItemFragment()
-////
-////                nextAction.dynamicIPAddress = ipAdds.get(position).ipAddress
-////
-////                val navController = findNavController()
-////                navController.navigate(nextAction)
-//
-//                val transaction =
-//                transaction.replace(R.id.fragment_layout_id, fragment)
-//                transaction.commit()
-//            }
-//        })
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -114,6 +92,8 @@ class IPAddressFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        IPAddressListing_list.layoutManager = LinearLayoutManager(this.requireContext())
+        IPAddressListing_list.adapter = IPAddressAdminAdapter(ipAdds, this.requireContext())
         addIPAddress()
     }
 
