@@ -167,6 +167,9 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
         }
         mMap = googleMap
         setUpMap()
+        val customInfoWindow = CustomInfoWindowAdapter(context!!)
+        mMap!!.setInfoWindowAdapter(customInfoWindow)
+
         db.collection("listings")
             .get()
             .addOnSuccessListener { result ->
@@ -177,6 +180,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
                     val avgLocation = document.getDouble("avgLocation")
                     var avgManage = document.getDouble("avgManage")
                     var avgAmenities = document.getDouble("avgAmenities")
+                    var avgOverallRating = document.getDouble("avgOverallRating")
                     var overallRating= 0.0
                     val review = document.get("reviews") as HashMap<String, *>
                     var countReviews = 0
@@ -184,7 +188,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
                     val marker = mMap.addMarker(
                         MarkerOptions().position(LatLng(location!!.latitude, location.longitude)).title(
                             address
-                        ).icon(BitmapDescriptorFactory.fromResource(drawable.logo1))
+                        ).icon(BitmapDescriptorFactory.fromResource(drawable.logo1)).snippet("$avgOverallRating")
                     )
                     //(abs(lat - ThirdState.shared.varLat) < 0.000001 || abs(long - ThirdState.shared.varLong) < 0.000001)
                     //if ((location!!.latitude - lat) < 0.000001 && (location!!.longitude - lng) < 0.000001){
