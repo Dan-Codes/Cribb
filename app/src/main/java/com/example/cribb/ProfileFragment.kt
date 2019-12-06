@@ -27,6 +27,7 @@ import com.example.cribb.ui.login.LoginActivity
 import com.example.cribb.ui.searchTable
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.auth.User
 import com.mikhaellopez.circularimageview.CircularImageView
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -227,6 +228,4 @@ class ProfileFragment: Fragment() {
                 if (adminStatus) adminButton.visibility = View.VISIBLE
             }
     }
-
-
 }

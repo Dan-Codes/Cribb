@@ -48,7 +48,7 @@ class ListingAdminFragment : Fragment() {
                     val review = document.get("reviews") as HashMap<String, HashMap<String, Any>>
 
                     property.name = document.get("address") as String
-                    property.price = (document.get("rent") as String)
+                    property.price = (document.get("rent") as String).removePrefix("%").toInt()
 
                     var totalRating = 0.0
                     var reviewCount = 0.0
