@@ -175,6 +175,7 @@
 
             <EditText
                 android:id="@+id/review_comments"
+                android:hint="Report Here"
                 android:layout_width="0dp"
                 android:layout_height="200dp"
                 android:layout_marginTop="24dp"
