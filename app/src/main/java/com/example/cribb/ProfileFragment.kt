@@ -96,6 +96,7 @@ class ProfileFragment: Fragment() {
             FirebaseAuth.getInstance().signOut()
             val nextAction = ProfileFragmentDirections.actionProfileFragmentToLoginActivity()
             Navigation.findNavController(it).navigate(nextAction)
+            activity!!.finish()
         }
         adminButton.setOnClickListener {
             val nextAction = ProfileFragmentDirections.actionProfileFragmentToAdminView()

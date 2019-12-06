@@ -89,7 +89,9 @@
             android:id="@+id/action_profileFragment_to_loginActivity"
             app:destination="@id/loginActivity"
             app:enterAnim="@anim/fade_out"
-            app:exitAnim="@anim/fade_out" />
+            app:exitAnim="@anim/fade_out"
+            app:popUpTo="@id/profileFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_profileFragment_to_adminView"
             app:destination="@id/adminView"
