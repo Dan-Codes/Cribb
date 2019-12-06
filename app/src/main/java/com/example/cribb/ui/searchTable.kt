@@ -86,9 +86,12 @@ class searchTable : Fragment(), SearchView.OnQueryTextListener {
                         }
                     }
                     if(document.get("avgOverallRating") == 0.0)
-                        property.rating = "Not rated!"
-                    else
-                        property.rating = (document.get("avgOverallRating")).toString()
+                        property.rating = "0"
+                    else {
+                        var roundingRating:Double = (document.get("avgOverallRating")).toString().toDouble()
+                        var roundedRating:Float = Math.round(roundingRating*100).toFloat() / 100
+                        property.rating = roundedRating.toString()
+                    }
 
                     arrayList.add(property)
                 }
@@ -146,11 +149,11 @@ class searchTable : Fragment(), SearchView.OnQueryTextListener {
 
         btnRating.setOnClickListener {
             if (filteredProp.isEmpty()) {
-                sharedProp = ArrayList(sharedProp.sortedWith(compareBy({ it.rating })))
+                sharedProp = ArrayList(sharedProp.sortedWith(compareByDescending({ it.rating })))
                 listing_list.adapter = ListingAdapter(sharedProp, this.requireContext())
             }
             else {
-                filteredProp = ArrayList(filteredProp.sortedWith(compareBy({ it.rating })))
+                filteredProp = ArrayList(filteredProp.sortedWith(compareByDescending({ it.rating })))
                 listing_list.adapter = ListingAdapter(filteredProp, this.requireContext())
             }
         }
