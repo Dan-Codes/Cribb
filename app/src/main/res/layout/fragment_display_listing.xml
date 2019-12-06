@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,10 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/address_passed"
@@ -36,6 +33,7 @@
             android:layout_height="32dp"
             android:layout_below="@id/address_passed"
             android:layout_marginTop="8dp"
+            android:fontFamily="@font/ubuntu_bold"
             android:gravity="center"
             android:text="@string/landlord"
             app:layout_constraintEnd_toStartOf="@+id/phoneNumberDisplay"
@@ -52,6 +50,7 @@
             android:layout_marginEnd="8dp"
             android:autoText="false"
             android:ems="10"
+            android:fontFamily="@font/ubuntu_bold"
             android:gravity="center|left"
             android:inputType="text"
             android:text="@string/overall_rating"
@@ -69,7 +68,8 @@
             android:layout_height="65dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:background="@color/cribbMiddleGrey"
+            android:background="@drawable/custom_rounded_corners"
+            android:fontFamily="@font/ubuntu_bold"
             android:gravity="center"
             android:text="@string/rent"
             android:textAllCaps="true"
@@ -149,6 +149,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:ems="10"
+            android:fontFamily="@font/ubuntu_bold"
             android:inputType="number"
             android:singleLine="false"
             android:text="@string/manage_rating"
@@ -166,6 +167,7 @@
             android:layout_height="48dp"
             android:layout_marginTop="8dp"
             android:ems="10"
+            android:fontFamily="@font/ubuntu_bold"
             android:inputType="number"
             android:text="@string/location_rating"
             android:textColor="#9CDEFF"
@@ -181,6 +183,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:ems="10"
+            android:fontFamily="@font/ubuntu_bold"
             android:inputType="number"
             android:text="@string/amenities_rating"
             android:textColor="#9CDEFF"
@@ -191,10 +194,10 @@
             app:layout_constraintTop_toBottomOf="@+id/amenities_text"
             app:layout_constraintVertical_bias="0.0" />
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/reviews_scrollView"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="300dp"
             android:layout_marginBottom="75dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -212,11 +215,12 @@
                     android:id="@+id/imageView4"
                     android:layout_width="389dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginTop="8dp"
                     android:src="@drawable/display_listing"
                     app:layout_constraintEnd_toEndOf="parent" />
             </LinearLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
         <Space
             android:id="@+id/space"
@@ -268,6 +272,7 @@
             android:layout_width="wrap_content"
             android:layout_height="32dp"
             android:layout_marginTop="8dp"
+            android:fontFamily="@font/ubuntu_bold"
             android:gravity="center"
             android:text="Contact Info"
             app:layout_constraintEnd_toStartOf="@+id/landlord"
@@ -280,6 +285,7 @@
             android:layout_width="wrap_content"
             android:layout_height="32dp"
             android:layout_marginTop="8dp"
+            android:fontFamily="@font/ubuntu_bold"
             android:gravity="center"
             android:text="800-800-8000"
             app:layout_constraintEnd_toEndOf="parent"
@@ -289,4 +295,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</RelativeLayout>
+</ScrollView>

@@ -223,9 +223,9 @@ class ProfileFragment: Fragment() {
         db.collection("Users").document(user)
             .get()
             .addOnSuccessListener { document ->
-                val adminStatus = document.get("Admin") as Boolean
+                val adminStatus = document.get("Admin") as Boolean?
 
-                if (adminStatus) adminButton.visibility = View.VISIBLE
+                if (adminStatus!=null && adminStatus ) adminButton.visibility = View.VISIBLE
             }
     }
 }
