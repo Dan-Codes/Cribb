@@ -61,6 +61,7 @@ class CreateListingFragment : Fragment() {
                 if (rent.text.toString().startsWith("$") || rent.text.toString().isEmpty()) return
                 rent.setText("$${rent.text.toString()}")
                 rent.setSelection(rent.text!!.length)
+
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -100,8 +101,16 @@ class CreateListingFragment : Fragment() {
     }
 
     private fun uploadProperty(): Boolean {
-        if (address1.text.isNullOrBlank() || city.text.isNullOrBlank() || state.text.isNullOrBlank() || zipcode.text.isNullOrBlank() || rent.text.isNullOrBlank() || landlord.text.isNullOrBlank()) {
+        if (address1.text.isNullOrBlank() || city.text.isNullOrBlank() || state.text.isNullOrBlank() || zipcode.text.isNullOrBlank() || rent.text.isNullOrBlank() || landlord.text.isNullOrBlank() || phoneNum.text.isNullOrBlank()) {
             Toast.makeText(context, "You must include all required address fields", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (phoneNum.text.toString().length < 10 || phoneNum.text.toString().length > 14){
+            Toast.makeText(context, "Phone number you have entered is invalid. Please try again.", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (rent.text.toString().length > 6){
+            Toast.makeText(context, "Rent input is too large!", Toast.LENGTH_SHORT).show()
             return false
         }
 
@@ -112,13 +121,14 @@ class CreateListingFragment : Fragment() {
             StrictMode.setThreadPolicy(policy)
             var result: String = UsStreetSingleAddressExample.run("${address1.text.toString()}", "${city.text.toString()}", "${state.text.toString()}", "${zipcode.text.toString()}")
             Log.d("Result", "$result")
-            if (result != "Address is valid."){
+            if (result == "Address is invalid."){
                 Toast.makeText(context!!, "This place does not exist.", Toast.LENGTH_SHORT).show()
                 return false
             }
 
             var listAddress: List<Address>
-            full_address = "${address1.text} ${city.text}, ${state.text} ${zipcode.text}"
+            //full_address = "${address1.text} ${city.text}, ${state.text} ${zipcode.text}"
+            full_address = result
             geocoder = Geocoder(context!!)
 
 

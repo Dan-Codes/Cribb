@@ -61,18 +61,26 @@ public class UsStreetSingleAddressExample {
         }
         else{
             Candidate firstCandidate = results.get(0);
-            Log.d("address", firstCandidate.getAddressee());
             System.out.println("Address is valid. (There is at least one candidate)\n");
             System.out.println("Input ID: " + firstCandidate.getInputId());
             System.out.println("ZIP Code: " + firstCandidate.getComponents().getZipCode());
             System.out.println("County: " + firstCandidate.getMetadata().getCountyName());
+            System.out.println("County: " + firstCandidate.getDeliveryLine1());
+            System.out.println("County: " + firstCandidate.getDeliveryLine2());
+            System.out.println("County: " + firstCandidate.getComponents().getCityName());
+            System.out.println("County: " + firstCandidate.getComponents().getState());
+            System.out.println("County: " + firstCandidate.getComponents().getZipCode());
             System.out.println("Latitude: " + firstCandidate.getMetadata().getLatitude());
             System.out.println("Longitude: " + firstCandidate.getMetadata().getLongitude());
             if (firstCandidate.getMetadata().getLatitude() == 0){
                 return "Address is invalid";
             }
             else {
-                return "Address is valid.";
+                String address1 = firstCandidate.getDeliveryLine1();
+                String City = firstCandidate.getComponents().getCityName();
+                String State = firstCandidate.getComponents().getState();
+                String Zipcode = firstCandidate.getComponents().getZipCode();
+                return address1 + " " + City + ", " + State + " " + Zipcode;
             }
         }
 
