@@ -124,6 +124,11 @@ class searchTable : Fragment(), SearchView.OnQueryTextListener {
         return false
     }
 
+    override fun onResume() {
+        super.onResume()
+        addProperty()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
