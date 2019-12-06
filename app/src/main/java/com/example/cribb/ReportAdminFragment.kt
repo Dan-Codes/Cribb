@@ -82,6 +82,11 @@ class ReportAdminFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         addReports()
+        ReportListing_list.addOnItemLongClickListener(object: ReportAdminAdapter.OnItemLongClickListener{
+            override fun onItemLongClicked(position: Int, view: View) {
+                (ReportListing_list.adapter as ReportAdminAdapter).removeItem(position)
+            }
+        })
     }
 
     override fun onAttach(context: Context) {

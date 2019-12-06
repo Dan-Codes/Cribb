@@ -11,6 +11,7 @@ import com.example.cribb.db
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cribb.ui.ListingAdapter
+import com.example.cribb.ui.addOnItemLongClickListener
 import com.example.cribb.ui.searchTable
 import kotlinx.android.synthetic.main.fragment_listing_admin.*
 import kotlinx.android.synthetic.main.fragment_search_table.*
@@ -95,6 +96,12 @@ class ListingAdminFragment : Fragment() {
         AdminListing_list.layoutManager = LinearLayoutManager(this.requireContext())
         AdminListing_list.adapter = ListingAdapter(Listing, this.requireContext())
         addListing()
+
+        AdminListing_list.addOnItemLongClickListener(object: ListingAdapter.OnItemLongClickListener{
+            override fun onItemLongClicked(position: Int, view: View) {
+                (AdminListing_list.adapter as ListingAdapter).removeItem(position)
+            }
+        })
     }
 
     // TODO: Rename method, update argument and hook method into UI event

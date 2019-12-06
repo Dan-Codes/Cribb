@@ -1,11 +1,19 @@
 package com.example.cribb.ui
 
+import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cribb.R
+import com.example.cribb.db
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.SetOptions
 import kotlinx.android.synthetic.main.listing_item.view.*
 import java.lang.Float.parseFloat
 
@@ -44,6 +52,22 @@ class ListingAdapter(val items : ArrayList<searchTable.Listing>, val context: Co
     interface OnItemClickListener {
         fun onItemClicked(position: Int, view: View)
     }
+
+    fun removeItem(position: Int){
+        val address = items[position].name
+
+        db.collection("listings").document(address)
+            .delete()
+            .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!")
+                Toast.makeText(context!!, "This listing is DELETED!", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
+
+        items.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+
 }
 
 fun RecyclerView.addOnItemClickListener(onClickListener: ListingAdapter.OnItemClickListener) {
@@ -59,6 +83,22 @@ fun RecyclerView.addOnItemClickListener(onClickListener: ListingAdapter.OnItemCl
             }
         }
     })
+}
+
+fun RecyclerView.addOnItemLongClickListener(onLongClickListener: ListingAdapter.OnItemLongClickListener){
+    this.addOnChildAttachStateChangeListener(object: RecyclerView.OnChildAttachStateChangeListener {
+        override fun onChildViewDetachedFromWindow(view: View) {
+            view?.setOnClickListener(null)
+        }
+
+        override fun onChildViewAttachedToWindow(view: View) {
+            view.setOnClickListener {
+                val holder = getChildViewHolder(view)
+                onLongClickListener.onItemLongClicked(holder.adapterPosition, view)
+            }
+        }
+    })
+
 }
 
 class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
