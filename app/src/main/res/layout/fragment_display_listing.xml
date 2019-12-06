@@ -191,7 +191,7 @@
         <androidx.core.widget.NestedScrollView
             android:id="@+id/reviews_scrollView"
             android:layout_width="0dp"
-            android:layout_height="400dp"
+            android:layout_height="300dp"
             android:layout_marginBottom="75dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

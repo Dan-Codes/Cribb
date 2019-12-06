@@ -115,7 +115,7 @@ class SignUpActivity : AppCompatActivity() {
             login.setOnClickListener {
                 loading.visibility = View.VISIBLE
                 //loginViewModel.login(username.text.toString(), password.text.toString())
-                signUp(username.text.toString(), password.text.toString(), firstName.text.toString(),
+                signUp(username.text.toString().toLowerCase(), password.text.toString(), firstName.text.toString(),
                     lastName.text.toString())
             }
         }
