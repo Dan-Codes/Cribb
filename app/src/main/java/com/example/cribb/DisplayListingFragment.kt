@@ -32,6 +32,11 @@ class DisplayListingFragment : androidx.fragment.app.Fragment() {
         return inflater.inflate(R.layout.fragment_display_listing, container, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        updateRating()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
@@ -146,6 +151,55 @@ class DisplayListingFragment : androidx.fragment.app.Fragment() {
             .addOnFailureListener { exception ->
                 Log.d(TAG, "get failed with ", exception)
             }
+    }
+
+    private fun updateRating(){
+        val addressRef = db.collection("listings").document(address)
+        var propertyFields = hashMapOf<Any, Any>()
+
+        var avgAmR = 0.0
+        var avgMnR = 0.0
+        var avgLcR = 0.0
+        var avgOAR = 0.0
+
+        addressRef.get().addOnSuccessListener { document ->
+            if (document != null) {
+                var totalOverallRating = 0.0
+                var totalAmentRating = 0.0
+                var totalLocRating = 0.0
+                var totalManageRating = 0.0
+
+                var reviewerNum = 0
+
+                val review = document.get("reviews") as HashMap<String, *>
+
+                for (reviewer in review) {
+                    reviewerNum++
+                    val reviewMap = review
+                    val reviewInfo:HashMap<String,*>  = reviewMap.getValue(reviewer.key) as HashMap<String, *>
+                    totalLocRating += (reviewInfo.getValue("locationRating")).toString().toFloat()
+                    totalAmentRating += (reviewInfo.getValue("amenitiesRating")).toString().toFloat()
+                    totalManageRating += (reviewInfo.getValue("managementRating")).toString().toFloat()
+
+                    totalOverallRating += (reviewInfo.getValue("rating")).toString().toFloat()
+                }
+                avgAmR = totalAmentRating/reviewerNum
+                avgMnR = totalManageRating/reviewerNum
+                avgLcR = totalLocRating/reviewerNum
+
+                avgOAR = totalOverallRating/reviewerNum
+            }
+
+            Log.d(TAG,avgAmR.toString())
+            propertyFields = hashMapOf(
+                "avgAmenities" to avgAmR,
+                "avgLocation" to avgLcR,
+                "avgManage" to avgMnR,
+                "avgOverallRating" to avgOAR
+            )
+
+            addressRef.set(propertyFields, SetOptions.merge())
+        }
     }
 
 }
