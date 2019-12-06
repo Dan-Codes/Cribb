@@ -26,10 +26,14 @@
 
     <Button
         android:id="@+id/btnDefault"
-        android:layout_width="100dp"
+        style="@android:style/Widget.Material.Light.Button"
+        android:layout_width="102dp"
         android:layout_height="48dp"
         android:layout_marginStart="16dp"
+        android:fontFamily="@font/ubuntu_bold"
         android:text="Default"
+        app:layout_constraintEnd_toStartOf="@+id/btnPrice"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchView" />
 
@@ -37,17 +41,24 @@
         android:id="@+id/btnPrice"
         android:layout_width="100dp"
         android:layout_height="48dp"
-        android:layout_marginStart="39dp"
+        android:layout_marginStart="40dp"
+        android:fontFamily="@font/ubuntu_bold"
         android:text="Price"
+        app:layout_constraintEnd_toStartOf="@+id/btnRating"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnDefault"
         app:layout_constraintTop_toBottomOf="@+id/searchView" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnRating"
         android:layout_width="100dp"
         android:layout_height="48dp"
         android:layout_marginStart="40dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/ubuntu_bold"
         android:text="Rating"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnPrice"
         app:layout_constraintTop_toBottomOf="@+id/searchView" />
 

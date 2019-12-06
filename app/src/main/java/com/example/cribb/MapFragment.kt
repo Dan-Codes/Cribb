@@ -182,10 +182,10 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
                     var avgAmenities = document.getDouble("avgAmenities")
                     var avgOverallRating = document.getDouble("avgOverallRating")
                     var overallRating= 0.0
-                    val review = document.get("reviews") as HashMap<String, *>
+                    val review = document.get("reviews") as HashMap<String, *>?
                     var countReviews = 0
 
-                    val marker = mMap.addMarker(
+                    val marker:Marker? = mMap.addMarker(
                         MarkerOptions().position(LatLng(location!!.latitude, location.longitude)).title(
                             address
                         ).icon(BitmapDescriptorFactory.fromResource(drawable.logo1)).snippet("$avgOverallRating")
@@ -193,7 +193,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
                     //(abs(lat - ThirdState.shared.varLat) < 0.000001 || abs(long - ThirdState.shared.varLong) < 0.000001)
                     //if ((location!!.latitude - lat) < 0.000001 && (location!!.longitude - lng) < 0.000001){
                     if (location!!.latitude.toFloat() == lat.toFloat() && location!!.longitude.toFloat() == lng.toFloat()){
-                        marker.showInfoWindow()
+                        marker?.showInfoWindow()
                         Log.d("info window", "$marker")
                     }
 
