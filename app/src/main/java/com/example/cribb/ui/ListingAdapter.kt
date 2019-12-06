@@ -37,6 +37,10 @@ class ListingAdapter(val items : ArrayList<searchTable.Listing>, val context: Co
         holder?.listingPrice?.text= "Price: " + items.get(position).price.toString()
     }
 
+    interface OnItemLongClickListener{
+        fun onItemLongClicked(position: Int, view: View)
+    }
+
     interface OnItemClickListener {
         fun onItemClicked(position: Int, view: View)
     }

@@ -33,9 +33,6 @@ class IPAddressAdminAdapter(val items : ArrayList<IPAddressFragment.IPAddress>, 
         holder?.ipEmailForViewHolder?.text = EmailStringTotal
     }
 
-    interface OnItemClickListener {
-        fun onItemClicked(position: Int, view: View)
-    }
 }
 
 class IPAdminViewHolder (view: View) : RecyclerView.ViewHolder(view) {
