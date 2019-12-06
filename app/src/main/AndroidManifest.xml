@@ -19,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/MyTheme.DayNight"
         android:windowSoftInputMode="adjustPan">
-        <activity android:name=".AdminView"></activity>
+        <activity android:name=".AdminView"
+            android:configChanges="orientation|screenSize|keyboardHidden"></activity>
         <activity android:name=".ui.login.ForgetPassword" />
         <activity android:name=".ui.login.SignUpActivity"
             android:noHistory="true"/>
