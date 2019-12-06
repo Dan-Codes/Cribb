@@ -1,5 +1,7 @@
 package com.example.cribb;
 
+import android.util.Log;
+
 import com.smartystreets.api.StaticCredentials;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_street.*;
@@ -59,7 +61,7 @@ public class UsStreetSingleAddressExample {
         }
         else{
             Candidate firstCandidate = results.get(0);
-
+            Log.d("address", firstCandidate.getAddressee());
             System.out.println("Address is valid. (There is at least one candidate)\n");
             System.out.println("Input ID: " + firstCandidate.getInputId());
             System.out.println("ZIP Code: " + firstCandidate.getComponents().getZipCode());
