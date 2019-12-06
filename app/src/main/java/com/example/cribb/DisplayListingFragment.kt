@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_display_listing.view.*
 
 class DisplayListingFragment : androidx.fragment.app.Fragment() {
     private lateinit var address:String
+    private lateinit var address1:String
     private lateinit var nameOfReviwer:String
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,9 +36,18 @@ class DisplayListingFragment : androidx.fragment.app.Fragment() {
         arguments?.let {
             val safeArgs = DisplayListingFragmentArgs.fromBundle(it)
             address = "${safeArgs.dynamicAddress}"
-            address_passed.text = address
+
             showReviews(address)
-            (activity as Main2Activity).supportActionBar?.title = address
+            address1=""
+            val splitAddress: List<String> = address.split(" ")
+
+            for (len in splitAddress){
+                if (len.last() == ',') break
+                address1 = "$address1$len "
+
+            }
+            address_passed.text = address
+            (activity as Main2Activity).supportActionBar?.title = address1
         }
 
         writeReview.setOnClickListener {
