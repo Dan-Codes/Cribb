@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,10 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/address_passed"
@@ -69,7 +66,7 @@
             android:layout_height="65dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:background="@color/cribbMiddleGrey"
+            android:background="@drawable/custom_rounded_corners"
             android:gravity="center"
             android:text="@string/rent"
             android:textAllCaps="true"
@@ -191,10 +188,10 @@
             app:layout_constraintTop_toBottomOf="@+id/amenities_text"
             app:layout_constraintVertical_bias="0.0" />
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/reviews_scrollView"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="400dp"
             android:layout_marginBottom="75dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -216,7 +213,7 @@
                     android:src="@drawable/display_listing"
                     app:layout_constraintEnd_toEndOf="parent" />
             </LinearLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
         <Space
             android:id="@+id/space"
@@ -289,4 +286,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</RelativeLayout>
+</ScrollView>
