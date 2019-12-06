@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.util.Log
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment.findNavController
@@ -39,29 +40,33 @@ class IPAddressFragment : Fragment() {
     class IPAddress{
         var occurrence:Int = 0
         var ipAddress:String = ""
+        var ipEamils:ArrayList<String> = ArrayList()
     }
 
     private var ipAdds:ArrayList<IPAddress> = ArrayList()
 
     private fun addIPAddress(){
-        var flagedIp = IPAddress()
+
         db.collection("IP")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
                     Log.d(TAG, "${document.id} => ${document.data}")
-
+                    var flagedIp = IPAddress()
                     val occurrenceOfThisIp:Int = document.get("occurrences").toString().toInt()
                     if(occurrenceOfThisIp > 1){
                         flagedIp.occurrence = occurrenceOfThisIp
                         flagedIp.ipAddress = document.id
+                        val email = document.get("emails") as ArrayList<String>
+                        flagedIp.ipEamils = email
                         ipAdds.add(flagedIp)
                     }
+                    Log.d("**********", flagedIp.ipAddress)
                 }
+
+
                 IPAddressListing_list.layoutManager = LinearLayoutManager(this.requireContext())
                 IPAddressListing_list.adapter = IPAddressAdminAdapter(ipAdds, this.requireContext())
-//                ReportListing_list.layoutManager = LinearLayoutManager(this.requireContext())
-//                ReportListing_list.adapter = ReportAdminAdapter(reports, this.requireContext())
             }
             .addOnFailureListener { exception ->
                 Log.d(TAG, "Error getting documents: ", exception)
@@ -72,12 +77,16 @@ class IPAddressFragment : Fragment() {
 ////                var nextAction = searchTableDirections.actionSearchTableToDisplayListingFragment2()
 ////
 ////                Navigation.findNavController(searchView).navigate(nextAction)
-//                var nextAction = IPAddressFragmentDirections.actionIPAddressFragmentToIPAddressItemFragment()
+////                var nextAction = IPAddressFragmentDirections.actionIPAddressFragmentToIPAddressItemFragment()
+////
+////                nextAction.dynamicIPAddress = ipAdds.get(position).ipAddress
+////
+////                val navController = findNavController()
+////                navController.navigate(nextAction)
 //
-//                nextAction.dynamicIPAddress = ipAdds.get(position).ipAddress
-//
-//                val navController = findNavController()
-//                navController.navigate(nextAction)
+//                val transaction =
+//                transaction.replace(R.id.fragment_layout_id, fragment)
+//                transaction.commit()
 //            }
 //        })
     }
