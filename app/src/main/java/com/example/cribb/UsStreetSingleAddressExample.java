@@ -40,7 +40,8 @@ public class UsStreetSingleAddressExample {
         lookup.setState(state);
         lookup.setZipCode(zipcode);
         lookup.setMaxCandidates(2);
-        lookup.setMatch(MatchType.INVALID); // "invalid" is the most permissive match
+        lookup.setMatch(MatchType.STRICT); // "invalid" is the most permissive match
+                                            // Strict is only USPS addresses
 
         try {
             client.send(lookup);
@@ -57,7 +58,7 @@ public class UsStreetSingleAddressExample {
 
         if (results.isEmpty()) {
             System.out.println("No candidates. This means the address is not valid.");
-            return "No candidates. This means the address is not valid.";
+            return "Address is invalid";
         }
         else{
             Candidate firstCandidate = results.get(0);
