@@ -35,7 +35,7 @@ class ReportAdminAdapter(val items : ArrayList<ReportAdminFragment.report>, val 
     fun removeItem(position: Int){
         val address = items[position].reportedAddress
 
-        db.collection("listings").document(address)
+        db.collection("Reports").document(address)
             .delete()
             .addOnSuccessListener { Log.d(ContentValues.TAG, "DocumentSnapshot successfully deleted!")
                 Toast.makeText(context!!, "Reports of this listing is DELETED!", Toast.LENGTH_SHORT).show()
