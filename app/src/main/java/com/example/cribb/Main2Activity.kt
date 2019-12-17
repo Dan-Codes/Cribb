@@ -34,8 +34,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-
-
+import androidx.viewpager.widget.ViewPager
 
 
 val db = FirebaseFirestore.getInstance()

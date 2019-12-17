@@ -13,7 +13,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.SetOptions
+import kotlinx.android.synthetic.main.display_review_cell.view.*
 import kotlinx.android.synthetic.main.reviews_cell.view.*
+import kotlinx.android.synthetic.main.reviews_cell.view.cell_address
+import kotlinx.android.synthetic.main.reviews_cell.view.cell_description
+import kotlinx.android.synthetic.main.reviews_cell.view.ratingBar
+import kotlinx.android.synthetic.main.reviews_cell.view.timeStamp
 import java.lang.reflect.Field
 
 class ReviewListAdapter(val items : ArrayList<ProfileFragment.Listing>, val context: Context) : RecyclerView.Adapter<ViewHolder>() {
@@ -131,7 +136,6 @@ fun RecyclerView.addOnItemClickListener(onClickListener: ListingAdapter.OnItemCl
 }
 
 class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
-    // Holds the TextView that will add each animal to
     val listingAddress = view.cell_address
     val listingRating = view.ratingBar
     val listingDescription = view.cell_description

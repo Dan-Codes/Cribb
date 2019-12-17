@@ -64,5 +64,7 @@ dependencies {
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'com.mikhaellopez:circularimageview:4.1.0'
     implementation "org.jetbrains.anko:anko-commons:0.10.4"
+    implementation 'com.github.jd-alexander:LikeButton:0.2.3'
+    implementation 'com.android.support.constraint:constraint-layout:2.0.0-beta4'
 }
 apply plugin: 'com.google.gms.google-services'

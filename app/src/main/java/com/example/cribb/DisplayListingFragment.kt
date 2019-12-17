@@ -15,16 +15,34 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.SetOptions
 import kotlinx.android.synthetic.main.fragment_display_listing.*
 import kotlinx.android.synthetic.main.fragment_display_listing.view.*
+import kotlinx.android.synthetic.main.fragment_profile.*
 
 
 class DisplayListingFragment : androidx.fragment.app.Fragment() {
     private lateinit var address:String
     private lateinit var address1:String
     private lateinit var nameOfReviwer:String
+
+    class Listing {
+
+        var address: String = ""
+        var rating: Float = 0F
+        var isAnonymous: String = ""
+        var comment: String = ""
+        var timeStamp: String = ""
+        var willLiveAgain: String = ""
+        var isEdited: String = ""
+        var locationRating = ""
+        var amenititesRating = ""
+        var managementRating = ""
+        var name = ""
+    }
+    private var arrayList:ArrayList<Listing> = ArrayList()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
@@ -67,6 +85,9 @@ class DisplayListingFragment : androidx.fragment.app.Fragment() {
             nextAction.reportAddress = address
             Navigation.findNavController(it).navigate(nextAction)
         }
+
+        displayCardView.adapter = displayListingAdapter(arrayList, this.requireContext())
+        displayCardView.layoutManager = LinearLayoutManager(this.requireContext())
     }
 
     @SuppressLint("ResourceType")
@@ -96,6 +117,7 @@ class DisplayListingFragment : androidx.fragment.app.Fragment() {
 
                     for (reviewer in review){
                           println(reviewer)
+                        var property = Listing()
                         val reviewer = reviewer
                         val reviewMap = review
                         val ratingBar = RatingBar(activity, null, android.R.attr.ratingBarStyleSmall)
@@ -112,37 +134,31 @@ class DisplayListingFragment : androidx.fragment.app.Fragment() {
                         var willLiveAgain:String = if (reviewInfo.getValue("willLiveAgain") as Boolean) "Yes" else "No"
                         val timestamp = reviewInfo.getValue("timeStamp") as Timestamp
 
-                        val linearLayout = (activity)!!.findViewById<LinearLayout>(R.id.LinearLayout_in_scroll)
-                        val textView = TextView(activity)
-                        textView.text = "Overall Rating: $overall_rating \n$comments  \n" +
-                                "Will live again: $willLiveAgain\n$nameOfReviwer\nTimestamp: ${timestamp.toDate()}\n"
-                        val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                        params.setMargins(100,10,48,10)
-                        textView.layoutParams = params
-                        var typeface = ResourcesCompat.getFont(context!!, R.font.raleway)
-                        textView.typeface = typeface
+                        property.name = nameOfReviwer
+                        property.comment = comments
+                        property.rating = overall_rating.toFloat()
+                        property.timeStamp = timestamp.toDate().toString()
+                        arrayList.add(property)
 
-
-//                        var params = textView.layoutParams as? LinearLayout.LayoutParams
-//                        val params = LinearLayout.LayoutParams(
-//                            LinearLayout.LayoutParams.MATCH_PARENT,
-//                            LinearLayout.LayoutParams.WRAP_CONTENT)
-
+//                        val linearLayout = (activity)!!.findViewById<LinearLayout>(R.id.LinearLayout_in_scroll)
+//                        val textView = TextView(activity)
+//                        textView.text = "Overall Rating: $overall_rating \n$comments  \n" +
+//                                "Will live again: $willLiveAgain\n$nameOfReviwer\nTimestamp: ${timestamp.toDate()}\n"
+//                        val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+//                        params.setMargins(100,10,48,10)
+//                        textView.layoutParams = params
+//                        var typeface = ResourcesCompat.getFont(context!!, R.font.raleway)
+//                        textView.typeface = typeface
 //
-//                        textView.id=1
-
-
-
-
-                        ratingBar.max = 5
-                        ratingBar.stepSize = 0.1.toFloat()
-                        ratingBar.rating = overall_rating.toFloat()
-                        ratingBar.layoutParams = params
-                        LinearLayout_in_scroll.addView(ratingBar)
-
-                        reviews_scrollView.LinearLayout_in_scroll.addView(textView)
+//                        ratingBar.max = 5
+//                        ratingBar.stepSize = 0.1.toFloat()
+//                        ratingBar.rating = overall_rating.toFloat()
+//                        ratingBar.layoutParams = params
+//                        LinearLayout_in_scroll.addView(ratingBar)
+//
+//                        reviews_scrollView.LinearLayout_in_scroll.addView(textView)
                     }
-
+                    displayCardView.adapter = displayListingAdapter(arrayList, this.requireContext())
 
                 } else {
                     Log.d(TAG, "No such document")
